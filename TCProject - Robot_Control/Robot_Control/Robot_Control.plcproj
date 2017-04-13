@@ -15,7 +15,7 @@
     <LibraryReferences>{6c39dee1-969a-4262-be39-2141f57b22cf}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\Axis\Axis.TcPOU">
+    <Compile Include="DUTs\Axis\Axis\Axis.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Delay\Delay.TcPOU">
@@ -53,6 +53,7 @@
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="DUTs\Axis" />
+    <Folder Include="DUTs\Axis\Axis" />
     <Folder Include="DUTs\Delay" />
     <Folder Include="GVLs" />
     <Folder Include="VISUs" />

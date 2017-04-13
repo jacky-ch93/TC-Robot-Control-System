@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="MAIN" Id="{bda53a05-d64b-4adc-957d-35b84e53eb09}" SpecialFunc="None">
+  <POU Name="MAIN" Id="{440363ac-5bde-4305-b825-0d523dc9b248}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 // =======================NC轴变量==========================
@@ -14,10 +14,12 @@ VAR
 	Robot_Power			: BOOL;							// 机器人所有电机使能
 	
 	Home_Execute		: BOOL;							// 设置零点程序使能
-	Axis_Start_Back 	: ARRAY[1..18] OF BOOL;			// 单电机找零回退信号
-	Robot_Start_Back	: BOOL;							// 机器人所有电机回退信号
+	//Axis_Start_Back 	: ARRAY[1..18] OF BOOL;			// 单电机找零回退信号
+	//Robot_Start_Back	: BOOL;							// 机器人所有电机回退信号
 	Axis_Home_Set		: ARRAY[1..18] OF BOOL;			// 单电机设定零点信号
 	Robot_Home_Set		: BOOL;							// 机器人所有电机设定零点信号
+	//Delay_On			: ARRAY[1..18] OF BOOL;
+	//TON1				: TON;
 	
 	Move_Execute		: BOOL;							// 绝对运动使能信号
 	Robot_Stand_Execute	: BOOL;							// 机器人站立程序使能	
@@ -32,6 +34,7 @@ VAR
 	Reset_Execute		: BOOL;							// 电机驱动重置动作发生使能
 	Axis_Reset			: ARRAY[1..18] OF BOOL;			// 单电机驱动重置信号使能
 	Robot_Reset			: BOOL;							// 机器人整体电机驱动重置
+	Axis_ResetDone		: ARRAY[1..18] OF BOOL;			// 单电机驱动重置完成
 	
 	// ===================状态监测变量=======================
 	Power_Status	: ARRAY[1..18] OF BOOL;				// 上电监测信号
@@ -50,13 +53,13 @@ VAR
 	t					: LREAL :=0;
 	
 	// =======================驱动器信号监测====================
-	Current_Turque_Value: ARRAY[1..18] OF INT ;//AT%IW0 : ARRAY[1..18] OF INT ;	//电流、力矩相关值
-	Max_Turque_Value 	: INT := 1000 ;					// 设置最大力矩边界值
+	Current_Turque_Value  AT%IW0 : ARRAY[1..18] OF INT ;	//电流、力矩相关值
+	Max_Turque_Value 	: INT ;							// 设置最大力矩边界值
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[// =======================子程序使能(永久运行)===================
-Variable_Monitor();			// 力矩监测子程序使能
+Variable_Monitor();			// 变量监测子程序使能
 Logic_Control();			// 逻辑控制子程序使能
 Variable_Set();				// 各动作速度子程序使能
 SetGenerator();				// 外部信号发生子程序使能
@@ -79,7 +82,7 @@ END_IF
 // =======================找零程序===============================
 IF Home_Execute THEN
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
-		Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);
+		Axis_Robot[Axis_Number].Home(Drive_Home:= Axis_Home_Set[Axis_Number]);
 	END_FOR
 END_IF
 
@@ -102,7 +105,7 @@ IF ExSetPoint_Execute THEN
 END_IF
 ]]></ST>
     </Implementation>
-    <Action Name="Logic_Control" Id="{434895b9-7f47-4011-8051-8baff4b20205}">
+    <Action Name="Logic_Control" Id="{c215c7dc-fc9f-4378-b645-9582d910ac24}">
       <Implementation>
         <ST><![CDATA[// =======================控制逻辑区==========================
 // 保证所有的动作拥有合理的先后顺序，优化控制逻辑
@@ -140,19 +143,28 @@ END_IF
 // =====================找零程序逻辑==========================
 IF Home_Execute THEN
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
-		IF Axis_Home_Set[Axis_Number] THEN			// 设定零点时，轴后退找零动作停止			
-			Axis_Start_Back[Axis_Number] :=0;	
-		END_IF
-		IF Current_Turque_Value[Axis_Number] > Max_Turque_Value THEN	// 轴后退找零点到位后，停止后退运动
-			Axis_Start_Back[Axis_Number] :=0;
-			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);
+		IF Home_Done[Axis_Number] THEN			// 	丝杠到达零点位置后，单电j机标零使能位关闭			
+			Axis_Home_Set[Axis_Number] :=0;	
+			Axis_Robot[Axis_Number].Home(Drive_Home:= Axis_Home_Set[Axis_Number]);
 		END_IF
 	END_FOR
+		(*IF Current_Turque_Value[Axis_Number] > Max_Turque_Value THEN	// 轴后退找零点到位后，停止后退运动
+			Axis_Start_Back[Axis_Number] :=0;
+			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);
+			TON1(IN:= TRUE, PT:=T#200MS, Q=> , ET=> );
+			Axis_Home_Set[Axis_Number] := TON1.Q;
+			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);			
+		END_IF
+	END_FOR
+	IF TON1.Q THEN
+		TON1(IN:= FALSE, PT:=T#200MS, Q=> , ET=> );
+	END_IF*)
+	
 	Move_Execute :=0;							// 设定零点时，不能进行其他运动
 	ExSetPoint_Execute :=0;
 ELSIF NOT Home_Execute THEN
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
-		Axis_Start_Back[Axis_Number] :=0;
+		//Axis_Start_Back[Axis_Number] :=0;
 		Axis_Home_Set[Axis_Number] := 0;
 	END_FOR
 END_IF
@@ -162,6 +174,11 @@ IF Move_Execute THEN
 	//Absolute_Eable := TRUE;
 	Home_Execute := FALSE;						// 站立运动使能时，机器人调零必须结束
 	ExSetPoint_Execute :=0;						// 站立运动时，不能进行其他运动
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		IF MoveAbsoluteDone[Axis_Number] THEN	// 	丝杠到达设定位置后，单电机绝对运动使能位关闭
+			Axis_Absolute_Eable[Axis_Number] := FALSE;
+		END_IF
+	END_FOR
 ELSIF NOT Move_Execute THEN						// 站立运动不使能,轴不能运动
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 		Axis_Absolute_Eable[Axis_Number] := FALSE;
@@ -181,7 +198,7 @@ ELSIF ExtSetPointDisable THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Robot_Action" Id="{3e02d8bd-fc97-4c22-9810-94f1deeba82b}">
+    <Action Name="Robot_Action" Id="{103d6b73-9e52-4067-a668-c66b63a8003e}">
       <Implementation>
         <ST><![CDATA[// =================机器人整体运动命令区======================
 // 六足所有电机整体控制
@@ -206,23 +223,27 @@ IF Robot_Power THEN
 END_IF
 	
 // ===================机器人找零程序=======================
-IF Robot_Start_Back THEN			// 回退程序
+(*IF Robot_Start_Back THEN			// 回退程序
 	IF Home_Execute THEN
 		FOR Axis_Number := 1 TO 18 {BY 1} DO
 			Axis_Start_Back[Axis_Number] := TRUE;
 		END_FOR
 	END_IF
-END_IF
+END_IF*)
 IF Robot_Home_Set THEN				// 标零程序
-	Robot_Start_Back := FALSE;
+	//Robot_Start_Back := FALSE;
 	IF Home_Execute THEN
 		FOR Axis_Number := 1 TO 18 {BY 1} DO
-			Axis_Home_Set[Axis_Number] := TRUE;
+			IF Home_Done[Axis_Number] THEN				// 	丝杠到达零点位置后，单电j机标零使能位关闭
+				Axis_Home_Set[Axis_Number] := FALSE;
+			ELSE
+				Axis_Home_Set[Axis_Number] := TRUE;
+			END_IF
 		END_FOR
 	END_IF
 ELSIF NOT Robot_Home_Set AND NOT Home_Execute THEN
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
-		Axis_Home_Set[Axis_Number] := FALSE;
+	Axis_Home_Set[Axis_Number] := FALSE;
 	END_FOR
 END_IF
 
@@ -230,7 +251,11 @@ END_IF
 IF Robot_Stand_Execute THEN
 	IF Move_Execute THEN
 		FOR Axis_Number := 1 TO 18 {BY 1} DO
-			Axis_Absolute_Eable[Axis_Number] := TRUE;
+			IF MoveAbsoluteDone[Axis_Number] THEN		// 	丝杠到达设定位置后，单电机绝对运动使能位关闭
+				Axis_Absolute_Eable[Axis_Number] := FALSE;
+			ELSE
+				Axis_Absolute_Eable[Axis_Number] := TRUE;
+			END_IF
 		END_FOR
 	END_IF
 ELSIF NOT Robot_Stand_Execute AND NOT Move_Execute THEN 
@@ -241,7 +266,7 @@ END_IF
 ]]></ST>
       </Implementation>
     </Action>
-    <Action Name="SetGenerator" Id="{f1300150-b582-4997-9575-ee88909e96d2}">
+    <Action Name="SetGenerator" Id="{df99b098-6f3a-407b-a0f4-818f567ebe0b}">
       <Implementation>
         <ST><![CDATA[// ====================外部信号发生测试区=====================
 // 用来测试外部信号发生功能和电机相关参数
@@ -255,16 +280,16 @@ IF ExtSetPointEnable THEN
 END_IF
 
 // =================外部信号停止逻辑判断=======================
-IF Axis_Robot[Axis_Number].State_ExtSetPiontDone THEN
+//IF Axis_Robot[Axis_Number].State_ExtSetPiontDone THEN
 	IF t>=20 THEN
 		ExtSetPointEnable := FALSE;
 		t:=0;
 		ExtSetPointDisable := TRUE;
 	END_IF
-END_IF]]></ST>
+//END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Monitor" Id="{d26fdba5-d382-400a-acf3-8ca0f54fa88c}">
+    <Action Name="Variable_Monitor" Id="{ba544c5b-3975-4680-8681-575f377c08d2}">
       <Implementation>
         <ST><![CDATA[// =====================关键数据信号监测======================
 
@@ -305,7 +330,7 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Set" Id="{57a8a09c-4d5e-47b2-91e5-09b26913f8b4}">
+    <Action Name="Variable_Set" Id="{bb26148f-2045-404a-a802-a94df446518b}">
       <Implementation>
         <ST><![CDATA[// =======================速度规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是一样的
@@ -320,22 +345,21 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR
 
 // =====================最大力矩规定区========================
-Max_Turque_Value := 800;
+Max_Turque_Value := 900;
 
 ]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="53" Count="43" />
-      <LineId Id="148" Count="0" />
+      <LineId Id="3" Count="44" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="73" />
+      <LineId Id="2" Count="87" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="54" />
+      <LineId Id="2" Count="62" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">

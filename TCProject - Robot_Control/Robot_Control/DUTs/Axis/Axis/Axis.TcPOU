@@ -59,6 +59,9 @@ VAR
 	Axis_Delay			: Delay;				// FB to operate the delay program		[延迟程序]
 	Axis_ExtSetPiontEnable	: MC_ExtSetPointGenEnable;	// FB to enable extsetpoint		[外部函数发生使能]
 	Axis_ExtSetPiontDisable	: MC_ExtSetPointGenDisable;	// FB to disable extsetpoint	[外部函数结束使能]
+  
+  // =============== Timer =================
+  Delay         : TON;          //[定时器]
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -187,7 +190,7 @@ END_IF
     <Method Name="Home" Id="{313e1eef-e597-492a-a006-a8453e584cfd}">
       <Declaration><![CDATA[METHOD Home
 VAR_INPUT
-	Back_Start 				: BOOL;
+	//Back_Start 				: BOOL;
 	//Velocity_Home	:LREAL;
 	//Axis_Current_Turque 	: INT;
 	Drive_Home				: BOOL;
@@ -202,17 +205,25 @@ END_VAR
 // 找零程序过程为：先让丝杠回退，到达机械限位后停止,并用程序将该位置置为零位
 
 //======================丝杠回退========================
-Jog_Backward(Drive_Jog_Backward:= Back_Start);
+Jog_Backward(Drive_Jog_Backward:= Drive_Home);
 Jog_Velocity := Velocity_Home;
 	
 IF NOT Axis_Home.Error THEN
-	IF ABS(Axis_Current_Turque) > Axis_Max_Turque THEN
-		Back_Start :=0;
+	IF ABS(Axis_Current_Turque) > Axis_Max_Turque AND NOT HomeDone THEN
+		Drive_Home :=0;
+		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+		Delay(IN:= NOT Delay.Q, PT:=T#200MS, Q=> , ET=> );
 		Axis_Home( 	Axis:= AxisRef, 
-					Execute:= Drive_Home, 
+					Execute:= Delay.Q, 
 					Position:= 0, 
 					HomingMode:= MC_Direct);
-		HomeDone := 1;
+		HomeDone := Axis_Home.Done;
+	END_IF
+	IF HomeDone THEN
+		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= 100 );
+		IF Axis_MoveAbsolute.Done THEN
+			HomeDone := FALSE;
+		END_IF
 	END_IF
 END_IF
 
@@ -229,6 +240,7 @@ IF Axis_Home.Error OR Axis_Home.CommandAborted OR ABS(Axis_Current_Turque) < Axi
 	Axis_Home( 	Axis:= AxisRef, 
 				Execute:= FALSE);
 END_IF
+
 // =========================================================]]></ST>
       </Implementation>
     </Method>
@@ -373,8 +385,7 @@ VAR_INPUT
 	Absolute_Position	: LREAL;			// 绝对运动位置
 	//Move_Velocity		: LREAL;			// 运动速度
 	//Axis_Current_Turque : INT;			// 边界条件：丝杠位置到达两端卡死
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[// =======================绝对运动==========================
 
@@ -733,9 +744,14 @@ END_VAR
       <LineId Id="40" Count="0" />
       <LineId Id="42" Count="0" />
       <LineId Id="45" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="119" Count="0" />
       <LineId Id="62" Count="0" />
       <LineId Id="64" Count="3" />
       <LineId Id="43" Count="0" />
+      <LineId Id="133" Count="1" />
+      <LineId Id="136" Count="2" />
+      <LineId Id="135" Count="0" />
       <LineId Id="12" Count="0" />
       <LineId Id="75" Count="2" />
       <LineId Id="83" Count="0" />
@@ -745,6 +761,7 @@ END_VAR
       <LineId Id="32" Count="0" />
       <LineId Id="34" Count="0" />
       <LineId Id="33" Count="0" />
+      <LineId Id="95" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="2" Count="0" />
     </LineIds>

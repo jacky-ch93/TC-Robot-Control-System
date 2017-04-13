@@ -1315,6 +1315,15 @@ External Setpoint Generation:
 			</Relations>
 		</DataType>
 		<DataType>
+			<Name GUID="{5668CD8E-CF1C-B917-34BA-930C5970F763}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..18] OF INT</Name>
+			<BitSize>288</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
+			<ArrayInfo>
+				<LBound>1</LBound>
+				<Elements>18</Elements>
+			</ArrayInfo>
+		</DataType>
+		<DataType>
 			<Name GUID="{85DC3E7A-8ADA-435B-9479-25573909A7DB}" Namespace="AX5000" TcBaseType="true">E_AX5000_P_0275_ActiveFeedbackAndMemory</Name>
 			<BitSize>8</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
@@ -5385,6 +5394,13 @@ External Setpoint Generation:
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.Current_Turque_Value</Name>
+							<Comment>
+								<![CDATA[电流、力矩相关值]]>
+							</Comment>
+							<Type GUID="{5668CD8E-CF1C-B917-34BA-930C5970F763}">ARRAY [1..18] OF INT</Type>
+						</Var>
 						<Var>
 							<Name>MAIN.Axis_Robot[1].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
