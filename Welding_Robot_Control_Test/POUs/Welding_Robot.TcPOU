@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Welding_Robot" Id="{b66e518f-e7f0-493b-b5d2-0962412c8e91}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Welding_Robot
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =======================逻辑控制==========================
+Robot_Simulink.stInput.t := t;											// 采样时间t与Simulink模型中的采样时间链接
+//Hexapod_Robot.Model_Position := Robot_Simulink.stOutput.Disp_P;			// Simulink中的电机输出位移输入到控制模型
+//Welding_Arm.Model_Position := Robot_Simulink.stOutput.Disp_P;			// Simulink中的电机输出位移输入到控制模型]]></ST>
+    </Implementation>
+    <LineIds Name="Welding_Robot">
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
