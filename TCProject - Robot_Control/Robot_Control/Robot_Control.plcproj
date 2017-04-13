@@ -136,13 +136,13 @@
     <SubObject Include="Axis.ExtSetPoint" />
     <SubObject Include="Axis.Halt" />
     <SubObject Include="Axis.Home" />
+    <SubObject Include="Axis.Home_Absolute_Position" />
+    <SubObject Include="Axis.Home_Absolute_Position.Get" />
+    <SubObject Include="Axis.Home_Absolute_Position.Set" />
+    <SubObject Include="Axis.Home_Sensor" />
     <SubObject Include="Axis.Home_Velocity" />
     <SubObject Include="Axis.Home_Velocity.Get" />
     <SubObject Include="Axis.Home_Velocity.Set" />
-    <SubObject Include="Axis.Home2" />
-    <SubObject Include="Axis.Home2_Velocity" />
-    <SubObject Include="Axis.Home2_Velocity.Get" />
-    <SubObject Include="Axis.Home2_Velocity.Set" />
     <SubObject Include="Axis.Jog_Backward" />
     <SubObject Include="Axis.Jog_Forward" />
     <SubObject Include="Axis.Jog_Velocity" />
@@ -164,8 +164,6 @@
     <SubObject Include="Axis.Move_Velocity.Get" />
     <SubObject Include="Axis.Move_Velocity.Set" />
     <SubObject Include="Axis.Power" />
-    <SubObject Include="Axis.Proximity_Switch_FeedBack" />
-    <SubObject Include="Axis.Proximity_Switch_FeedBack.Set" />
     <SubObject Include="Axis.Reset" />
     <SubObject Include="Axis.State_ExtSetPiontDone" />
     <SubObject Include="Axis.State_ExtSetPiontDone.Get" />
@@ -179,6 +177,7 @@
     <SubObject Include="Axis.State_PowerStatus.Get" />
     <SubObject Include="Axis.State_ResetDone" />
     <SubObject Include="Axis.State_ResetDone.Get" />
+    <SubObject Include="MAIN.Leg_Action" />
     <SubObject Include="MAIN.Logic_Control" />
     <SubObject Include="MAIN.Robot_Action" />
     <SubObject Include="MAIN.SetGenerator" />
