@@ -21,6 +21,9 @@
     <Compile Include="DUTs\Delay\Delay.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DUTs\Hexapod_Robot_Mapping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>
