@@ -54,12 +54,22 @@ VAR
 	
 	// =======================模块中间变量======================
 	//HomeDone_Number	: LREAL :=0;					//完成找零的轴数
-	ExSetPoint_Position	: ARRAY[1..18] OF LREAL;		// 外部信号位置
-	t					: LREAL :=0;
+	//ExSetPoint_Position	: ARRAY[1..18] OF LREAL;		// 外部信号位置
+	//t					: LREAL :=0;
 	
 	// =======================驱动器信号监测====================
 	Current_Turque_Value  AT%IW0 : ARRAY[1..18] OF INT ;	//电流、力矩相关值
 	Max_Turque_Value 	: INT ;							// 设置最大力矩边界值
+	
+		// ====================Simulink模块相关=====================
+	Robot_Simulink		: FB_SimulinkModel_forControl(oid:=16#01010020);	// Simulink模型定义
+	Model_Position		: ARRAY[1..18] OF LREAL;			// Simulink中各个腿的位置
+	ExSetPoint_Position	: ARRAY[1..18] OF LREAL;			// 外部信号位置
+	T_ALL				: LREAL:=100;						// Simulink模型运动总时长
+	t_Interval			: LREAL:=0.001;						// 取样时间间隔，默认为1ms
+	t					: LREAL:=0;							// 取样当前时间变量，以0为起点
+	Mapping				: Hexapod_Robot_Mapping;			// 变量映射			
+	Home_Position 		: ARRAY[1..18] OF LREAL;			// Home结束后的位移值
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -87,6 +97,7 @@ END_IF
 
 // =======================找零程序===============================
 IF Home_Execute THEN
+	Robot_Simulink.Execute();	// Simulink模型使能，用来为找零后的电机提供初始位移
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 		Axis_Robot[Axis_Number].Home(Drive_Home:= Axis_Home_Set[Axis_Number]);
 	END_FOR
@@ -102,7 +113,8 @@ END_IF
 	
 // =======================外部信号运动程序=======================
 IF ExSetPoint_Execute THEN
-	SetGenerator();			// 使能外部信号发生子程序
+	//SetGenerator();			// 使能外部信号发生子程序
+	Robot_Simulink.Execute();	// Simulink模型使能
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 		Axis_Robot[Axis_Number].ExtSetPoint(Drive_ExtSetPointEnable:= ExtSetPointEnable, 
 											Drive_ExtSetPointDisable:= ExtSetPointDisable, 
@@ -203,6 +215,7 @@ IF ExSetPoint_Execute THEN
 	Move_Execute :=0;							// 外部信号发生时，不能进行其他运动
 ELSIF NOT ExSetPoint_Execute THEN
 	ExtSetPointEnable := 0;						// 外部信号发生不使能时，外部信号不能进入程序
+	ExtSetPointDisable :=0;
 ELSIF ExtSetPointDisable THEN
 	ExtSetPointEnable :=0;						// 外部信号发生停止与外部信号发生开始不能同时进行
 END_IF]]></ST>
@@ -233,37 +246,11 @@ IF Robot_Power THEN
 END_IF
 	
 // ===================机器人找零程序=======================
-(*IF Robot_Start_Back THEN			// 回退程序
-	IF Home_Execute THEN
-		FOR Axis_Number := 1 TO 18 {BY 1} DO
-			Axis_Start_Back[Axis_Number] := TRUE;
-		END_FOR
-	END_IF
-END_IF*)
 IF Robot_Home_Set THEN				// 标零程序
 	//Robot_Start_Back := FALSE;
 	IF Home_Execute THEN
-		(*FOR Axis_Number := 1 TO 18 {BY 1} DO
-			IF Home_Done[Axis_Number] THEN				// 	丝杠到达零点位置后，单电j机标零使能位关闭
-				Axis_Home_Set[Axis_Number] := FALSE;
-			ELSE
-				Axis_Home_Set[Axis_Number] := TRUE;
-			END_IF
-		END_FOR*)
 		Leg_Home_Set[3] := Leg_Home_Set[5] := Leg_Home_Set[1];	// 在整机调零时，1\3\5三条腿同时调零；
 		Leg_Home_Set[4] := Leg_Home_Set[6] := Leg_Home_Set[2];	// 在整机调零时，2\4\6三条腿同时调零；
-		(*FOR Leg_Number := 1 TO 6 {BY 1} DO
-			IF Leg_Home_Done[1] AND Leg_Home_Done[3] AND Leg_Home_Done[5] THEN
-				//Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := FALSE;
-				Leg_Home_Set[2] := Leg_Home_Set[4]:= Leg_Home_Set[6] := TRUE;
-			ELSE
-				Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := TRUE;
-			END_IF			
-			IF Leg_Home_Done[2] AND Leg_Home_Done[4] AND Leg_Home_Done[6] THEN
-				Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := FALSE;
-				Leg_Home_Set[2] := Leg_Home_Set[4]:= Leg_Home_Set[6] := FALSE;
-			END_IF
-		END_FOR*)
 	ELSIF NOT Home_Execute THEN
 		FOR Leg_Number := 1 TO 6 {BY 1} DO
 			Leg_Home_Set[Leg_Number] := FALSE;
@@ -291,7 +278,27 @@ ELSIF NOT Robot_Stand_Execute AND NOT Move_Execute THEN
 		Axis_Absolute_Eable[Axis_Number] := FALSE;
 	END_FOR
 END_IF
-]]></ST>
+
+// ======================外部信号发生=========================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	ExSetPoint_Position[Axis_Number]:= Mapping.Controller_Leg_Position[Axis_Number];
+END_FOR
+
+IF ExtSetPointEnable THEN	
+	//FOR Axis_Number := 1 TO 2 {BY 1} DO
+	t := t + t_Interval;
+	//END_FOR
+END_IF
+
+IF t=0 THEN
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		Home_Position[Axis_Number] := Axis_ActPostion[Axis_Number];
+	END_FOR
+ELSIF t>=T_ALL THEN
+	ExtSetPointEnable := FALSE;
+	t:=0;
+	ExtSetPointDisable := TRUE;
+END_IF]]></ST>
       </Implementation>
     </Action>
     <Action Name="SetGenerator" Id="{df99b098-6f3a-407b-a0f4-818f567ebe0b}">
@@ -300,7 +307,7 @@ END_IF
 // 用来测试外部信号发生功能和电机相关参数
 
 // =================外部信号正弦信号发生======================
-IF ExtSetPointEnable THEN
+(*IF ExtSetPointEnable THEN
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 		ExSetPoint_Position[Axis_Number]:=10*SIN(2*3.14*t);
 		t := t+0.001;
@@ -314,7 +321,7 @@ IF t>=20 THEN
 	t:=0;
 	ExtSetPointDisable := TRUE;
 END_IF
-//END_IF]]></ST>
+//END_IF*)]]></ST>
       </Implementation>
     </Action>
     <Action Name="Variable_Monitor" Id="{ba544c5b-3975-4680-8681-575f377c08d2}">
@@ -370,18 +377,18 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是
 	Axis_Robot[Axis_Number].Move_Relative_Velocity	:=30;	//相对运动速度
 END_FOR
 IF Home_Execute THEN
-	IF Robot_Home_Set THEN
+	//IF Robot_Home_Set THEN
 		Axis_Robot[1].Move_Absolute_Velocity :=10; Axis_Robot[3].Move_Absolute_Velocity :=10; Axis_Robot[4].Move_Absolute_Velocity :=10;
 		Axis_Robot[6].Move_Absolute_Velocity :=10; Axis_Robot[7].Move_Absolute_Velocity :=10; Axis_Robot[9].Move_Absolute_Velocity :=10;
 		Axis_Robot[10].Move_Absolute_Velocity :=10; Axis_Robot[12].Move_Absolute_Velocity :=10; Axis_Robot[13].Move_Absolute_Velocity :=10;
 		Axis_Robot[15].Move_Absolute_Velocity :=10; Axis_Robot[16].Move_Absolute_Velocity :=10; Axis_Robot[18].Move_Absolute_Velocity :=10;
 		Axis_Robot[2].Move_Absolute_Velocity :=20; Axis_Robot[5].Move_Absolute_Velocity :=20; Axis_Robot[8].Move_Absolute_Velocity :=20;
 		Axis_Robot[11].Move_Absolute_Velocity :=20; Axis_Robot[14].Move_Absolute_Velocity :=20; Axis_Robot[17].Move_Absolute_Velocity :=20;
-	ELSIF NOT Robot_Home_Set THEN
-		FOR Axis_Number := 1 TO 18 {BY 1} DO
-			Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;
-		END_FOR
-	END_IF
+	//ELSIF NOT Robot_Home_Set THEN
+		//FOR Axis_Number := 1 TO 18 {BY 1} DO
+			//Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;
+		//END_FOR
+	//END_IF
 ELSE
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 			Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;
@@ -395,15 +402,24 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR
 
 // =====================最大力矩规定区========================
-Max_Turque_Value := 900;
+Max_Turque_Value := 1200;
 
 // ===============电机设置零点后到达位置规定区================
-Axis_Robot[1].Home_Absolute_Position := 73.7632; Axis_Robot[3].Home_Absolute_Position := 73.7632; Axis_Robot[4].Home_Absolute_Position := 73.7632;
+(*Axis_Robot[1].Home_Absolute_Position := 73.7632; Axis_Robot[3].Home_Absolute_Position := 73.7632; Axis_Robot[4].Home_Absolute_Position := 73.7632;
 Axis_Robot[6].Home_Absolute_Position := 73.7632; Axis_Robot[7].Home_Absolute_Position := 73.7632; Axis_Robot[9].Home_Absolute_Position := 73.7632;
 Axis_Robot[10].Home_Absolute_Position := 73.7632; Axis_Robot[12].Home_Absolute_Position := 73.7632; Axis_Robot[13].Home_Absolute_Position := 73.7632;
 Axis_Robot[15].Home_Absolute_Position := 73.7632; Axis_Robot[16].Home_Absolute_Position := 73.7632; Axis_Robot[18].Home_Absolute_Position := 73.7632;
 Axis_Robot[2].Home_Absolute_Position := 83.7506; Axis_Robot[5].Home_Absolute_Position := 83.7506; Axis_Robot[8].Home_Absolute_Position := 83.7506;
-Axis_Robot[11].Home_Absolute_Position := 83.7506; Axis_Robot[14].Home_Absolute_Position := 83.7506; Axis_Robot[17].Home_Absolute_Position := 83.7506;
+Axis_Robot[11].Home_Absolute_Position := 83.7506; Axis_Robot[14].Home_Absolute_Position := 83.7506; Axis_Robot[17].Home_Absolute_Position := 83.7506;*)
+(*Axis_Robot[1].Home_Absolute_Position := 138; Axis_Robot[3].Home_Absolute_Position := 138; Axis_Robot[4].Home_Absolute_Position := 138;
+Axis_Robot[6].Home_Absolute_Position := 138; Axis_Robot[7].Home_Absolute_Position := 138; Axis_Robot[9].Home_Absolute_Position := 138;
+Axis_Robot[10].Home_Absolute_Position := 138; Axis_Robot[12].Home_Absolute_Position := 138; Axis_Robot[13].Home_Absolute_Position := 138;
+Axis_Robot[15].Home_Absolute_Position := 138; Axis_Robot[16].Home_Absolute_Position := 138; Axis_Robot[18].Home_Absolute_Position := 138;
+Axis_Robot[2].Home_Absolute_Position := 149; Axis_Robot[5].Home_Absolute_Position := 149; Axis_Robot[8].Home_Absolute_Position := 149;
+Axis_Robot[11].Home_Absolute_Position := 149; Axis_Robot[14].Home_Absolute_Position := 149; Axis_Robot[17].Home_Absolute_Position := 149;*)
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Axis_Robot[Axis_Number].Home_Absolute_Position := Mapping.Controller_Leg_Position[Axis_Number];
+END_FOR
 
 // ===================电机和腿映射关系========================
 //FOR Leg_Number := 1 TO 6 {BY 1} DO
@@ -413,11 +429,16 @@ Leg_Robot[3](Axis1:= Axis_Robot[7], Axis2:= Axis_Robot[8], Axis3:= Axis_Robot[9]
 Leg_Robot[4](Axis1:= Axis_Robot[10], Axis2:= Axis_Robot[11], Axis3:= Axis_Robot[12]);
 Leg_Robot[5](Axis1:= Axis_Robot[13], Axis2:= Axis_Robot[14], Axis3:= Axis_Robot[15]);
 Leg_Robot[6](Axis1:= Axis_Robot[16], Axis2:= Axis_Robot[17], Axis3:= Axis_Robot[18]);*)
-//END_FOR]]></ST>
+//END_FOR
+
+// ===================程序与模型的变量链接===================
+Mapping(Model_Leg_Position:= Model_Position);
+Robot_Simulink.stInput.t := t;
+Model_Position := Robot_Simulink.stOutput.Disp_P;]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="3" Count="45" />
+      <LineId Id="3" Count="47" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Leg_Action">
@@ -425,11 +446,11 @@ Leg_Robot[6](Axis1:= Axis_Robot[16], Axis2:= Axis_Robot[17], Axis3:= Axis_Robot[
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="75" />
+      <LineId Id="2" Count="76" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="80" />
+      <LineId Id="2" Count="74" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">
@@ -441,7 +462,7 @@ Leg_Robot[6](Axis1:= Axis_Robot[16], Axis2:= Axis_Robot[17], Axis3:= Axis_Robot[
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Set">
-      <LineId Id="2" Count="48" />
+      <LineId Id="2" Count="62" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>

@@ -6,6 +6,16 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
+              <v n="TextID">"137"</v>
+              <v n="TextDefault">" %.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"144"</v>
+              <v n="TextDefault">" t_Interval=%.3f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"81"</v>
               <v n="TextDefault">"Axis10_Back"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -491,6 +501,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"136"</v>
+              <v n="TextDefault">"Exsetopint_Enable"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"141"</v>
+              <v n="TextDefault">"Exsetopint_On"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"131"</v>
+              <v n="TextDefault">"Exsetpoint_Exectue"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"23"</v>
               <v n="TextDefault">"Home"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -576,8 +601,23 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"139"</v>
+              <v n="TextDefault">"t=%.3f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"22"</v>
               <v n="TextDefault">"切换视图"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"143"</v>
+              <v n="TextDefault">"取样时间间隔 t_Interval(s)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"134"</v>
+              <v n="TextDefault">"可以用来整体机器人进行Simulink模型验证"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -611,6 +651,16 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"135"</v>
+              <v n="TextDefault">"开始输入轨迹"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"140"</v>
+              <v n="TextDefault">"当前取样时间 t(s)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"25"</v>
               <v n="TextDefault">"是"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -631,8 +681,18 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"132"</v>
+              <v n="TextDefault">"是否进行运动操作"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"50"</v>
               <v n="TextDefault">"是否进行驱动重置"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"133"</v>
+              <v n="TextDefault">"本界面为电机Sumulink模型运动程序："</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -658,6 +718,16 @@
             <o>
               <v n="TextID">"51"</v>
               <v n="TextDefault">"本界面为驱动重置程序："</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"138"</v>
+              <v n="TextDefault">"输入运动总时长 T_ALL(s)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"142"</v>
+              <v n="TextDefault">"运动终止信号"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
           </l>
