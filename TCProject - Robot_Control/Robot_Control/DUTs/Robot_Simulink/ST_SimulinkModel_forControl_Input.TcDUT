@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_SimulinkModel_forControl_Input" Id="{299436e3-ce68-48b6-8695-b4743e6b354e}">
+    <Declaration><![CDATA[TYPE ST_SimulinkModel_forControl_Input :
+STRUCT
+	t: LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="E_TcMatSimDataAreaType" Id="{c9bba8c5-2260-4d99-a4f0-33a91d126449}">
+    <Declaration><![CDATA[TYPE E_TcMatSimDataAreaType :
+(
+	NotSpecified := 0,
+	Standard,
+	InputSrc,
+	InputDst,
+	OutputSrc,
+	OutputDst,
+	InternalDa,
+	MArea,
+	RetainDa
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -21,7 +21,28 @@
     <Compile Include="DUTs\Delay\Delay.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Hexapod_Robot_Mapping.TcPOU">
+    <Compile Include="DUTs\Hexapod_Robot_Mapping\Hexapod_Robot_Mapping.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\E_TcMatSimDataAreaType.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\FB_SimulinkModel_forControl.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\FB_TcMatSimObject.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_SimulinkModel_forControl_InitData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_SimulinkModel_forControl_Input.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_SimulinkModel_forControl_Output.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_TcMatSimObjectDataAreaInfo.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -45,6 +66,10 @@
       <SubType>Code</SubType>
       <DependentUpon>视图管理器.TcVMO</DependentUpon>
     </Compile>
+    <Compile Include="VISUs\Visu_SimulinkMove.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>视图管理器.TcVMO</DependentUpon>
+    </Compile>
     <Compile Include="VISUs\Visu_Stand.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>视图管理器.TcVMO</DependentUpon>
@@ -58,6 +83,8 @@
     <Folder Include="DUTs\Axis" />
     <Folder Include="DUTs\Axis\Axis" />
     <Folder Include="DUTs\Delay" />
+    <Folder Include="DUTs\Hexapod_Robot_Mapping" />
+    <Folder Include="DUTs\Robot_Simulink" />
     <Folder Include="GVLs" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
@@ -121,6 +148,10 @@
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc3_Module</Namespace>
     </PlaceholderReference>
+    <PlaceholderReference Include="VisuDialogs">
+      <DefaultResolution>VisuDialogs, * (System)</DefaultResolution>
+      <Namespace>VisuDialogs</Namespace>
+    </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Robot_Control.tmc">
@@ -177,6 +208,118 @@
     <SubObject Include="Axis.State_PowerStatus.Get" />
     <SubObject Include="Axis.State_ResetDone" />
     <SubObject Include="Axis.State_ResetDone.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.CallBy_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskCycleTimeNs_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskOid_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPort_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskPriority_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ContextInfoArr_0_TaskSortOrder_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.CycleUpdateExecuted_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.CycleUpdateExecuted_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.CycleUpdateExecuted_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.Execute" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecuteModelCode_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ExecutionSequence_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.FB_init" />
+    <SubObject Include="FB_SimulinkModel_forControl.InitData" />
+    <SubObject Include="FB_SimulinkModel_forControl.InitData.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.InitData.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.Input_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.Input_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.Input_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.Internal_SetObjState" />
+    <SubObject Include="FB_SimulinkModel_forControl.MdlInitialized_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.MdlInitialized_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.MdlInitialized_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleBuildInfo_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleBuildInfo_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleBuildInfo_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleInfo_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleInfo_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.ModuleInfo_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.SaveOnlineParametersForInit" />
+    <SubObject Include="FB_SimulinkModel_forControl.SimulinkTime_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.SimulinkTime_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.SimulinkTime_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Online" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Online.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Online.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Startup" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Startup.Get" />
+    <SubObject Include="FB_SimulinkModel_forControl.StepSize_Startup.Set" />
+    <SubObject Include="FB_SimulinkModel_forControl.VerifyParameters" />
+    <SubObject Include="FB_TcMatSimObject.AssignClassId" />
+    <SubObject Include="FB_TcMatSimObject.ClassId" />
+    <SubObject Include="FB_TcMatSimObject.ClassId.Get" />
+    <SubObject Include="FB_TcMatSimObject.Error" />
+    <SubObject Include="FB_TcMatSimObject.Error.Get" />
+    <SubObject Include="FB_TcMatSimObject.ErrorCode" />
+    <SubObject Include="FB_TcMatSimObject.ErrorCode.Get" />
+    <SubObject Include="FB_TcMatSimObject.Execute" />
+    <SubObject Include="FB_TcMatSimObject.FB_exit" />
+    <SubObject Include="FB_TcMatSimObject.FB_init" />
+    <SubObject Include="FB_TcMatSimObject.GetImagePtrs" />
+    <SubObject Include="FB_TcMatSimObject.GetObjPara" />
+    <SubObject Include="FB_TcMatSimObject.Init" />
+    <SubObject Include="FB_TcMatSimObject.InitObjName" />
+    <SubObject Include="FB_TcMatSimObject.Internal_SetObjState" />
+    <SubObject Include="FB_TcMatSimObject.QueryObjInterface" />
+    <SubObject Include="FB_TcMatSimObject.QueryObjInterfaces" />
+    <SubObject Include="FB_TcMatSimObject.QueryTcComInterface" />
+    <SubObject Include="FB_TcMatSimObject.ReadModuleClassId" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseImagePtrs" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseObjInterfaces" />
+    <SubObject Include="FB_TcMatSimObject.ReleaseTcComInterface" />
+    <SubObject Include="FB_TcMatSimObject.ResetHresult" />
+    <SubObject Include="FB_TcMatSimObject.SaveOnlineParametersForInit" />
+    <SubObject Include="FB_TcMatSimObject.SetDataAreaInfo" />
+    <SubObject Include="FB_TcMatSimObject.SetInitDataInfo" />
+    <SubObject Include="FB_TcMatSimObject.SetObjPara" />
+    <SubObject Include="FB_TcMatSimObject.SetObjState" />
+    <SubObject Include="FB_TcMatSimObject.State" />
+    <SubObject Include="FB_TcMatSimObject.State.Get" />
+    <SubObject Include="FB_TcMatSimObject.State.Set" />
+    <SubObject Include="FB_TcMatSimObject.VerifyClassId" />
     <SubObject Include="MAIN.Leg_Action" />
     <SubObject Include="MAIN.Logic_Control" />
     <SubObject Include="MAIN.Robot_Action" />
