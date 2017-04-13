@@ -102,7 +102,7 @@ IF ExSetPoint_Execute THEN
 END_IF
 ]]></ST>
     </Implementation>
-    <Action Name="Logic_Control" Id="{c215c7dc-fc9f-4378-b645-9582d910ac24}">
+    <Action Name="Logic_Control" Id="{434895b9-7f47-4011-8051-8baff4b20205}">
       <Implementation>
         <ST><![CDATA[// =======================控制逻辑区==========================
 // 保证所有的动作拥有合理的先后顺序，优化控制逻辑
@@ -143,8 +143,9 @@ IF Home_Execute THEN
 		IF Axis_Home_Set[Axis_Number] THEN			// 设定零点时，轴后退找零动作停止			
 			Axis_Start_Back[Axis_Number] :=0;	
 		END_IF
-		IF Current_Turque_Value[Axis_Number] < Max_Turque_Value THEN	// 轴后退找零点时，不能设置零点，不能设定位置运动
-			Axis_Home_Set[Axis_Number] :=0;
+		IF Current_Turque_Value[Axis_Number] > Max_Turque_Value THEN	// 轴后退找零点到位后，停止后退运动
+			Axis_Start_Back[Axis_Number] :=0;
+			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);
 		END_IF
 	END_FOR
 	Move_Execute :=0;							// 设定零点时，不能进行其他运动
@@ -180,7 +181,7 @@ ELSIF ExtSetPointDisable THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Robot_Action" Id="{103d6b73-9e52-4067-a668-c66b63a8003e}">
+    <Action Name="Robot_Action" Id="{3e02d8bd-fc97-4c22-9810-94f1deeba82b}">
       <Implementation>
         <ST><![CDATA[// =================机器人整体运动命令区======================
 // 六足所有电机整体控制
@@ -219,6 +220,10 @@ IF Robot_Home_Set THEN				// 标零程序
 			Axis_Home_Set[Axis_Number] := TRUE;
 		END_FOR
 	END_IF
+ELSIF NOT Robot_Home_Set AND NOT Home_Execute THEN
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		Axis_Home_Set[Axis_Number] := FALSE;
+	END_FOR
 END_IF
 
 // =====================站立程序===============================
@@ -228,11 +233,15 @@ IF Robot_Stand_Execute THEN
 			Axis_Absolute_Eable[Axis_Number] := TRUE;
 		END_FOR
 	END_IF
+ELSIF NOT Robot_Stand_Execute AND NOT Move_Execute THEN 
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		Axis_Absolute_Eable[Axis_Number] := FALSE;
+	END_FOR
 END_IF
 ]]></ST>
       </Implementation>
     </Action>
-    <Action Name="SetGenerator" Id="{df99b098-6f3a-407b-a0f4-818f567ebe0b}">
+    <Action Name="SetGenerator" Id="{f1300150-b582-4997-9575-ee88909e96d2}">
       <Implementation>
         <ST><![CDATA[// ====================外部信号发生测试区=====================
 // 用来测试外部信号发生功能和电机相关参数
@@ -255,7 +264,7 @@ IF Axis_Robot[Axis_Number].State_ExtSetPiontDone THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Monitor" Id="{ba544c5b-3975-4680-8681-575f377c08d2}">
+    <Action Name="Variable_Monitor" Id="{d26fdba5-d382-400a-acf3-8ca0f54fa88c}">
       <Implementation>
         <ST><![CDATA[// =====================关键数据信号监测======================
 
@@ -296,7 +305,7 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Set" Id="{bb26148f-2045-404a-a802-a94df446518b}">
+    <Action Name="Variable_Set" Id="{57a8a09c-4d5e-47b2-91e5-09b26913f8b4}">
       <Implementation>
         <ST><![CDATA[// =======================速度规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是一样的
@@ -311,7 +320,7 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR
 
 // =====================最大力矩规定区========================
-Max_Turque_Value := 1000;
+Max_Turque_Value := 800;
 
 ]]></ST>
       </Implementation>
@@ -322,11 +331,11 @@ Max_Turque_Value := 1000;
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="72" />
+      <LineId Id="2" Count="73" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="46" />
+      <LineId Id="2" Count="54" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">
