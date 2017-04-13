@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <DUT Name="ST_SimulinkModel_forControl_Output" Id="{948ee725-58fa-4f71-ab9d-aea6c0198018}">
-    <Declaration><![CDATA[TYPE ST_SimulinkModel_forControl_Output :
+  <DUT Name="ST_HexMove_Output" Id="{99954306-c44d-4c9f-9a56-8a1447a65979}">
+    <Declaration><![CDATA[TYPE ST_HexMove_Output :
 STRUCT
 	Disp_P: matrix_18_real_T;
 END_STRUCT

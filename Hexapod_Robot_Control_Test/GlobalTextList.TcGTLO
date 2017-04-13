@@ -6,13 +6,33 @@
         <o xml:space="preserve" t="GlobalTextListObject">
           <l n="TextList" t="ArrayList" cet="TextListRow">
             <o>
-              <v n="TextID">"137"</v>
+              <v n="TextID">"145"</v>
               <v n="TextDefault">" %.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"144"</v>
+              <v n="TextID">"165"</v>
+              <v n="TextDefault">" t_Interval=%.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"167"</v>
               <v n="TextDefault">" t_Interval=%.3f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"169"</v>
+              <v n="TextDefault">" t_Interval=%.4f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"168"</v>
+              <v n="TextDefault">" t_Interval=%.5f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"143"</v>
+              <v n="TextDefault">"%.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -501,17 +521,17 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"136"</v>
+              <v n="TextID">"151"</v>
               <v n="TextDefault">"Exsetopint_Enable"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"141"</v>
+              <v n="TextID">"152"</v>
               <v n="TextDefault">"Exsetopint_On"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"131"</v>
+              <v n="TextID">"141"</v>
               <v n="TextDefault">"Exsetpoint_Exectue"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
@@ -528,6 +548,36 @@
             <o>
               <v n="TextID">"61"</v>
               <v n="TextDefault">"Home_Set"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"131"</v>
+              <v n="TextDefault">"Leg1_Home"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"132"</v>
+              <v n="TextDefault">"Leg2_Home"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"133"</v>
+              <v n="TextDefault">"Leg3_Home"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"134"</v>
+              <v n="TextDefault">"Leg4_Home"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"135"</v>
+              <v n="TextDefault">"Leg5_Home"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"136"</v>
+              <v n="TextDefault">"Leg6_Home"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -601,8 +651,28 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"139"</v>
+              <v n="TextID">"166"</v>
+              <v n="TextDefault">"Simulink_Move"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"147"</v>
+              <v n="TextDefault">"t=%.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"170"</v>
               <v n="TextDefault">"t=%.3f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"144"</v>
+              <v n="TextDefault">"T_ALL = %.2f"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"158"</v>
+              <v n="TextDefault">"t_Interval=%.2f"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -611,12 +681,32 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"143"</v>
+              <v n="TextID">"157"</v>
+              <v n="TextDefault">"取样时间间隔 t_Interval"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"160"</v>
+              <v n="TextDefault">"取样时间间隔 t_Interval(ms)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"161"</v>
               <v n="TextDefault">"取样时间间隔 t_Interval(s)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"134"</v>
+              <v n="TextID">"159"</v>
+              <v n="TextDefault">"取样时间间隔 t_Interval/ms"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"139"</v>
+              <v n="TextDefault">"可以用来整体机器人运动"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"140"</v>
               <v n="TextDefault">"可以用来整体机器人进行Simulink模型验证"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
@@ -651,18 +741,28 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"135"</v>
+              <v n="TextID">"149"</v>
               <v n="TextDefault">"开始输入轨迹"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"140"</v>
+              <v n="TextID">"156"</v>
+              <v n="TextDefault">"当前取样时间 t"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"163"</v>
               <v n="TextDefault">"当前取样时间 t(s)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
               <v n="TextID">"25"</v>
               <v n="TextDefault">"是"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"148"</v>
+              <v n="TextDefault">"是否开始输入轨迹"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -681,7 +781,7 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"132"</v>
+              <v n="TextID">"142"</v>
               <v n="TextDefault">"是否进行运动操作"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
@@ -691,8 +791,13 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"133"</v>
+              <v n="TextID">"138"</v>
               <v n="TextDefault">"本界面为电机Sumulink模型运动程序："</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"137"</v>
+              <v n="TextDefault">"本界面为电机Sumulink程序："</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -721,12 +826,37 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"138"</v>
+              <v n="TextID">"154"</v>
+              <v n="TextDefault">"输入运动总时长 T_ALL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"162"</v>
               <v n="TextDefault">"输入运动总时长 T_ALL(s)"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
-              <v n="TextID">"142"</v>
+              <v n="TextID">"150"</v>
+              <v n="TextDefault">"运动当前时间 t"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"164"</v>
+              <v n="TextDefault">"运动当前时间 t(s)"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"146"</v>
+              <v n="TextDefault">"运动总时长 T_ALL"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"155"</v>
+              <v n="TextDefault">"运动时间间隔 t"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"153"</v>
               <v n="TextDefault">"运动终止信号"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>

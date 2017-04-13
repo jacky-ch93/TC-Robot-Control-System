@@ -32,8 +32,8 @@ Controller_Leg_Position[17]	:= Model_Leg_Position[4];
 Controller_Leg_Position[18]	:= Model_Leg_Position[5];]]></ST>
     </Implementation>
     <LineIds Name="Hexapod_Robot_Mapping">
-      <LineId Id="3" Count="16" />
-      <LineId Id="2" Count="0" />
+      <LineId Id="12" Count="16" />
+      <LineId Id="9" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

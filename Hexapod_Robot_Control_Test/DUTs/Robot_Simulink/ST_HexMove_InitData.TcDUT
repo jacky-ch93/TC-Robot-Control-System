@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <DUT Name="ST_SimulinkModel_forControl_InitData" Id="{1fbdf1ee-5341-4709-9e8a-294ad69e109f}">
+  <DUT Name="ST_HexMove_InitData" Id="{04466e41-05a4-421b-a9aa-a30f3103d9d3}">
     <Declaration><![CDATA[{attribute 'pack_mode' := '4'}
-TYPE ST_SimulinkModel_forControl_InitData :
+TYPE ST_HexMove_InitData :
 STRUCT
 	Header: TComInitDataHdr;
 	CallByHdr: TComInitDataElmHdr;
