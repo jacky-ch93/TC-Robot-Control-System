@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="MAIN" Id="{fd460483-4c15-45e9-a130-c38eb726d511}" SpecialFunc="None">
-    <Declaration><![CDATA[PROGRAM MAIN
+    <Declaration>
+      <![CDATA[PROGRAM MAIN
 VAR
 // =======================NC轴变量==========================
 	//Leg_Robot			: ARRAY[1..6] OF Hexapod_Leg;	// 定义六足的腿
@@ -51,6 +52,7 @@ VAR
 	Axis_ErrorID	: ARRAY[1..18] OF UDINT;			// 电机错误号码监测信号
 	
 	Axis_ActPostion	: ARRAY[1..18] OF LREAL;			// 电机轴实际位置
+	Difference_Position	: ARRAY[1..18] OF LREAL;		// 实际位置与输入位置差值
 	
 	// =======================模块中间变量======================
 	//HomeDone_Number	: LREAL :=0;					//完成找零的轴数
@@ -62,7 +64,7 @@ VAR
 	Max_Turque_Value 	: INT ;							// 设置最大力矩边界值
 	
 		// ====================Simulink模块相关=====================
-	Robot_Simulink		: FB_SimulinkModel_forControl(oid:=16#01010020);	// Simulink模型定义
+	Robot_Simulink		: FB_HexMove(oid:=16#01010020);	// Simulink模型定义
 	Model_Position		: ARRAY[1..18] OF LREAL;			// Simulink中各个腿的位置
 	ExSetPoint_Position	: ARRAY[1..18] OF LREAL;			// 外部信号位置
 	T_ALL				: LREAL:=100;						// Simulink模型运动总时长
@@ -70,6 +72,9 @@ VAR
 	t					: LREAL:=0;							// 取样当前时间变量，以0为起点
 	Mapping				: Hexapod_Robot_Mapping;			// 变量映射			
 	Home_Position 		: ARRAY[1..18] OF LREAL;			// Home结束后的位移值
+  
+  Filter_Current  : FB_Filter_Current_Hexapod_Robot(oid:=16#01010030);
+  Current_Turque_Filter  : ARRAY[1..18] OF LREAL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -90,6 +95,7 @@ END_IF
 
 // =======================电机上电===============================
 IF Power_Execute THEN
+	Filter_Current.Execute();
 	FOR Axis_Number := 1 TO 18 {BY 1} DO
 		Axis_Robot[Axis_Number].Power(Axis_Enable:= Axis_Power[Axis_Number]);
 	END_FOR
@@ -280,13 +286,10 @@ ELSIF NOT Robot_Stand_Execute AND NOT Move_Execute THEN
 END_IF
 
 // ======================外部信号发生=========================
-FOR Axis_Number := 1 TO 18 {BY 1} DO
-	ExSetPoint_Position[Axis_Number]:= Mapping.Controller_Leg_Position[Axis_Number];
-END_FOR
-
 IF ExtSetPointEnable THEN	
 	//FOR Axis_Number := 1 TO 2 {BY 1} DO
 	t := t + t_Interval;
+	ExtSetPointDisable := FALSE;
 	//END_FOR
 END_IF
 
@@ -366,6 +369,11 @@ END_FOR
 FOR Axis_Number := 1 TO 18 {BY 1} DO
 	Axis_Error[Axis_Number] := Axis_Robot[Axis_Number].Axis_Error;
 	Axis_ErrorID[Axis_Number] := Axis_Robot[Axis_Number].Axis_ErrorID;
+END_FOR
+
+// ==============实际运动位移和输入位移差值检测区==============
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Difference_Position[Axis_Number] := Axis_ActPostion[Axis_Number]- Mapping.Controller_Leg_Position[Axis_Number]; 
 END_FOR]]></ST>
       </Implementation>
     </Action>
@@ -373,15 +381,15 @@ END_FOR]]></ST>
       <Implementation>
         <ST><![CDATA[// =======================速度规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是一样的
-	Axis_Robot[Axis_Number].Home_Velocity 	:= 10;			//找零速度(Axis_Jog中的速度)
+	Axis_Robot[Axis_Number].Home_Velocity 	:= 20;			//找零速度(Axis_Jog中的速度)
 	Axis_Robot[Axis_Number].Move_Relative_Velocity	:=30;	//相对运动速度
 END_FOR
 IF Home_Execute THEN
 	//IF Robot_Home_Set THEN
-		Axis_Robot[1].Move_Absolute_Velocity :=10; Axis_Robot[3].Move_Absolute_Velocity :=10; Axis_Robot[4].Move_Absolute_Velocity :=10;
-		Axis_Robot[6].Move_Absolute_Velocity :=10; Axis_Robot[7].Move_Absolute_Velocity :=10; Axis_Robot[9].Move_Absolute_Velocity :=10;
-		Axis_Robot[10].Move_Absolute_Velocity :=10; Axis_Robot[12].Move_Absolute_Velocity :=10; Axis_Robot[13].Move_Absolute_Velocity :=10;
-		Axis_Robot[15].Move_Absolute_Velocity :=10; Axis_Robot[16].Move_Absolute_Velocity :=10; Axis_Robot[18].Move_Absolute_Velocity :=10;
+		Axis_Robot[1].Move_Absolute_Velocity :=17; Axis_Robot[3].Move_Absolute_Velocity :=17; Axis_Robot[4].Move_Absolute_Velocity :=16.74;
+		Axis_Robot[6].Move_Absolute_Velocity :=16.74; Axis_Robot[7].Move_Absolute_Velocity :=17.3; Axis_Robot[9].Move_Absolute_Velocity :=17.3;
+		Axis_Robot[10].Move_Absolute_Velocity :=16.95; Axis_Robot[12].Move_Absolute_Velocity :=16.95; Axis_Robot[13].Move_Absolute_Velocity :=17;
+		Axis_Robot[15].Move_Absolute_Velocity :=17; Axis_Robot[16].Move_Absolute_Velocity :=17; Axis_Robot[18].Move_Absolute_Velocity :=17;
 		Axis_Robot[2].Move_Absolute_Velocity :=20; Axis_Robot[5].Move_Absolute_Velocity :=20; Axis_Robot[8].Move_Absolute_Velocity :=20;
 		Axis_Robot[11].Move_Absolute_Velocity :=20; Axis_Robot[14].Move_Absolute_Velocity :=20; Axis_Robot[17].Move_Absolute_Velocity :=20;
 	//ELSIF NOT Robot_Home_Set THEN
@@ -402,7 +410,7 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR
 
 // =====================最大力矩规定区========================
-Max_Turque_Value := 1200;
+Max_Turque_Value := 1300;
 
 // ===============电机设置零点后到达位置规定区================
 (*Axis_Robot[1].Home_Absolute_Position := 73.7632; Axis_Robot[3].Home_Absolute_Position := 73.7632; Axis_Robot[4].Home_Absolute_Position := 73.7632;
@@ -421,6 +429,11 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 	Axis_Robot[Axis_Number].Home_Absolute_Position := Mapping.Controller_Leg_Position[Axis_Number];
 END_FOR
 
+// ===================外部信号发生电机位置输入值================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	ExSetPoint_Position[Axis_Number]:= Mapping.Controller_Leg_Position[Axis_Number];
+END_FOR
+
 // ===================电机和腿映射关系========================
 //FOR Leg_Number := 1 TO 6 {BY 1} DO
 (*Leg_Robot[1](Axis1:= Axis_Robot[1], Axis2:= Axis_Robot[2], Axis3:= Axis_Robot[3]);
@@ -432,25 +445,54 @@ Leg_Robot[6](Axis1:= Axis_Robot[16], Axis2:= Axis_Robot[17], Axis3:= Axis_Robot[
 //END_FOR
 
 // ===================程序与模型的变量链接===================
-Mapping(Model_Leg_Position:= Model_Position);
-Robot_Simulink.stInput.t := t;
-Model_Position := Robot_Simulink.stOutput.Disp_P;]]></ST>
+Mapping(Model_Leg_Position:= Model_Position);				// 映射运动学模型中腿编号和控制模型中的电机编号
+Robot_Simulink.stInput.t := t;								// 采样时间t与Simulink模型中的采样时间链接
+Model_Position := Robot_Simulink.stOutput.Disp_P;			// Simulink中的电机输出位移输入到控制模型
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Filter_Current.stInput.Current_Motor[Axis_Number-1] := Current_Turque_Value[Axis_Number];
+END_FOR	
+Current_Turque_Filter := Filter_Current.stOutput.Current_Monitor;]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="3" Count="47" />
+      <LineId Id="3" Count="3" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="7" Count="10" />
+      <LineId Id="251" Count="0" />
+      <LineId Id="18" Count="6" />
+      <LineId Id="176" Count="0" />
+      <LineId Id="25" Count="15" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="41" Count="6" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Leg_Action">
-      <LineId Id="2" Count="10" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="7" />
+      <LineId Id="3" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="76" />
+      <LineId Id="2" Count="39" />
+      <LineId Id="54" Count="32" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="87" Count="2" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="74" />
+      <LineId Id="2" Count="21" />
+      <LineId Id="31" Count="2" />
+      <LineId Id="90" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="86" Count="2" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="55" Count="22" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="98" Count="2" />
+      <LineId Id="113" Count="0" />
+      <LineId Id="101" Count="11" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">
@@ -458,11 +500,36 @@ Model_Position := Robot_Simulink.stOutput.Disp_P;]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Monitor">
-      <LineId Id="2" Count="39" />
+      <LineId Id="2" Count="44" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Set">
-      <LineId Id="2" Count="62" />
+      <LineId Id="2" Count="1" />
+      <LineId Id="5" Count="1" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="70" Count="4" />
+      <LineId Id="59" Count="3" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="63" Count="3" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="7" Count="9" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="32" Count="2" />
+      <LineId Id="75" Count="5" />
+      <LineId Id="86" Count="2" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="95" Count="0" />
+      <LineId Id="91" Count="3" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="20" Count="5" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="81" Count="4" />
+      <LineId Id="97" Count="2" />
+      <LineId Id="89" Count="0" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>

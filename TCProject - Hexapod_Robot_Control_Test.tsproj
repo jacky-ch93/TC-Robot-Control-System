@@ -181,31 +181,12 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{C4FB114F-D932-ADF4-CC67-05A115DC90B8}">ExtU_output_WeldingDiameter10_T</Name>
-			<BitSize>64</BitSize>
-			<SubItem>
-				<Name>t</Name>
-				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
-				<BitSize>64</BitSize>
-				<BitOffs>0</BitOffs>
-			</SubItem>
-		</DataType>
-		<DataType>
 			<Name GUID="{017A51F0-74AC-1814-A21E-237B868B9BC2}">matrix_18_real_T</Name>
 			<BitSize>1152</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
 			<ArrayInfo>
 				<LBound>0</LBound>
 				<Elements>18</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
-			<Name GUID="{6761E8AA-7A72-5550-E6F7-E2105630A466}">matrix_3_real_T</Name>
-			<BitSize>192</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-			<ArrayInfo>
-				<LBound>0</LBound>
-				<Elements>3</Elements>
 			</ArrayInfo>
 		</DataType>
 		<DataType>
@@ -553,6 +534,16 @@
 				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
 				<BitSize>64</BitSize>
 				<BitOffs>5696</BitOffs>
+			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{EACDDCAC-1F72-903E-4E03-CE7B59AEA9AF}">ExtU_hexmove_T</Name>
+			<BitSize>64</BitSize>
+			<SubItem>
+				<Name>t</Name>
+				<Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+				<BitSize>64</BitSize>
+				<BitOffs>0</BitOffs>
 			</SubItem>
 		</DataType>
 		<DataType>
@@ -1878,15 +1869,6 @@ External Setpoint Generation:
 			</ArrayInfo>
 		</DataType>
 		<DataType>
-			<Name GUID="{A5AC38E6-0DC4-889C-DC96-B6E74C453940}" IecBaseType="true" AutoDeleteType="true">ARRAY [1..3] OF INT</Name>
-			<BitSize>48</BitSize>
-			<BaseType GUID="{18071995-0000-0000-0000-000000000006}">INT</BaseType>
-			<ArrayInfo>
-				<LBound>1</LBound>
-				<Elements>3</Elements>
-			</ArrayInfo>
-		</DataType>
-		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-002000000008}" IecBaseType="true" AutoDeleteType="true" HideSubItems="true">ARRAY [0..0] OF BYTE</Name>
 			<BitSize>8</BitSize>
 			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
@@ -1964,399 +1946,10 @@ External Setpoint Generation:
 		<System>
 			<Tasks>
 				<Task Id="4" Priority="20" CycleTime="10000" AmsPort="350">
-					<Name>Welding_Robot_Task</Name>
-				</Task>
-				<Task Id="6" Priority="21" CycleTime="10000" AmsPort="351">
-					<Name>HexRobot_Task</Name>
-				</Task>
-				<Task Id="8" Priority="22" CycleTime="10000" AmsPort="353">
-					<Name>Welding_Arm_Task</Name>
+					<Name>PlcTask</Name>
 				</Task>
 			</Tasks>
 			<Modules>
-				<Module Id="#x01010020" KeepUnrestoredLinks="2">
-					<Name>Object1 (Welding_Control_Circle_86s)</Name>
-					<ImageId>1000</ImageId>
-					<TmcDesc GUID="{4F7C9520-5E7B-4579-BE6E-10C0EB37316D}">
-						<Name>Welding_Control_Circle_86s</Name>
-						<CLSID ClassFactory="Welding_Control_Circle_86s">{4F7C9520-5E7B-4579-BE6E-10C0EB37316D}</CLSID>
-						<Info>
-							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
-						</Info>
-						<Licenses>
-							<License>
-								<LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
-							</License>
-						</Licenses>
-						<InitSequence>PSO</InitSequence>
-						<Contexts>
-							<Context>
-								<Id>0</Id>
-								<ManualConfig>
-									<OTCID>#x02010040</OTCID>
-								</ManualConfig>
-								<Priority>20</Priority>
-								<CycleTime>1000000</CycleTime>
-							</Context>
-						</Contexts>
-						<Interfaces>
-							<Interface>
-								<Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
-							</Interface>
-							<Interface>
-								<Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
-							</Interface>
-						</Interfaces>
-						<Parameters>
-							<Parameter CreateSymbol="true">
-								<Name>CallBy</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</BaseType>
-								<PTCID>#x00000000</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ExecutionSequence</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</BaseType>
-								<PTCID>#x00000001</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>StepSize</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</BaseType>
-								<PTCID>#x00000002</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>MdlInitialized</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-								<PTCID>#x00000003</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>CycleUpdateExecuted</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-								<PTCID>#x00000004</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>SimulinkTime</Name>
-								<BitSize>64</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-								<PTCID>#x00000005</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>ModuleInfo</Name>
-								<BitSize>1184</BitSize>
-								<BaseType GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</BaseType>
-								<PTCID>#x00000006</PTCID>
-							</Parameter>
-							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
-								<Name>ModuleBuildInfo</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</BaseType>
-								<PTCID>#x00000007</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ExecuteModelCode</Name>
-								<BitSize>8</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
-								<PTCID>#x00000008</PTCID>
-							</Parameter>
-							<Parameter>
-								<Name>Input</Name>
-								<BitSize>64</BitSize>
-								<BaseType GUID="{C4FB114F-D932-ADF4-CC67-05A115DC90B8}">ExtU_output_WeldingDiameter10_T</BaseType>
-								<PTCID>#x80000000</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ContextInfoArr_0_TaskOid</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
-								<PTCID>#x03002060</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ContextInfoArr_0_TaskPriority</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x03002070</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x03002080</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ContextInfoArr_0_TaskPort</Name>
-								<BitSize>16</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
-								<PTCID>#x03002090</PTCID>
-							</Parameter>
-							<Parameter CreateSymbol="true">
-								<Name>ContextInfoArr_0_TaskSortOrder</Name>
-								<BitSize>32</BitSize>
-								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
-								<PTCID>#x030020b0</PTCID>
-							</Parameter>
-						</Parameters>
-						<DataAreas>
-							<DataArea>
-								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
-								<Name>Input</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>8</ByteSize>
-								<Symbol CreateSymbol="true">
-									<Name>t</Name>
-									<BitSize>64</BitSize>
-									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
-									<PTCID>#x80000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-							</DataArea>
-							<DataArea>
-								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
-								<Name>Output</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>144</ByteSize>
-								<Symbol CreateSymbol="true">
-									<Name>Disp_P</Name>
-									<BitSize>1152</BitSize>
-									<BaseType GUID="{017A51F0-74AC-1814-A21E-237B868B9BC2}">matrix_18_real_T</BaseType>
-									<PTCID>#x81000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-							</DataArea>
-							<DataArea>
-								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
-								<Name>BlockIO</Name>
-								<ContextId>0</ContextId>
-								<ByteSize>24</ByteSize>
-								<Symbol CreateSymbol="true">
-									<Name>position</Name>
-									<BitSize>192</BitSize>
-									<BaseType GUID="{6761E8AA-7A72-5550-E6F7-E2105630A466}">matrix_3_real_T</BaseType>
-									<PTCID>#x82000000</PTCID>
-									<BitOffs>0</BitOffs>
-								</Symbol>
-							</DataArea>
-						</DataAreas>
-						<Deployment>
-							<FileEntry TargetPlatform="TwinCAT RT (x86)">
-								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.sys</SourceFile>
-								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
-							</FileEntry>
-							<FileEntry TargetPlatform="TwinCAT RT (x86)">
-								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.pdb</SourceFile>
-								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
-							</FileEntry>
-							<FileEntry TargetPlatform="TwinCAT RT (x64)">
-								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.sys</SourceFile>
-								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
-							</FileEntry>
-							<FileEntry TargetPlatform="TwinCAT RT (x64)">
-								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.pdb</SourceFile>
-								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
-							</FileEntry>
-							<FileEntry>
-								<ProjectFile>%SOLUTIONMODULEINSTTPATH%Welding_Control_Circle_86s_PlcOpenPOUs.xml</ProjectFile>
-							</FileEntry>
-							<FileEntry>
-								<ProjectFile>%SOLUTIONMODULEINSTTPATH%Welding_Control_Circle_86s_ModuleInfo.xml</ProjectFile>
-							</FileEntry>
-						</Deployment>
-						<Xml>
-							<GeneratedModuleInfoFile>Welding_Control_Circle_86s_ModuleInfo.xml</GeneratedModuleInfoFile>
-						</Xml>
-						<ParameterValues>
-							<Value>
-								<Name>CallBy</Name>
-								<EnumText>Module</EnumText>
-							</Value>
-							<Value>
-								<Name>ExecutionSequence</Name>
-								<EnumText>StateUpdateAfterOutputMapping</EnumText>
-							</Value>
-							<Value>
-								<Name>StepSize</Name>
-								<EnumText>UseTaskCycleTime</EnumText>
-							</Value>
-							<Value>
-								<Name>MdlInitialized</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>CycleUpdateExecuted</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>SimulinkTime</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ClassId</Name>
-								<Data>00000000000000000000000000000000</Data>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.BuildTimeStamp</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelCheckSum[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelCheckSum[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelCheckSum[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelCheckSum[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.ModelVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TwinCatVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TwinCatVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TwinCatVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TwinCatVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.MatlabVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.MatlabVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.MatlabVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.MatlabVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.SimulinkVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.SimulinkVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.SimulinkVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.SimulinkVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[0]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetLicenseId</Name>
-								<Data>00000000000000000000000000000000</Data>
-							</Value>
-							<Value>
-								<Name>ModuleBuildInfo.Debug</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>ExecuteModelCode</Name>
-								<EnumText>TRUE</EnumText>
-							</Value>
-							<Value>
-								<Name>Input.t</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskOid</Name>
-								<Value>33620032</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskPriority</Name>
-								<Value>20</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
-								<Value>1000000</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskPort</Name>
-								<Value>350</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskSortOrder</Name>
-								<Value>0</Value>
-							</Value>
-						</ParameterValues>
-					</TmcDesc>
-				</Module>
 				<Module Id="#x01010030" KeepUnrestoredLinks="2">
 					<Name>Object2 (Filter_Current_Hexapod_Robot)</Name>
 					<ImageId>1000</ImageId>
@@ -4041,6 +3634,344 @@ External Setpoint Generation:
 							<Value>
 								<Name>ContextInfoArr_0_TaskOid</Name>
 								<Value>33620032</Value>
+							</Value>
+							<Value>
+								<Name>ContextInfoArr_0_TaskPriority</Name>
+								<Value>20</Value>
+							</Value>
+							<Value>
+								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
+								<Value>1000000</Value>
+							</Value>
+							<Value>
+								<Name>ContextInfoArr_0_TaskPort</Name>
+								<Value>350</Value>
+							</Value>
+							<Value>
+								<Name>ContextInfoArr_0_TaskSortOrder</Name>
+								<Value>0</Value>
+							</Value>
+						</ParameterValues>
+					</TmcDesc>
+				</Module>
+				<Module Id="#x01010020" KeepUnrestoredLinks="2">
+					<Name>Object2 (HexMove)</Name>
+					<ImageId>1000</ImageId>
+					<TmcDesc GUID="{17344CA2-8DEB-423E-86B2-C072D90EC986}">
+						<Name>HexMove</Name>
+						<CLSID ClassFactory="HexMove">{17344CA2-8DEB-423E-86B2-C072D90EC986}</CLSID>
+						<Info>
+							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
+						</Info>
+						<Licenses>
+							<License>
+								<LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+							</License>
+						</Licenses>
+						<InitSequence>PSO</InitSequence>
+						<Contexts>
+							<Context>
+								<Id>0</Id>
+								<ManualConfig>
+									<OTCID>#x02010040</OTCID>
+								</ManualConfig>
+								<Priority>20</Priority>
+								<CycleTime>1000000</CycleTime>
+							</Context>
+						</Contexts>
+						<Interfaces>
+							<Interface>
+								<Type GUID="{03000010-0000-0000-E000-000000000064}">ITcCyclic</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000025-0000-0000-E000-000000000064}">ITcPostCyclic</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000012-0000-0000-E000-000000000064}">ITcADI</Type>
+							</Interface>
+							<Interface>
+								<Type GUID="{03000018-0000-0000-E000-000000000064}">ITcWatchSource</Type>
+							</Interface>
+						</Interfaces>
+						<Parameters>
+							<Parameter CreateSymbol="true">
+								<Name>CallBy</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</BaseType>
+								<PTCID>#x00000000</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ExecutionSequence</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</BaseType>
+								<PTCID>#x00000001</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>StepSize</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</BaseType>
+								<PTCID>#x00000002</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>MdlInitialized</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+								<PTCID>#x00000003</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>CycleUpdateExecuted</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+								<PTCID>#x00000004</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>SimulinkTime</Name>
+								<BitSize>64</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+								<PTCID>#x00000005</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>ModuleInfo</Name>
+								<BitSize>1184</BitSize>
+								<BaseType GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</BaseType>
+								<PTCID>#x00000006</PTCID>
+							</Parameter>
+							<Parameter OnlineParameter="true" CreateSymbol="true" ReadOnly="true">
+								<Name>ModuleBuildInfo</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</BaseType>
+								<PTCID>#x00000007</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ExecuteModelCode</Name>
+								<BitSize>8</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+								<PTCID>#x00000008</PTCID>
+							</Parameter>
+							<Parameter>
+								<Name>Input</Name>
+								<BitSize>64</BitSize>
+								<BaseType GUID="{EACDDCAC-1F72-903E-4E03-CE7B59AEA9AF}">ExtU_hexmove_T</BaseType>
+								<PTCID>#x80000000</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ContextInfoArr_0_TaskOid</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+								<PTCID>#x03002060</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ContextInfoArr_0_TaskPriority</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x03002070</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x03002080</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ContextInfoArr_0_TaskPort</Name>
+								<BitSize>16</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+								<PTCID>#x03002090</PTCID>
+							</Parameter>
+							<Parameter CreateSymbol="true">
+								<Name>ContextInfoArr_0_TaskSortOrder</Name>
+								<BitSize>32</BitSize>
+								<BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+								<PTCID>#x030020b0</PTCID>
+							</Parameter>
+						</Parameters>
+						<DataAreas>
+							<DataArea>
+								<AreaNo AreaType="InputDst" CreateSymbols="true">0</AreaNo>
+								<Name>Input</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>8</ByteSize>
+								<Symbol CreateSymbol="true">
+									<Name>t</Name>
+									<BitSize>64</BitSize>
+									<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+									<PTCID>#x80000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="OutputSrc" CreateSymbols="true">1</AreaNo>
+								<Name>Output</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>144</ByteSize>
+								<Symbol CreateSymbol="true">
+									<Name>Disp_P</Name>
+									<BitSize>1152</BitSize>
+									<BaseType GUID="{017A51F0-74AC-1814-A21E-237B868B9BC2}">matrix_18_real_T</BaseType>
+									<PTCID>#x81000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+							</DataArea>
+						</DataAreas>
+						<Deployment>
+							<FileEntry TargetPlatform="TwinCAT RT (x86)">
+								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.sys</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x86)">
+								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.pdb</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x64)">
+								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.sys</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+							</FileEntry>
+							<FileEntry TargetPlatform="TwinCAT RT (x64)">
+								<SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.pdb</SourceFile>
+								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+							</FileEntry>
+							<FileEntry>
+								<ProjectFile>%SOLUTIONMODULEINSTTPATH%HexMove_PlcOpenPOUs.xml</ProjectFile>
+							</FileEntry>
+							<FileEntry>
+								<ProjectFile>%SOLUTIONMODULEINSTTPATH%HexMove_ModuleInfo.xml</ProjectFile>
+							</FileEntry>
+						</Deployment>
+						<Xml>
+							<GeneratedModuleInfoFile>HexMove_ModuleInfo.xml</GeneratedModuleInfoFile>
+						</Xml>
+						<ParameterValues>
+							<Value>
+								<Name>CallBy</Name>
+								<EnumText>Module</EnumText>
+							</Value>
+							<Value>
+								<Name>ExecutionSequence</Name>
+								<EnumText>StateUpdateAfterOutputMapping</EnumText>
+							</Value>
+							<Value>
+								<Name>StepSize</Name>
+								<EnumText>UseTaskCycleTime</EnumText>
+							</Value>
+							<Value>
+								<Name>MdlInitialized</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+							<Value>
+								<Name>CycleUpdateExecuted</Name>
+								<EnumText>FALSE</EnumText>
+							</Value>
+							<Value>
+								<Name>SimulinkTime</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ClassId</Name>
+								<Data>00000000000000000000000000000000</Data>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.BuildTimeStamp</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelCheckSum[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelCheckSum[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelCheckSum[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelCheckSum[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.ModelVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TwinCatVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TwinCatVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TwinCatVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TwinCatVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TcTargetVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TcTargetVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TcTargetVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.TcTargetVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.MatlabVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.MatlabVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.MatlabVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.MatlabVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.SimulinkVersion[0]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.SimulinkVersion[1]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.SimulinkVersion[2]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.SimulinkVersion[3]</Name>
+								<Value>0</Value>
+							</Value>
+							<Value>
+								<Name>ModuleInfo.CoderVersion[0]</Name>
+								<Value>0</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskPriority</Name>
@@ -7789,21 +7720,21 @@ External Setpoint Generation:
 			</NC>
 		</Motion>
 		<Plc>
-			<Project GUID="{41DF21BC-5DAD-41C5-B304-5BCA5D02C90E}" Name="Welding_Robot_Control_Test" PrjFilePath="Welding_Robot_Control_Test\Welding_Robot_Control_Test.plcproj" TmcFilePath="Welding_Robot_Control_Test\Welding_Robot_Control_Test.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+			<Project GUID="{41DF21BC-5DAD-41C5-B304-5BCA5D02C90E}" Name="Hexapod_Robot_Control_Test" PrjFilePath="Hexapod_Robot_Control_Test\Hexapod_Robot_Control_Test.plcproj" TmcFilePath="Hexapod_Robot_Control_Test\Hexapod_Robot_Control_Test.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
-					<Name>Welding_Robot_Control_Test Instance</Name>
+					<Name>Hexapod_Robot_Control_Test Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
-						<Name>HexRobot_Task Inputs</Name>
+						<Name>PlcTask Inputs</Name>
 						<Var>
-							<Name>Hexapod_Robot.Current_Turque_Value</Name>
+							<Name>MAIN.Current_Turque_Value</Name>
 							<Comment>
 								<![CDATA[电流、力矩相关值]]>
 							</Comment>
 							<Type GUID="{5668CD8E-CF1C-B917-34BA-930C5970F763}">ARRAY [1..18] OF INT</Type>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[1].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[1].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -7852,7 +7783,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[2].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[2].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -7901,7 +7832,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[3].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[3].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -7950,7 +7881,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[4].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[4].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -7999,7 +7930,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[5].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[5].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8048,7 +7979,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[6].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[6].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8097,7 +8028,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[7].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[7].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8146,7 +8077,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[8].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[8].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8195,7 +8126,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[9].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[9].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8244,7 +8175,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[10].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[10].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8293,7 +8224,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[11].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[11].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8342,7 +8273,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[12].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[12].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8391,7 +8322,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[13].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[13].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8440,7 +8371,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[14].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[14].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8489,7 +8420,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[15].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[15].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8538,7 +8469,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[16].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[16].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8587,7 +8518,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[17].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[17].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8636,239 +8567,7 @@ External Setpoint Generation:
 							</SubVar>
 						</Var>
 						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[18].AxisRef.NcToPlc</Name>
-							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-							<SubVar>
-								<Name>AxisState</Name>
-								<Comment>
-									<![CDATA[Present State Of The Axis Movement (continuous axis):
-0  = INACTIVE:		axis has no job
-1  = RUNNING:		axis is executing a motion job
-2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
-3  = PHASE_VELOCONST:	axis is moving at constant velocity
-4  = PHASE_ACCPOS:	axis is accelerating
-5  = PHASE_ACCNEG:	axis is decelerating
-Slaves only:
-11 = PREPHASE:		slave axis is in a motion pre-phase
-12 = SYNCHRONIZING:	slave axis is synchronizing
-13 = SYNCHRONOUS:	slave axis is moving synchronously
-External Setpoint Generation:
-41 = EXTSETGEN_MODE1:	external setpoint generation active
-42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>HomingState</Name>
-								<Comment>
-									<![CDATA[Axis Homing Status:
-0: idle
-1: start homing
-2: searching home switch
-3: stopping on home switch
-4: moving off home switch
-5: searching sync pulse
-6: stopping after homing
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>CoupleState</Name>
-								<Comment>
-									<![CDATA[Axis Coupling Status:
-0: axis is a single axis (not coupled)
-1: axis is a master axis
-2: axis is master and slave
-3: axis is a slave axis
-]]>
-								</Comment>
-							</SubVar>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="2">
-						<Name>HexRobot_Task Outputs</Name>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[1].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[2].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[3].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[4].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[5].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[6].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[7].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[8].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[9].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[10].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[11].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[12].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[13].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[14].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[15].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[16].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[17].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-						<Var>
-							<Name>Hexapod_Robot.Axis_Robot[18].AxisRef.PlcToNc</Name>
-							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
-						</Var>
-					</Vars>
-					<Vars VarGrpType="1">
-						<Name>Welding_Arm_Task Inputs</Name>
-						<Var>
-							<Name>Welding_Arm.Current_Turque_Value</Name>
-							<Comment>
-								<![CDATA[电流、力矩相关值]]>
-							</Comment>
-							<Type GUID="{A5AC38E6-0DC4-889C-DC96-B6E74C453940}">ARRAY [1..3] OF INT</Type>
-						</Var>
-						<Var>
-							<Name>Welding_Arm.Axis_Arm[1].AxisRef.NcToPlc</Name>
-							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-							<SubVar>
-								<Name>AxisState</Name>
-								<Comment>
-									<![CDATA[Present State Of The Axis Movement (continuous axis):
-0  = INACTIVE:		axis has no job
-1  = RUNNING:		axis is executing a motion job
-2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
-3  = PHASE_VELOCONST:	axis is moving at constant velocity
-4  = PHASE_ACCPOS:	axis is accelerating
-5  = PHASE_ACCNEG:	axis is decelerating
-Slaves only:
-11 = PREPHASE:		slave axis is in a motion pre-phase
-12 = SYNCHRONIZING:	slave axis is synchronizing
-13 = SYNCHRONOUS:	slave axis is moving synchronously
-External Setpoint Generation:
-41 = EXTSETGEN_MODE1:	external setpoint generation active
-42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>HomingState</Name>
-								<Comment>
-									<![CDATA[Axis Homing Status:
-0: idle
-1: start homing
-2: searching home switch
-3: stopping on home switch
-4: moving off home switch
-5: searching sync pulse
-6: stopping after homing
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>CoupleState</Name>
-								<Comment>
-									<![CDATA[Axis Coupling Status:
-0: axis is a single axis (not coupled)
-1: axis is a master axis
-2: axis is master and slave
-3: axis is a slave axis
-]]>
-								</Comment>
-							</SubVar>
-						</Var>
-						<Var>
-							<Name>Welding_Arm.Axis_Arm[2].AxisRef.NcToPlc</Name>
-							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
-							<SubVar>
-								<Name>AxisState</Name>
-								<Comment>
-									<![CDATA[Present State Of The Axis Movement (continuous axis):
-0  = INACTIVE:		axis has no job
-1  = RUNNING:		axis is executing a motion job
-2  = OVERRIDE_ZERO:	axis is executing a job but override is zero
-3  = PHASE_VELOCONST:	axis is moving at constant velocity
-4  = PHASE_ACCPOS:	axis is accelerating
-5  = PHASE_ACCNEG:	axis is decelerating
-Slaves only:
-11 = PREPHASE:		slave axis is in a motion pre-phase
-12 = SYNCHRONIZING:	slave axis is synchronizing
-13 = SYNCHRONOUS:	slave axis is moving synchronously
-External Setpoint Generation:
-41 = EXTSETGEN_MODE1:	external setpoint generation active
-42 = EXTSETGEN_MODE2:	internal and external setpoint gen. active
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>HomingState</Name>
-								<Comment>
-									<![CDATA[Axis Homing Status:
-0: idle
-1: start homing
-2: searching home switch
-3: stopping on home switch
-4: moving off home switch
-5: searching sync pulse
-6: stopping after homing
-]]>
-								</Comment>
-							</SubVar>
-							<SubVar>
-								<Name>CoupleState</Name>
-								<Comment>
-									<![CDATA[Axis Coupling Status:
-0: axis is a single axis (not coupled)
-1: axis is a master axis
-2: axis is master and slave
-3: axis is a slave axis
-]]>
-								</Comment>
-							</SubVar>
-						</Var>
-						<Var>
-							<Name>Welding_Arm.Axis_Arm[3].AxisRef.NcToPlc</Name>
+							<Name>MAIN.Axis_Robot[18].AxisRef.NcToPlc</Name>
 							<Type GUID="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" Namespace="MC">NCTOPLC_AXIS_REF</Type>
 							<SubVar>
 								<Name>AxisState</Name>
@@ -8918,191 +8617,81 @@ External Setpoint Generation:
 						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
-						<Name>Welding_Arm_Task Outputs</Name>
+						<Name>PlcTask Outputs</Name>
 						<Var>
-							<Name>Welding_Arm.Axis_Arm[1].AxisRef.PlcToNc</Name>
+							<Name>MAIN.Axis_Robot[1].AxisRef.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>Welding_Arm.Axis_Arm[2].AxisRef.PlcToNc</Name>
+							<Name>MAIN.Axis_Robot[2].AxisRef.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 						<Var>
-							<Name>Welding_Arm.Axis_Arm[3].AxisRef.PlcToNc</Name>
+							<Name>MAIN.Axis_Robot[3].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[4].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[5].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[6].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[7].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[8].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[9].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[10].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[11].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[12].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[13].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[14].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[15].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[16].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[17].AxisRef.PlcToNc</Name>
+							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Axis_Robot[18].AxisRef.PlcToNc</Name>
 							<Type GUID="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" Namespace="MC">PLCTONC_AXIS_REF</Type>
 						</Var>
 					</Vars>
-					<UnrestoredVarLinks ImportTime="2017-04-10T09:51:12">
-						<OwnerA Name="OutputSrc" Prefix="TIPC^Hexapod_Robot_Control_Test^Hexapod_Robot_Control_Test Instance" Type="2">
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
-								<Link VarA="MAIN.Axis_Robot[1].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 10">
-								<Link VarA="MAIN.Axis_Robot[10].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 11">
-								<Link VarA="MAIN.Axis_Robot[11].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 12">
-								<Link VarA="MAIN.Axis_Robot[12].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 13">
-								<Link VarA="MAIN.Axis_Robot[13].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 14">
-								<Link VarA="MAIN.Axis_Robot[14].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 15">
-								<Link VarA="MAIN.Axis_Robot[15].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 16">
-								<Link VarA="MAIN.Axis_Robot[16].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 17">
-								<Link VarA="MAIN.Axis_Robot[17].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 18">
-								<Link VarA="MAIN.Axis_Robot[18].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
-								<Link VarA="MAIN.Axis_Robot[2].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 3">
-								<Link VarA="MAIN.Axis_Robot[3].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 4">
-								<Link VarA="MAIN.Axis_Robot[4].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 5">
-								<Link VarA="MAIN.Axis_Robot[5].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 6">
-								<Link VarA="MAIN.Axis_Robot[6].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 7">
-								<Link VarA="MAIN.Axis_Robot[7].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 8">
-								<Link VarA="MAIN.Axis_Robot[8].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 9">
-								<Link VarA="MAIN.Axis_Robot[9].AxisRef.PlcToNc" TypeA="MC.PLCTONC_AXIS_REF" InOutA="1" GuidA="{63A84524-72E3-41C8-BEAB-4CCE44690A13}" VarB="Inputs^FromPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-						</OwnerA>
-						<OwnerA Name="InputDst" Prefix="TIPC^Hexapod_Robot_Control_Test^Hexapod_Robot_Control_Test Instance" Type="1">
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 1 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[1]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 10 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[10]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 11 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[11]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 12 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[12]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 13 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[13]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 14 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[14]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 15 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[15]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 16 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[16]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 17 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[17]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 18 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[18]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 2 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[2]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 3 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[3]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 4 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[4]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 5 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[5]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 6 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[6]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 7 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[7]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 8 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[8]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 9 (Elmo Drive)">
-								<Link VarA="MAIN.Current_Turque_Value[9]" TypeA="INT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Inputs_1^Current actual value" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
-								<Link VarA="MAIN.Axis_Robot[1].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 10">
-								<Link VarA="MAIN.Axis_Robot[10].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 11">
-								<Link VarA="MAIN.Axis_Robot[11].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 12">
-								<Link VarA="MAIN.Axis_Robot[12].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 13">
-								<Link VarA="MAIN.Axis_Robot[13].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 14">
-								<Link VarA="MAIN.Axis_Robot[14].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 15">
-								<Link VarA="MAIN.Axis_Robot[15].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 16">
-								<Link VarA="MAIN.Axis_Robot[16].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 17">
-								<Link VarA="MAIN.Axis_Robot[17].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 18">
-								<Link VarA="MAIN.Axis_Robot[18].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
-								<Link VarA="MAIN.Axis_Robot[2].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 3">
-								<Link VarA="MAIN.Axis_Robot[3].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 4">
-								<Link VarA="MAIN.Axis_Robot[4].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 5">
-								<Link VarA="MAIN.Axis_Robot[5].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 6">
-								<Link VarA="MAIN.Axis_Robot[6].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 7">
-								<Link VarA="MAIN.Axis_Robot[7].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 8">
-								<Link VarA="MAIN.Axis_Robot[8].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-							<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 9">
-								<Link VarA="MAIN.Axis_Robot[9].AxisRef.NcToPlc" TypeA="MC.NCTOPLC_AXIS_REF" InOutA="0" GuidA="{6A65C767-34E5-42BF-AD87-E1A503EAC7BE}" VarB="Outputs^ToPlc" RestoreInfo="ANotFound"/>
-							</OwnerB>
-						</OwnerA>
-					</UnrestoredVarLinks>
 					<TaskPouOids>
-						<TaskPouOid Prio="22" OTCID="#x01010015"/>
-						<TaskPouOid Prio="21" OTCID="#x01010014"/>
 						<TaskPouOid Prio="20" OTCID="#x01010011"/>
 					</TaskPouOids>
 				</Instance>
@@ -17964,8 +17553,8 @@ External Setpoint Generation:
 		</Io>
 	</Project>
 	<Mappings>
-		<MappingInfo Identifier="{01010014-0030-0304-1000-010130000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
-		<MappingInfo Identifier="{05000010-0014-0101-1000-040310000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{01010011-0030-0304-1000-010130000403}" Id="#x02030020" Watchdog="04000000040000000400000004000000"/>
+		<MappingInfo Identifier="{05000010-0011-0101-1000-040310000101}" Id="#x02030030" Watchdog="04000000040000000400000004000000"/>
 		<MappingInfo Identifier="{00000000-0020-0304-1000-040320000403}" Id="#x02030040"/>
 		<MappingInfo Identifier="{00000000-0030-0304-1000-040330000403}" Id="#x02030010"/>
 		<OwnerA Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
@@ -18256,132 +17845,132 @@ External Setpoint Generation:
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
 			</OwnerB>
 		</OwnerA>
-		<OwnerA Name="TIPC^Welding_Robot_Control_Test^Welding_Robot_Control_Test Instance">
+		<OwnerA Name="TIPC^Hexapod_Robot_Control_Test^Hexapod_Robot_Control_Test Instance">
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 1 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[1]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[1]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 10 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[10]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[10]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 11 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[11]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[11]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 12 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[12]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[12]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 13 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[13]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[13]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 14 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[14]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[14]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 15 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[15]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[15]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 16 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[16]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[16]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 17 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[17]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[17]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 18 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[18]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[18]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 2 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[2]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[2]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 3 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[3]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[3]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 4 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[4]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[4]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 5 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[5]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[5]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 6 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[6]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[6]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 7 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[7]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[7]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 8 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[8]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[8]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 9 (Elmo Drive)">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Current_Turque_Value[9]" VarB="Inputs_1^Current actual value"/>
+				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[9]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 1">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[1].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[1].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[1].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[1].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 10">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[10].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[10].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[10].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[10].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 11">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[11].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[11].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[11].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[11].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 12">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[12].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[12].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[12].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[12].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 13">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[13].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[13].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[13].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[13].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 14">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[14].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[14].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[14].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[14].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 15">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[15].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[15].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[15].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[15].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 16">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[16].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[16].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[16].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[16].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 17">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[17].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[17].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[17].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[17].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 18">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[18].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[18].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[18].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[18].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 2">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[2].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[2].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[2].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[2].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 3">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[3].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[3].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[3].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[3].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 4">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[4].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[4].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[4].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[4].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 5">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[5].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[5].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[5].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[5].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 6">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[6].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[6].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[6].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[6].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 7">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[7].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[7].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[7].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[7].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 8">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[8].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[8].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[8].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[8].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 			<OwnerB Name="TINC^NC-Task 1 SAF^Axes^Axis 9">
-				<Link VarA="HexRobot_Task Inputs^Hexapod_Robot.Axis_Robot[9].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
-				<Link VarA="HexRobot_Task Outputs^Hexapod_Robot.Axis_Robot[9].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
+				<Link VarA="PlcTask Inputs^MAIN.Axis_Robot[9].AxisRef.NcToPlc" VarB="Outputs^ToPlc"/>
+				<Link VarA="PlcTask Outputs^MAIN.Axis_Robot[9].AxisRef.PlcToNc" VarB="Inputs^FromPlc"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>

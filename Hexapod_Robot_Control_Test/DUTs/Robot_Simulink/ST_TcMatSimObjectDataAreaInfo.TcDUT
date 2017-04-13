@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <DUT Name="ST_TcMatSimObjectDataAreaInfo" Id="{4a2e7d14-c020-4d40-ba5c-8fb19136bd15}">
+  <DUT Name="ST_TcMatSimObjectDataAreaInfo" Id="{84b63d9c-1f3b-4f18-91a3-a469bdd630fe}">
     <Declaration><![CDATA[TYPE ST_TcMatSimObjectDataAreaInfo :
 STRUCT
 	pPlcVar: PVOID;

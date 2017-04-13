@@ -1388,7 +1388,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"131"</v>
+                      <v n="Value">"141"</v>
                     </o>
                   </l>
                 </o>
@@ -1542,7 +1542,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"132"</v>
+                      <v n="Value">"142"</v>
                     </o>
                   </l>
                 </o>
@@ -2210,7 +2210,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"133"</v>
+                      <v n="Value">"138"</v>
                     </o>
                   </l>
                 </o>
@@ -2328,7 +2328,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"134"</v>
+                      <v n="Value">"140"</v>
                     </o>
                   </l>
                 </o>
@@ -3776,7 +3776,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"135"</v>
+                      <v n="Value">"149"</v>
                     </o>
                   </l>
                 </o>
@@ -3984,7 +3984,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"136"</v>
+                      <v n="Value">"151"</v>
                     </o>
                   </l>
                 </o>
@@ -4145,7 +4145,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"137"</v>
+                      <v n="Value">"145"</v>
                     </o>
                   </l>
                 </o>
@@ -4279,7 +4279,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"138"</v>
+                      <v n="Value">"162"</v>
                     </o>
                   </l>
                 </o>
@@ -4432,7 +4432,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"139"</v>
+                      <v n="Value">"170"</v>
                     </o>
                   </l>
                 </o>
@@ -4550,7 +4550,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"140"</v>
+                      <v n="Value">"163"</v>
                     </o>
                   </l>
                 </o>
@@ -4725,7 +4725,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"141"</v>
+                      <v n="Value">"152"</v>
                     </o>
                   </l>
                 </o>
@@ -4933,7 +4933,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"142"</v>
+                      <v n="Value">"153"</v>
                     </o>
                   </l>
                 </o>
@@ -5051,7 +5051,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"143"</v>
+                      <v n="Value">"161"</v>
                     </o>
                   </l>
                 </o>
@@ -5204,7 +5204,7 @@
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
-                      <v n="Value">"144"</v>
+                      <v n="Value">"167"</v>
                     </o>
                   </l>
                 </o>
@@ -5214,7 +5214,7 @@
                 <v n="VisualElementIdentifier">"GenElemInst_305"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
-                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="InputBoxInputAction[]">
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
                   <v>OnMouseClick</v>
                   <a cet="InputBoxInputAction">
                     <o>
@@ -5225,7 +5225,7 @@
                       <v n="InputBoxDialogTitle">""</v>
                       <v n="Password">false</v>
                       <v n="UseTextOutputVariable">false</v>
-                      <v n="TextOutputVariableInitialized">true</v>
+                      <v n="TextOutputVariableInitialized">false</v>
                       <v n="OtherVarConversion">""</v>
                       <v n="Format">""</v>
                     </o>
@@ -5441,6 +5441,7 @@
         <Type n="Guid">System.Guid</Type>
         <Type n="Hashtable">System.Collections.Hashtable</Type>
         <Type n="HotkeyConfiguration">{6b108d46-58af-4e41-a3f4-174d8f160cc4}</Type>
+        <Type n="IInputAction[]">_3S.CoDeSys.VisualElem.IInputAction[], VisualElem, Version=3.5.8.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="InputBoxInputAction">{e8e7e747-f76f-4dee-ab1c-b9637e41ac26}</Type>
         <Type n="InputBoxInputAction[]">_3S.CoDeSys.VisualElem.InputBoxInputAction[], VisualElem.plugin, Version=3.5.8.40, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="Int16">System.Int16</Type>
