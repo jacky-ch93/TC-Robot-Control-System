@@ -3974,38 +3974,6 @@ External Setpoint Generation:
 								<Value>0</Value>
 							</Value>
 							<Value>
-								<Name>ModuleInfo.CoderVersion[1]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[2]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.CoderVersion[3]</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ModuleInfo.TcTargetLicenseId</Name>
-								<Data>00000000000000000000000000000000</Data>
-							</Value>
-							<Value>
-								<Name>ModuleBuildInfo.Debug</Name>
-								<EnumText>FALSE</EnumText>
-							</Value>
-							<Value>
-								<Name>ExecuteModelCode</Name>
-								<EnumText>TRUE</EnumText>
-							</Value>
-							<Value>
-								<Name>Input.t</Name>
-								<Value>0</Value>
-							</Value>
-							<Value>
-								<Name>ContextInfoArr_0_TaskOid</Name>
-								<Value>33620032</Value>
-							</Value>
-							<Value>
 								<Name>ContextInfoArr_0_TaskPriority</Name>
 								<Value>20</Value>
 							</Value>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <Task Name="Welding_Arm_Task" Id="{65ba41f4-7b6b-4ea0-ad0b-3177c44164fb}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>1000</CycleTime>
+    <Priority>22</Priority>
+    <PouCall>
+      <Name>Welding_Arm</Name>
+    </PouCall>
+    <TaskFBGuid>{95ac31db-235b-4f03-8ed7-93e412a6c33e}</TaskFBGuid>
+    <Fb_init>{1f37a6a4-9599-44df-9917-e259c3452b92}</Fb_init>
+    <Fb_exit>{ad44ac0d-c1f2-411e-8c74-428669850a05}</Fb_exit>
+    <CycleUpdate>{67ba53c3-cd75-45f0-977b-c46544619c11}</CycleUpdate>
+    <PostCycleUpdate>{b0e4f600-2d95-4963-ac2a-d63f1fd21e3b}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>
