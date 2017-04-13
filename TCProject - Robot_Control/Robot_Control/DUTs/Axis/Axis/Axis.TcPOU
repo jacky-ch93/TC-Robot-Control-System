@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Axis" Id="{752ec826-01be-4872-838e-fdec6a999a4b}" SpecialFunc="None">
+  <POU Name="Axis" Id="{875f83f1-eb97-483f-b7d6-014637e061f1}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Axis
 //VAR_INPUT	
 //END_VAR
@@ -25,14 +25,14 @@ VAR
 	// =============== State variables ========================
 	Power_StatusEnable	: BOOL;					// Enable feedback
 	
-	// =============== Velocity, override =====================
+	// ============= Velocity, override ,Position==============
 	Velocity_Jog		: LREAL;				// Jog velocity
 	Velocity_Move		: LREAL;				// Target velocity
-	Velocity_Home		: LREAL;				// Home1 velocity
-  Velocity_Home2    : LREAL;        // Home1 velocity   
+	Velocity_Home		: LREAL;				// Home velocity
 	Velocity_Absolute	: LREAL;				// MoveAbsolute velocity
 	Velocity_Relative	: LREAL;				// MoveRelative velocity
 	fOverride 			: LREAL := 100.0;		// Override 100%
+  Home_Position   : LREAL;        // The absolute position after Home will be
 	
 	// =============== Trigger function blocks ================
 	
@@ -45,9 +45,10 @@ VAR
 	// =============== About axis turque ====================
 	Axis_Current_Turque 	: INT;
   	Axis_Max_Turque       	: INT;
+
 	// ================= Sensor FeedBack ====================
   Proximity_Switch      : DINT;
-  
+	
 	// =============== Motion function blocks =================
 	Axis_Power 			: MC_Power;				// FB for enable and override			[上电]
 	Axis_Home			: MC_Home;				// FB for axis home						[找零]
@@ -72,7 +73,7 @@ END_VAR
     </Implementation>
     <Property Name="ActPosition" Id="{3015e613-88a6-44b7-bfd3-2c06df6f075d}">
       <Declaration><![CDATA[PROPERTY ActPosition : LREAL]]></Declaration>
-      <Get Name="Get" Id="{a1550c61-e344-45b9-84a9-b4c92d3e44f5}">
+      <Get Name="Get" Id="{27fb4bd7-51c8-4da8-ad10-81bc861ca291}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -84,7 +85,7 @@ ActPosition := Axis_ActPosition.Position;]]></ST>
     </Property>
     <Property Name="Current_Turque_Value" Id="{3a2f771d-3376-4640-bd97-650af6e34455}">
       <Declaration><![CDATA[PROPERTY Current_Turque_Value : INT]]></Declaration>
-      <Get Name="Get" Id="{cf61b5f8-2ee8-4892-af0b-6df01ee01050}">
+      <Get Name="Get" Id="{4e4a0d8a-07ca-47df-99eb-bdebf4c6a479}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -92,7 +93,7 @@ END_VAR
           <ST><![CDATA[Current_Turque_Value := Axis_Current_Turque;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{454d6b57-9848-48a1-bdc6-2e4c4bcfbc97}">
+      <Set Name="Set" Id="{bfea1bb6-73fc-4934-ac6e-1c20d8fac547}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -200,7 +201,8 @@ VAR_INPUT
 END_VAR
 
 VAR
-	HomeSet					: BOOL;
+	//HomeSet					: BOOL;
+	BackDone				: BOOL;					// 电机退回到顶点位，该标志位使能
 END_VAR
 ]]></Declaration>
       <Implementation>
@@ -210,9 +212,10 @@ END_VAR
 //======================丝杠回退========================
 Jog_Backward(Drive_Jog_Backward:= Drive_Home);
 Jog_Velocity := Velocity_Home;
+HomeDone := Axis_MoveAbsolute.Done;					// 回到零点的标志为丝杠伸长到制定距离
 	
 IF NOT Axis_Home.Error THEN
-	IF ABS(Axis_Current_Turque) > Axis_Max_Turque AND NOT HomeDone THEN
+	IF ABS(Axis_Current_Turque) > Axis_Max_Turque AND NOT BackDone THEN
 		Drive_Home :=0;
 		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
 		Delay(IN:= NOT Delay.Q, PT:=T#200MS, Q=> , ET=> );
@@ -220,12 +223,88 @@ IF NOT Axis_Home.Error THEN
 					Execute:= Delay.Q, 
 					Position:= 0, 
 					HomingMode:= MC_Direct);
-		HomeDone := Axis_Home.Done;
+		BackDone := Axis_Home.Done;				
 	END_IF
-	IF HomeDone THEN
-		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= 10 );
+	IF BackDone THEN
+		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= Home_Position );
 		IF Axis_MoveAbsolute.Done THEN
-			HomeDone := FALSE;
+			BackDone := FALSE;
+		END_IF
+	END_IF
+END_IF
+
+(*IF HomeSet THEN
+	Jog_Backward(Drive_Jog_Backward:= 0,  Axis_Current_Turque:= Axis_Current_Turque);
+	HomeDone := 1;
+END_IF*)
+
+IF Axis_Home.Error OR Axis_Home.CommandAborted OR ABS(Axis_Current_Turque) < Axis_Max_Turque THEN
+	IF Axis_Jog.Error THEN
+		Axis_Error		:= TRUE;
+		Axis_ErrorID 	:= Axis_Home.ErrorID;
+	END_IF
+	Axis_Home( 	Axis:= AxisRef, 
+				Execute:= FALSE);
+END_IF
+
+// =========================================================]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Home_Absolute_Position" Id="{4b2bc104-de65-4853-bc96-2381d638aa2c}">
+      <Declaration><![CDATA[PROPERTY Home_Absolute_Position : LREAL]]></Declaration>
+      <Get Name="Get" Id="{fd0da777-30ef-4042-80f6-69042d016d50}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Home_Absolute_Position := Home_Position;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ea4282fe-ed1b-4201-88cf-ee853e9f5d9b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Home_Position := Home_Absolute_Position;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Home_Sensor" Id="{a22704a8-b010-4cc1-be73-1967f40884b9}">
+      <Declaration><![CDATA[METHOD Home_Sensor
+VAR_INPUT
+	Drive_Home				: BOOL;			// 调零使能信号
+	Home_Switch				: BOOL;			// 零位调零传感器信号
+	//MaxPosition_Swicth		: BOOL;
+END_VAR
+
+VAR
+	//HomeSet				: BOOL;
+	BackDone				: BOOL;					// 电机退回到顶点位，该标志位使能
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// =======================找零程序==========================
+// 找零程序过程为：先让丝杠回退，当传感器检测到金属表面并反馈信号后, 程序将该位置置为零位
+
+//======================丝杠回退========================
+Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+Jog_Velocity := Velocity_Home;
+HomeDone := Axis_MoveAbsolute.Done;					// 回到零点的标志为丝杠伸长到制定距离
+	
+IF NOT Axis_Home.Error THEN
+	IF Home_Switch AND NOT HomeDone THEN
+		Drive_Home :=0;
+		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+		Delay(IN:= NOT Delay.Q, PT:=T#200MS, Q=> , ET=> );
+		Axis_Home( 	Axis:= AxisRef, 
+					Execute:= Delay.Q,
+					Position:= 0, 
+					HomingMode:= MC_Direct);
+		BackDone := Axis_Home.Done;
+	END_IF
+	IF BackDone THEN
+		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= 20);
+		IF Axis_MoveAbsolute.Done THEN
+			BackDone := FALSE;
 		END_IF
 	END_IF
 END_IF
@@ -249,7 +328,7 @@ END_IF
     </Method>
     <Property Name="Home_Velocity" Id="{075d0823-6614-4698-9d00-5a9266b58e8c}">
       <Declaration><![CDATA[PROPERTY Home_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{337c8281-9e84-4066-80f8-1804a324ddb1}">
+      <Get Name="Get" Id="{471cb643-36fc-48b8-a814-a5978ee4fe51}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -257,81 +336,12 @@ END_VAR
           <ST><![CDATA[Home_Velocity := Velocity_Home;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{28f71fe8-0908-4a45-b6fa-862d0622a7a8}">
+      <Set Name="Set" Id="{1da30d88-39fa-414f-a1f6-2240056abfeb}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
           <ST><![CDATA[Velocity_Home := Home_Velocity;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
-    <Method Name="Home2" Id="{538e8ca7-d46b-41f9-930c-142666bfb84c}">
-      <Declaration><![CDATA[METHOD Home2 : BOOL
-VAR_INPUT
-	Drive_Home		: BOOL;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[// =======================找零程序==========================
-// 找零程序过程为：先让丝杠回退，当传感器检测到金属表面并反馈信号后, 程序将该位置置为零位
-
-//======================丝杠回退========================
-Jog_Backward(Drive_Jog_Backward:= Drive_Home);
-Jog_Velocity := Velocity_Home2;
-	
-IF NOT Axis_Home.Error THEN
-	IF ABS(Proximity_Switch) = 64028672 AND NOT HomeDone THEN
-		Drive_Home :=0;
-		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
-		Delay(IN:= NOT Delay.Q, PT:=T#200MS, Q=> , ET=> );
-		Axis_Home( 	Axis:= AxisRef, 
-					Execute:= Delay.Q,
-					Position:= 0, 
-					HomingMode:= MC_Direct);
-		HomeDone := Axis_Home.Done;
-	END_IF
-	IF HomeDone THEN
-		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= 20);
-		IF Axis_MoveAbsolute.Done THEN
-			HomeDone := FALSE;
-		END_IF
-	END_IF
-END_IF
-
-(*IF HomeSet THEN
-	Jog_Backward(Drive_Jog_Backward:= 0,  Axis_Current_Turque:= Axis_Current_Turque);
-	HomeDone := 1;
-END_IF*)
-
-IF Axis_Home.Error OR Axis_Home.CommandAborted OR ABS(Axis_Current_Turque) < Axis_Max_Turque THEN
-	IF Axis_Jog.Error THEN
-		Axis_Error		:= TRUE;
-		Axis_ErrorID 	:= Axis_Home.ErrorID;
-	END_IF
-	Axis_Home( 	Axis:= AxisRef, 
-				Execute:= FALSE);
-END_IF
-
-// =========================================================]]></ST>
-      </Implementation>
-    </Method>
-    <Property Name="Home2_Velocity" Id="{29542bf1-ba67-49a9-803d-762403c92f58}">
-      <Declaration><![CDATA[PROPERTY Home2_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{fe78f786-10a8-4f98-9e65-95fb7c4427c2}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Home2_Velocity := Velocity_Home2;]]></ST>
-        </Implementation>
-      </Get>
-      <Set Name="Set" Id="{7e1f886e-1b8d-4d9a-9fc1-c6d7443f0295}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Velocity_Home2 := Home2_Velocity;]]></ST>
         </Implementation>
       </Set>
     </Property>
@@ -421,7 +431,7 @@ END_IF*)
       <Declaration><![CDATA[// =======================读写点动程序中的速度值==========================
 
 PROPERTY Jog_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{777f885d-c13b-46bb-a81c-11c9d0c034b5}">
+      <Get Name="Get" Id="{6a65099a-7be9-4acf-a28b-612d3967eec1}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -429,7 +439,7 @@ END_VAR
           <ST><![CDATA[Jog_Velocity := Velocity_Jog;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{3493f918-b8b5-4bfd-88eb-49ef90625a72}">
+      <Set Name="Set" Id="{12e87a2d-f3db-4387-aa81-929597472493}">
         <Declaration><![CDATA[
 VAR
 END_VAR
@@ -441,7 +451,7 @@ END_VAR
     </Property>
     <Property Name="Max_Turque_Value" Id="{c8624b49-e9f6-4c92-b644-367354523826}">
       <Declaration><![CDATA[PROPERTY Max_Turque_Value : INT]]></Declaration>
-      <Set Name="Set" Id="{d52428b7-2c03-4786-a6ff-9fe9a6b65b24}">
+      <Set Name="Set" Id="{45a2f9ab-ba5e-400e-a5dc-b78842915363}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -457,7 +467,8 @@ VAR_INPUT
 	Absolute_Position	: LREAL;			// 绝对运动位置
 	//Move_Velocity		: LREAL;			// 运动速度
 	//Axis_Current_Turque : INT;			// 边界条件：丝杠位置到达两端卡死
-END_VAR]]></Declaration>
+END_VAR
+]]></Declaration>
       <Implementation>
         <ST><![CDATA[// =======================绝对运动==========================
 
@@ -488,7 +499,7 @@ END_IF
       <Declaration><![CDATA[// =======================读写绝对运动程序中的速度值==========================
 
 PROPERTY Move_Absolute_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{69b3b0a0-70e4-4a5d-b413-ab7229a2e9bd}">
+      <Get Name="Get" Id="{8d0f3623-cf5f-4105-970f-aae79a3106a9}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -496,7 +507,7 @@ END_VAR
           <ST><![CDATA[Move_Absolute_Velocity := Velocity_Absolute;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{226c6ce0-f119-45e3-aed2-044f6ed96e56}">
+      <Set Name="Set" Id="{694e932b-4e56-41a8-9445-5bbb74cb5dd2}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -606,7 +617,7 @@ END_IF
       <Declaration><![CDATA[// =======================读写相对运动程序中的速度值==========================
 
 PROPERTY Move_Relative_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{348afd78-8fc2-4019-a44e-c1c1383e294e}">
+      <Get Name="Get" Id="{457b353e-3e68-42fc-bbe6-ecb08d8b1fd9}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -614,7 +625,7 @@ END_VAR
           <ST><![CDATA[Move_Relative_Velocity := Velocity_Relative;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{5825f81f-4221-4e2d-a800-e81839a342ef}">
+      <Set Name="Set" Id="{0d89b0f7-daed-4fcb-88cb-0315b40d2417}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -625,7 +636,7 @@ END_VAR
     </Property>
     <Property Name="Move_Velocity" Id="{21dc1ad2-a805-4cc5-ba52-5eb4a3378ad2}">
       <Declaration><![CDATA[PROPERTY Move_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{1866d0e7-3c70-4d48-8eca-a37834a3ae08}">
+      <Get Name="Get" Id="{8caad008-46ec-4060-81c2-ee62c45e3391}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -633,7 +644,7 @@ END_VAR
           <ST><![CDATA[Move_Velocity := Velocity_Move;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{22390785-422b-4fe3-a5a7-2a060fc5e62a}">
+      <Set Name="Set" Id="{3cab85da-1482-4ed1-96e7-da68740aaec7}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -670,17 +681,6 @@ Axis_Moves := AxisRef.Status.Moving;
 // ==========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Proximity_Switch_FeedBack" Id="{266d5a90-626e-4237-baca-31f21f0c8e8c}">
-      <Declaration><![CDATA[PROPERTY Proximity_Switch_FeedBack : DINT]]></Declaration>
-      <Set Name="Set" Id="{4caf84bf-6035-4fe8-8acd-b0890ff2a20e}">
-        <Declaration><![CDATA[VAR
-END_VAR
-]]></Declaration>
-        <Implementation>
-          <ST><![CDATA[Proximity_Switch := Proximity_Switch_FeedBack;]]></ST>
-        </Implementation>
-      </Set>
-    </Property>
     <Method Name="Reset" Id="{dedc8057-c4ab-4248-b14b-274fa3c9288f}">
       <Declaration><![CDATA[METHOD Reset
 VAR_INPUT
@@ -719,7 +719,7 @@ END_IF
     </Method>
     <Property Name="State_ExtSetPiontDone" Id="{6243132d-fdac-4a44-aabc-1626db2c504e}">
       <Declaration><![CDATA[PROPERTY State_ExtSetPiontDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{707129e4-107c-4490-bb7b-c4d081868570}">
+      <Get Name="Get" Id="{0766e16d-0f0c-43d5-a84b-f294c89a75cf}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -732,7 +732,7 @@ END_VAR
       <Declaration><![CDATA[// =======================回零结束信号==========================
 
 PROPERTY State_HomeDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{264bc084-d205-492c-afbe-d826e47ed36b}">
+      <Get Name="Get" Id="{66da27af-eedb-4cf8-8440-9c5557fd6b93}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -745,7 +745,7 @@ END_VAR
       <Declaration><![CDATA[// =======================点动结束信号==========================
 
 PROPERTY State_JogDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{0fe6b904-9b2c-4f79-ad95-929babff25cb}">
+      <Get Name="Get" Id="{0a3e6580-cb17-4854-a3c3-37f750b02a41}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -756,7 +756,7 @@ END_VAR
     </Property>
     <Property Name="State_MoveAbsoluteDone" Id="{7b7a8b76-a437-47fb-99a9-6a9d632d1395}">
       <Declaration><![CDATA[PROPERTY State_MoveAbsoluteDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{c74d3577-a7ec-4111-94f6-46d87e085a5c}">
+      <Get Name="Get" Id="{c6c8af74-5e1b-4168-8c37-ae7356169ab9}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -769,7 +769,7 @@ END_VAR
       <Declaration><![CDATA[// =======================上电状态信号==========================
 
 PROPERTY State_PowerStatus : BOOL]]></Declaration>
-      <Get Name="Get" Id="{f32eea30-ecfd-40aa-98ad-396678666aa2}">
+      <Get Name="Get" Id="{29016da4-5013-4869-b3f7-c975cf386061}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -782,7 +782,7 @@ END_VAR
       <Declaration><![CDATA[// =======================复位结束信号==========================
 
 PROPERTY State_ResetDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{305c7aa0-f515-4867-a0e8-4b3fd35a9f3f}">
+      <Get Name="Get" Id="{dc7fc419-a3de-44e5-80b8-6a6888f17339}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -813,23 +813,23 @@ END_VAR
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home">
-      <LineId Id="3" Count="39" />
+      <LineId Id="3" Count="40" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Axis.Home_Absolute_Position.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Axis.Home_Absolute_Position.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Axis.Home_Sensor">
+      <LineId Id="3" Count="40" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Velocity.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Velocity.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Axis.Home2">
-      <LineId Id="3" Count="39" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Axis.Home2_Velocity.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Axis.Home2_Velocity.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Jog_Backward">
@@ -885,9 +885,6 @@ END_VAR
     </LineIds>
     <LineIds Name="Axis.Power">
       <LineId Id="3" Count="17" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="Axis.Proximity_Switch_FeedBack.Set">
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Reset">

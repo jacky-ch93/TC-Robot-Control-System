@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="MAIN" Id="{440363ac-5bde-4305-b825-0d523dc9b248}" SpecialFunc="None">
+  <POU Name="MAIN" Id="{fd460483-4c15-45e9-a130-c38eb726d511}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 // =======================NC轴变量==========================
+	//Leg_Robot			: ARRAY[1..6] OF Hexapod_Leg;	// 定义六足的腿
 	Axis_Robot			: ARRAY[1..18] OF Axis;			// 定义六足轴参量(可以调整数据上限来调整电机数目)
 	Axis_Delay			: Delay;						// 延迟程序
+	Leg_Number			: INT;							// 定义机器人腿数
 	Axis_Number 		: INT;							// 定义轴数目
 	
 	// ===================模块动作信号(按动作先后排列)==========
@@ -16,8 +18,10 @@ VAR
 	Home_Execute		: BOOL;							// 设置零点程序使能
 	//Axis_Start_Back 	: ARRAY[1..18] OF BOOL;			// 单电机找零回退信号
 	//Robot_Start_Back	: BOOL;							// 机器人所有电机回退信号
+	Leg_Home_Set		: ARRAY[1..6] OF BOOL;	
 	Axis_Home_Set		: ARRAY[1..18] OF BOOL;			// 单电机设定零点信号
 	Robot_Home_Set		: BOOL;							// 机器人所有电机设定零点信号
+	//Home_Set_Position	: ARRAY[1..18] OF LREAL;		// 找到零点后电机到达的位置
 	//Delay_On			: ARRAY[1..18] OF BOOL;
 	//TON1				: TON;
 	
@@ -38,6 +42,7 @@ VAR
 	
 	// ===================状态监测变量=======================
 	Power_Status	: ARRAY[1..18] OF BOOL;				// 上电监测信号
+	Leg_Home_Done	: ARRAY[1..6] OF BOOL;
 	Home_Done		: ARRAY[1..18] OF BOOL;				// 找零监测信号
 	MoveAbsoluteDone: ARRAY[1..18] OF BOOL;				// 电机运动监测信号
 	
@@ -63,6 +68,7 @@ Variable_Monitor();			// 变量监测子程序使能
 Logic_Control();			// 逻辑控制子程序使能
 Variable_Set();				// 各动作速度子程序使能
 SetGenerator();				// 外部信号发生子程序使能
+Leg_Action();				// 单腿运动子程序使能
 Robot_Action();				// 机器人整体运动子程序使能
 
 // =====================电机驱动重置=============================
@@ -105,6 +111,22 @@ IF ExSetPoint_Execute THEN
 END_IF
 ]]></ST>
     </Implementation>
+    <Action Name="Leg_Action" Id="{4c1abdbd-87a5-4a2a-b095-1d68b1c20f72}">
+      <Implementation>
+        <ST><![CDATA[// ===================机器人单挑腿找零程序====================
+IF Home_Execute THEN
+	FOR Leg_Number := 1 TO 6 {BY 1} DO
+		IF Leg_Home_Set[Leg_Number] THEN		// 在可视化中，Leg_Home_Set为点动
+			Axis_Home_Set[1+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+			Axis_Home_Set[2+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+			Axis_Home_Set[3+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+		ELSIF Home_Done[1+(Leg_Number-1)*3] AND Axis_Home_Set[2+(Leg_Number-1)*3] AND Axis_Home_Set[3+(Leg_Number-1)*3] THEN
+			Leg_Home_Set[Leg_Number] := FALSE; 
+		END_IF
+	END_FOR
+END_IF]]></ST>
+      </Implementation>
+    </Action>
     <Action Name="Logic_Control" Id="{c215c7dc-fc9f-4378-b645-9582d910ac24}">
       <Implementation>
         <ST><![CDATA[// =======================控制逻辑区==========================
@@ -148,18 +170,6 @@ IF Home_Execute THEN
 			Axis_Robot[Axis_Number].Home(Drive_Home:= Axis_Home_Set[Axis_Number]);
 		END_IF
 	END_FOR
-		(*IF Current_Turque_Value[Axis_Number] > Max_Turque_Value THEN	// 轴后退找零点到位后，停止后退运动
-			Axis_Start_Back[Axis_Number] :=0;
-			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);
-			TON1(IN:= TRUE, PT:=T#200MS, Q=> , ET=> );
-			Axis_Home_Set[Axis_Number] := TON1.Q;
-			Axis_Robot[Axis_Number].Home(Back_Start:= Axis_Start_Back[Axis_Number], Drive_Home:= Axis_Home_Set[Axis_Number]);			
-		END_IF
-	END_FOR
-	IF TON1.Q THEN
-		TON1(IN:= FALSE, PT:=T#200MS, Q=> , ET=> );
-	END_IF*)
-	
 	Move_Execute :=0;							// 设定零点时，不能进行其他运动
 	ExSetPoint_Execute :=0;
 ELSIF NOT Home_Execute THEN
@@ -233,12 +243,30 @@ END_IF*)
 IF Robot_Home_Set THEN				// 标零程序
 	//Robot_Start_Back := FALSE;
 	IF Home_Execute THEN
-		FOR Axis_Number := 1 TO 18 {BY 1} DO
+		(*FOR Axis_Number := 1 TO 18 {BY 1} DO
 			IF Home_Done[Axis_Number] THEN				// 	丝杠到达零点位置后，单电j机标零使能位关闭
 				Axis_Home_Set[Axis_Number] := FALSE;
 			ELSE
 				Axis_Home_Set[Axis_Number] := TRUE;
 			END_IF
+		END_FOR*)
+		Leg_Home_Set[3] := Leg_Home_Set[5] := Leg_Home_Set[1];	// 在整机调零时，1\3\5三条腿同时调零；
+		Leg_Home_Set[4] := Leg_Home_Set[6] := Leg_Home_Set[2];	// 在整机调零时，2\4\6三条腿同时调零；
+		(*FOR Leg_Number := 1 TO 6 {BY 1} DO
+			IF Leg_Home_Done[1] AND Leg_Home_Done[3] AND Leg_Home_Done[5] THEN
+				//Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := FALSE;
+				Leg_Home_Set[2] := Leg_Home_Set[4]:= Leg_Home_Set[6] := TRUE;
+			ELSE
+				Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := TRUE;
+			END_IF			
+			IF Leg_Home_Done[2] AND Leg_Home_Done[4] AND Leg_Home_Done[6] THEN
+				Leg_Home_Set[1] := Leg_Home_Set[3]:= Leg_Home_Set[5] := FALSE;
+				Leg_Home_Set[2] := Leg_Home_Set[4]:= Leg_Home_Set[6] := FALSE;
+			END_IF
+		END_FOR*)
+	ELSIF NOT Home_Execute THEN
+		FOR Leg_Number := 1 TO 6 {BY 1} DO
+			Leg_Home_Set[Leg_Number] := FALSE;
 		END_FOR
 	END_IF
 ELSIF NOT Robot_Home_Set AND NOT Home_Execute THEN
@@ -281,11 +309,11 @@ END_IF
 
 // =================外部信号停止逻辑判断=======================
 //IF Axis_Robot[Axis_Number].State_ExtSetPiontDone THEN
-	IF t>=20 THEN
-		ExtSetPointEnable := FALSE;
-		t:=0;
-		ExtSetPointDisable := TRUE;
-	END_IF
+IF t>=20 THEN
+	ExtSetPointEnable := FALSE;
+	t:=0;
+	ExtSetPointDisable := TRUE;
+END_IF
 //END_IF]]></ST>
       </Implementation>
     </Action>
@@ -318,6 +346,10 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 	Home_Done[Axis_Number] := Axis_Robot[Axis_Number].State_HomeDone;
 END_FOR
 
+(*FOR Leg_Number := 1 TO 6 {BY 1} DO
+	Leg_Home_Done[Leg_Number] := Leg_Robot[Axis_Number].State_HomeDone;
+END_FOR*)
+
 // ===================电机绝对运动状态检测区==================
 FOR Axis_Number := 1 TO 18 {BY 1} DO
 	MoveAbsoluteDone[Axis_Number] := Axis_Robot[Axis_Number].State_MoveAbsoluteDone;
@@ -335,31 +367,69 @@ END_FOR]]></ST>
         <ST><![CDATA[// =======================速度规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是一样的
 	Axis_Robot[Axis_Number].Home_Velocity 	:= 10;			//找零速度(Axis_Jog中的速度)
-	Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;	//绝对运动速度
 	Axis_Robot[Axis_Number].Move_Relative_Velocity	:=30;	//相对运动速度
 END_FOR
+IF Home_Execute THEN
+	IF Robot_Home_Set THEN
+		Axis_Robot[1].Move_Absolute_Velocity :=10; Axis_Robot[3].Move_Absolute_Velocity :=10; Axis_Robot[4].Move_Absolute_Velocity :=10;
+		Axis_Robot[6].Move_Absolute_Velocity :=10; Axis_Robot[7].Move_Absolute_Velocity :=10; Axis_Robot[9].Move_Absolute_Velocity :=10;
+		Axis_Robot[10].Move_Absolute_Velocity :=10; Axis_Robot[12].Move_Absolute_Velocity :=10; Axis_Robot[13].Move_Absolute_Velocity :=10;
+		Axis_Robot[15].Move_Absolute_Velocity :=10; Axis_Robot[16].Move_Absolute_Velocity :=10; Axis_Robot[18].Move_Absolute_Velocity :=10;
+		Axis_Robot[2].Move_Absolute_Velocity :=20; Axis_Robot[5].Move_Absolute_Velocity :=20; Axis_Robot[8].Move_Absolute_Velocity :=20;
+		Axis_Robot[11].Move_Absolute_Velocity :=20; Axis_Robot[14].Move_Absolute_Velocity :=20; Axis_Robot[17].Move_Absolute_Velocity :=20;
+	ELSIF NOT Robot_Home_Set THEN
+		FOR Axis_Number := 1 TO 18 {BY 1} DO
+			Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;
+		END_FOR
+	END_IF
+ELSE
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+			Axis_Robot[Axis_Number].Move_Absolute_Velocity	:=10;
+	END_FOR
+END_IF
+	
 
 // =======================位置规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO
-	Axis_Move_Position[Axis_Number] := 100;
+	Axis_Move_Position[Axis_Number] := 160;
 END_FOR
 
 // =====================最大力矩规定区========================
 Max_Turque_Value := 900;
 
-]]></ST>
+// ===============电机设置零点后到达位置规定区================
+Axis_Robot[1].Home_Absolute_Position := 73.7632; Axis_Robot[3].Home_Absolute_Position := 73.7632; Axis_Robot[4].Home_Absolute_Position := 73.7632;
+Axis_Robot[6].Home_Absolute_Position := 73.7632; Axis_Robot[7].Home_Absolute_Position := 73.7632; Axis_Robot[9].Home_Absolute_Position := 73.7632;
+Axis_Robot[10].Home_Absolute_Position := 73.7632; Axis_Robot[12].Home_Absolute_Position := 73.7632; Axis_Robot[13].Home_Absolute_Position := 73.7632;
+Axis_Robot[15].Home_Absolute_Position := 73.7632; Axis_Robot[16].Home_Absolute_Position := 73.7632; Axis_Robot[18].Home_Absolute_Position := 73.7632;
+Axis_Robot[2].Home_Absolute_Position := 83.7506; Axis_Robot[5].Home_Absolute_Position := 83.7506; Axis_Robot[8].Home_Absolute_Position := 83.7506;
+Axis_Robot[11].Home_Absolute_Position := 83.7506; Axis_Robot[14].Home_Absolute_Position := 83.7506; Axis_Robot[17].Home_Absolute_Position := 83.7506;
+
+// ===================电机和腿映射关系========================
+//FOR Leg_Number := 1 TO 6 {BY 1} DO
+(*Leg_Robot[1](Axis1:= Axis_Robot[1], Axis2:= Axis_Robot[2], Axis3:= Axis_Robot[3]);
+Leg_Robot[2](Axis1:= Axis_Robot[4], Axis2:= Axis_Robot[5], Axis3:= Axis_Robot[6]);
+Leg_Robot[3](Axis1:= Axis_Robot[7], Axis2:= Axis_Robot[8], Axis3:= Axis_Robot[9]);
+Leg_Robot[4](Axis1:= Axis_Robot[10], Axis2:= Axis_Robot[11], Axis3:= Axis_Robot[12]);
+Leg_Robot[5](Axis1:= Axis_Robot[13], Axis2:= Axis_Robot[14], Axis3:= Axis_Robot[15]);
+Leg_Robot[6](Axis1:= Axis_Robot[16], Axis2:= Axis_Robot[17], Axis3:= Axis_Robot[18]);*)
+//END_FOR]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
-      <LineId Id="3" Count="44" />
+      <LineId Id="3" Count="45" />
       <LineId Id="2" Count="0" />
     </LineIds>
+    <LineIds Name="MAIN.Leg_Action">
+      <LineId Id="2" Count="10" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="87" />
+      <LineId Id="2" Count="75" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="62" />
+      <LineId Id="2" Count="80" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">
@@ -367,11 +437,11 @@ Max_Turque_Value := 900;
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Monitor">
-      <LineId Id="2" Count="35" />
+      <LineId Id="2" Count="39" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Set">
-      <LineId Id="2" Count="14" />
+      <LineId Id="2" Count="48" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
