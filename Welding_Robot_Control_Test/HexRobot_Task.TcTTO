@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <Task Name="HexRobot_Task" Id="{67be5058-23df-4314-9e6c-0434360f6f73}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>1000</CycleTime>
+    <Priority>21</Priority>
+    <PouCall>
+      <Name>Hexapod_Robot</Name>
+    </PouCall>
+    <TaskFBGuid>{37952232-44a3-412e-965c-c3e2b8462d71}</TaskFBGuid>
+    <Fb_init>{c118d5dc-b121-4cc1-8f4c-64703f3440a4}</Fb_init>
+    <Fb_exit>{7243b224-8494-40b8-8d8b-b3bb17b64a26}</Fb_exit>
+    <CycleUpdate>{a9362fa3-e86d-4dc1-b576-b04d76568fc1}</CycleUpdate>
+    <PostCycleUpdate>{cca05e95-2e84-42f1-a7fa-9ead96ba45e7}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>
