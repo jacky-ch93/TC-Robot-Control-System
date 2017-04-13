@@ -102,7 +102,7 @@ IF ExSetPoint_Execute THEN
 END_IF
 ]]></ST>
     </Implementation>
-    <Action Name="Logic_Control" Id="{c215c7dc-fc9f-4378-b645-9582d910ac24}">
+    <Action Name="Logic_Control" Id="{3d827e38-563c-40ec-9c3b-9c7ac0040a24}">
       <Implementation>
         <ST><![CDATA[// =======================控制逻辑区==========================
 // 保证所有的动作拥有合理的先后顺序，优化控制逻辑
@@ -138,12 +138,8 @@ IF Home_Execute THEN
 		IF Axis_Home_Set[Axis_Number] THEN			// 设定零点时，轴后退找零动作停止			
 			Axis_Start_Back[Axis_Number] :=0;	
 		END_IF
-	END_FOR
-	FOR Axis_Number := 1 TO 18 {BY 1} DO
-		IF Axis_Start_Back[Axis_Number] THEN			// 轴后退找零点时，不能设置零点，不能设定位置运动
-			FOR Axis_Number := 1 TO 18 {BY 1} DO
-				Axis_Home_Set[Axis_Number] :=0;	
-			END_FOR
+		IF Current_Turque_Value[Axis_Number] < Max_Turque_Value THEN	// 轴后退找零点时，不能设置零点，不能设定位置运动
+			Axis_Home_Set[Axis_Number] :=0;
 		END_IF
 	END_FOR
 	Move_Execute :=0;							// 设定零点时，不能进行其他运动
@@ -179,7 +175,7 @@ ELSIF ExtSetPointDisable THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Robot_Action" Id="{103d6b73-9e52-4067-a668-c66b63a8003e}">
+    <Action Name="Robot_Action" Id="{128dd332-5f8d-474c-9a99-5924403b515f}">
       <Implementation>
         <ST><![CDATA[// =================机器人整体运动命令区======================
 // 六足所有电机整体控制
@@ -231,7 +227,7 @@ END_IF
 ]]></ST>
       </Implementation>
     </Action>
-    <Action Name="SetGenerator" Id="{df99b098-6f3a-407b-a0f4-818f567ebe0b}">
+    <Action Name="SetGenerator" Id="{d9700682-384c-4584-aa59-df5c84595bcd}">
       <Implementation>
         <ST><![CDATA[// ====================外部信号发生测试区=====================
 // 用来测试外部信号发生功能和电机相关参数
@@ -254,7 +250,7 @@ IF Axis_Robot[Axis_Number].State_ExtSetPiontDone THEN
 END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Monitor" Id="{ba544c5b-3975-4680-8681-575f377c08d2}">
+    <Action Name="Variable_Monitor" Id="{f10c31a9-41f8-494a-aa9b-ca802e8ae9d8}">
       <Implementation>
         <ST><![CDATA[// =====================关键数据信号监测======================
 
@@ -295,7 +291,7 @@ FOR Axis_Number := 1 TO 18 {BY 1} DO
 END_FOR]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Set" Id="{bb26148f-2045-404a-a802-a94df446518b}">
+    <Action Name="Variable_Set" Id="{851da005-a489-4fa0-a0ad-5bd551379857}">
       <Implementation>
         <ST><![CDATA[// =======================速度规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO						//此时每一个电机的速度都是一样的
@@ -307,7 +303,12 @@ END_FOR
 // =======================位置规定区==========================
 FOR Axis_Number := 1 TO 18 {BY 1} DO
 	Axis_Move_Position[Axis_Number] := 100;
-END_FOR]]></ST>
+END_FOR
+
+// =====================最大力矩规定区========================
+Max_Turque_Value := 1000;
+
+]]></ST>
       </Implementation>
     </Action>
     <LineIds Name="MAIN">
@@ -316,118 +317,23 @@ END_FOR]]></ST>
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Logic_Control">
-      <LineId Id="2" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="3" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="96" Count="1" />
-      <LineId Id="99" Count="1" />
-      <LineId Id="98" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="108" Count="3" />
-      <LineId Id="103" Count="1" />
-      <LineId Id="107" Count="0" />
-      <LineId Id="105" Count="0" />
-      <LineId Id="95" Count="0" />
-      <LineId Id="29" Count="0" />
-      <LineId Id="74" Count="1" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="77" Count="1" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="72" Count="1" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="57" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="117" Count="0" />
-      <LineId Id="58" Count="0" />
-      <LineId Id="124" Count="0" />
-      <LineId Id="118" Count="5" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="36" Count="2" />
-      <LineId Id="68" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="32" Count="1" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="69" Count="1" />
-      <LineId Id="86" Count="1" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="46" Count="2" />
-      <LineId Id="50" Count="4" />
-      <LineId Id="49" Count="0" />
+      <LineId Id="2" Count="67" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="0" />
-      <LineId Id="5" Count="1" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="80" Count="0" />
-      <LineId Id="70" Count="5" />
-      <LineId Id="67" Count="1" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="26" Count="3" />
-      <LineId Id="25" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="79" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="46" Count="1" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="94" Count="0" />
-      <LineId Id="87" Count="6" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="48" Count="2" />
-      <LineId Id="82" Count="0" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="55" Count="1" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="13" Count="0" />
+      <LineId Id="2" Count="46" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.SetGenerator">
-      <LineId Id="64" Count="0" />
-      <LineId Id="62" Count="1" />
-      <LineId Id="66" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="2" Count="0" />
-      <LineId Id="4" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="52" Count="1" />
-      <LineId Id="58" Count="3" />
-      <LineId Id="54" Count="0" />
+      <LineId Id="2" Count="17" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Monitor">
-      <LineId Id="27" Count="1" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="12" Count="1" />
-      <LineId Id="6" Count="1" />
-      <LineId Id="2" Count="2" />
-      <LineId Id="42" Count="4" />
-      <LineId Id="14" Count="1" />
-      <LineId Id="19" Count="7" />
-      <LineId Id="47" Count="4" />
-      <LineId Id="29" Count="3" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="33" Count="0" />
+      <LineId Id="2" Count="35" />
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Variable_Set">
-      <LineId Id="2" Count="9" />
+      <LineId Id="2" Count="14" />
       <LineId Id="1" Count="0" />
     </LineIds>
   </POU>
