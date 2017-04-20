@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Hexapod_Robot_Mapping" Id="{8bfbae00-9283-4db4-a499-7fa23242537f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Hexapod_Robot_Mapping
+VAR_INPUT
+	Model_Leg_Position	: ARRAY[1..18] OF LREAL;		// 六足机构模型中的腿位置
+END_VAR
+VAR_OUTPUT
+	Controller_Leg_Position	: ARRAY[1..18] OF LREAL;		// 控制模型中的驱动器位置
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Controller_Leg_Position[1]	:= Model_Leg_Position[3];
+Controller_Leg_Position[2]	:= Model_Leg_Position[1];
+Controller_Leg_Position[3]	:= Model_Leg_Position[2];
+Controller_Leg_Position[4]	:= Model_Leg_Position[18];
+Controller_Leg_Position[5]	:= Model_Leg_Position[16];
+Controller_Leg_Position[6]	:= Model_Leg_Position[17];
+Controller_Leg_Position[7]	:= Model_Leg_Position[15];
+Controller_Leg_Position[8]	:= Model_Leg_Position[13];
+Controller_Leg_Position[9]	:= Model_Leg_Position[14];
+Controller_Leg_Position[10]	:= Model_Leg_Position[12];
+Controller_Leg_Position[11]	:= Model_Leg_Position[10];
+Controller_Leg_Position[12]	:= Model_Leg_Position[11];
+Controller_Leg_Position[13]	:= Model_Leg_Position[9];
+Controller_Leg_Position[14]	:= Model_Leg_Position[7];
+Controller_Leg_Position[15]	:= Model_Leg_Position[8];
+Controller_Leg_Position[16]	:= Model_Leg_Position[6];
+Controller_Leg_Position[17]	:= Model_Leg_Position[4];
+Controller_Leg_Position[18]	:= Model_Leg_Position[5];]]></ST>
+    </Implementation>
+    <LineIds Name="Hexapod_Robot_Mapping">
+      <LineId Id="12" Count="16" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
