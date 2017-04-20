@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{41df21bc-5dad-41c5-b304-5bca5d02c90e}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
-    <Name>Hexapod_Robot_Control_Test</Name>
+    <Name>TC_Robot_Control</Name>
     <ProgramVersion>3.1.4020.4</ProgramVersion>
     <Application>{12835eea-fdc5-4dcc-8d40-0070c9005ff0}</Application>
     <TypeSystem>{d7a8ee89-115e-49bc-a5d7-78ee15d0072f}</TypeSystem>
@@ -179,7 +179,7 @@
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Hexapod_Robot_Control_Test.tmc">
+    <None Include="TC_Robot_Control.tmc">
       <SubType>Content</SubType>
     </None>
   </ItemGroup>

@@ -1942,7 +1942,7 @@ External Setpoint Generation:
 		<ImageData Id="1000">424d3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542c32784c31784b3077493076482f75462e74442d72422c71402b703e2a6e3c296c3a286b372769352667331d4a1e337b4f3d94833c93803a917d398f7a378d76358a7233886f31856a2f81662d7e612b7b5d29775827735424704f266733357d5340998a3f98873d97843c95813a927d389079368d75348a7032876c3083672d7f622b7c5d297859277454276935378056439e913c8f712e66232e66232e66232e66232e66232e66232e66232e66232e66232e66233d7c50297759286b3838835946a5982e6623419d8d409b893e98863c96823a927d388f78358c7333876f31836a2e7c622e6623468b6f296c3a3a855b4caa9e2e66234ba99b397e4f57ad9c42a08d409d883c99833a957d389178368d7333886d2e6623478c702a6e3c4289605eb5aa2e662360b7ac2b6421326a29519d7f43a390409e893d9a833b967e389078358c732e6623488f732b703f4a8f6670bfb52e662373c3b82c65225ea997326c36407e4953a996409e893d99833a947e378f782e66234a91782c724153936b81c9c02e662385ccc42d65237cc8be70c1b5488a6e31682a539b7c409d893d98833a937d2e66234b947b2d73435b987092d2c92e662397d6ce2e66238cd1c980cbc172c2b659a79a3473453977404fa28e3c96812e66234d967f2e7445629b74a2d9d22e6623a8ded72e65229ad9d18dd1c97ec9bf6dbeb25ab2a43d8d702a612a4d92712e66234e98822f7647699e77b1dfd92e6623bce6e02d6520abdfd89bd7d08acfc67bc5bc68baae55ad9f49a2923977532e66234b98833077496ea079bde4df87aa942e66232e66232e66232e66232e66232e66232e66232e66232e66232e662332794f3c928031784b6fa07ac2e6e1d3edead2ede9c2e7e2b1e0d9a0d8d08dcfc77bc5bb69bab056afa446a497439f91409a8a3d948332784c6d9f79bde3dec9e8e4c8e8e4bde3deadddd79dd5ce8bcdc57ac3ba67b9ae54aea247a59945a093419b8c3e958633794e3e66416f9f7973a27c73a27c6fa07a689d76609a7258956e4f9169468b633d865d388259378157367e54347b5123542d</ImageData>
 		<ImageData Id="1001">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e000000000000000000000000000000008000008000000080800080000000800080008080000080808000c0c0c0000000ff0000ff000000ffff00ff000000ff00ff00ffff0000ffffff00ffffffffffffffffffffffffffffffff79999997ffffffff99977999ffffffff9998ff89ffffffff99999fffffffffff999997ffff777777999999ffff777777799999ffff877777fffffffffff77777ffffffff78ff8777ffffffff77777777ffffffff77777777ffffffffffffffff</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{42D221E9-C7AE-471C-9237-66BAA34BA7A8}" TargetNetId="5.18.64.212.1.1" ShowHideConfigurations="#x106">
+	<Project ProjectGUID="{5F1F88CD-B05D-4CA0-B54C-7FB349808451}" TargetNetId="5.18.64.212.1.1" ShowHideConfigurations="#x106">
 		<System>
 			<Tasks>
 				<Task Id="4" Priority="20" CycleTime="10000" AmsPort="350">
@@ -3995,7 +3995,7 @@ External Setpoint Generation:
 							</Value>
 							<Value>
 								<Name>ExecuteModelCode</Name>
-								<EnumText>FALSE</EnumText>
+								<EnumText>TRUE</EnumText>
 							</Value>
 							<Value>
 								<Name>Input.t</Name>
@@ -7752,9 +7752,9 @@ External Setpoint Generation:
 			</NC>
 		</Motion>
 		<Plc>
-			<Project GUID="{41DF21BC-5DAD-41C5-B304-5BCA5D02C90E}" Name="Hexapod_Robot_Control_Test" PrjFilePath="Hexapod_Robot_Control_Test\Hexapod_Robot_Control_Test.plcproj" TmcFilePath="Hexapod_Robot_Control_Test\Hexapod_Robot_Control_Test.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+			<Project GUID="{41DF21BC-5DAD-41C5-B304-5BCA5D02C90E}" Name="TC_Robot_Control" PrjFilePath="TC_Robot_Control\TC_Robot_Control.plcproj" TmcFilePath="TC_Robot_Control\TC_Robot_Control.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
-					<Name>Hexapod_Robot_Control_Test Instance</Name>
+					<Name>TC_Robot_Control Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Vars VarGrpType="1">
 						<Name>PlcTask Inputs</Name>
@@ -17877,7 +17877,7 @@ External Setpoint Generation:
 				<Link VarA="Enc^Inputs^In^nState4" VarB="WcState^WcState"/>
 			</OwnerB>
 		</OwnerA>
-		<OwnerA Name="TIPC^Hexapod_Robot_Control_Test^Hexapod_Robot_Control_Test Instance">
+		<OwnerA Name="TIPC^TC_Robot_Control^TC_Robot_Control Instance">
 			<OwnerB Name="TIID^Device 3 (EtherCAT)^Drive 1 (Elmo Drive)">
 				<Link VarA="PlcTask Inputs^MAIN.Current_Turque_Value[1]" VarB="Inputs_1^Current actual value"/>
 			</OwnerB>
