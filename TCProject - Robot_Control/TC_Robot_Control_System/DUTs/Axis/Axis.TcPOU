@@ -819,9 +819,7 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home">
-      <LineId Id="131" Count="4" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="136" Count="34" />
+      <LineId Id="196" Count="40" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Absolute_Position.Get">
