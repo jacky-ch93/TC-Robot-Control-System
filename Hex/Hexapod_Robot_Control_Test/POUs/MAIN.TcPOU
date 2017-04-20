@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
   <POU Name="MAIN" Id="{fd460483-4c15-45e9-a130-c38eb726d511}" SpecialFunc="None">
-    <Declaration>
-      <![CDATA[PROGRAM MAIN
+    <Declaration><![CDATA[PROGRAM MAIN
 VAR
 // =======================NC轴变量==========================
 	//Leg_Robot			: ARRAY[1..6] OF Hexapod_Leg;	// 定义六足的腿
