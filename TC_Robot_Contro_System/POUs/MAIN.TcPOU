@@ -234,9 +234,8 @@ END_IF]]></ST>
 // ====================机器人驱动重置=========================
 IF Robot_Reset THEN
 	IF Reset_Execute THEN
-		Axis_Reset[Axis_Number] := TRUE;
 		FOR Axis_Number := 1 TO 18 {BY 1} DO
-			Axis_Robot[Axis_Number].Reset(Drive_Reset:= Axis_Reset[Axis_Number]);
+			Axis_Robot[Axis_Number].Reset(Drive_Reset:= TRUE);
 		END_FOR
 	END_IF
 END_IF	
@@ -480,7 +479,8 @@ Current_Turque_Filter := Filter_Current.stOutput.Current_Monitor;]]></ST>
       <LineId Id="1" Count="0" />
     </LineIds>
     <LineIds Name="MAIN.Robot_Action">
-      <LineId Id="2" Count="21" />
+      <LineId Id="2" Count="4" />
+      <LineId Id="8" Count="15" />
       <LineId Id="31" Count="2" />
       <LineId Id="90" Count="0" />
       <LineId Id="92" Count="0" />
