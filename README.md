@@ -11,4 +11,4 @@ Repository for Robot Control System Test in Hexapod Robot
 
 其余接口外部设备需要配备相应的倍福通讯模块或者与系统进行ADS通信。
 ## About the Version
-本系统版本到V1.3为止，能够支持18个电机的单个电机与整机操作调试工作。
+本系统版本到V2.0为止，能够支持18个电机的单个电机与整机操作调试工作。
