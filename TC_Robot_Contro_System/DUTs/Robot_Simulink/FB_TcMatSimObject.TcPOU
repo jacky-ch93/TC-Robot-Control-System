@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="FB_TcMatSimObject" Id="{297eb521-547c-4d1c-8bc8-10eafb85a0d5}" SpecialFunc="None">
+  <POU Name="FB_TcMatSimObject" Id="{eb28346a-c345-4908-a947-15a93b050e10}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TcMatSimObject
 VAR_INPUT
 	/// set this flag to write FB input values to the TcComObject's input DataAreas. This will overwrite the mapped input values before module execution. Set to FALSE to read the mapped input values from the TcComObject to the FB.
@@ -49,10 +49,10 @@ bClassIdVerified := false;
                   ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="ClassId" Id="{4b86db13-a862-4b9e-9f46-286349b7f6ac}">
+    <Property Name="ClassId" Id="{1fe3eca5-b219-4b63-9c5c-1c0d0e348f89}">
       <Declaration><![CDATA[PROPERTY ClassId : CLSID
 ]]></Declaration>
-      <Get Name="Get" Id="{e37717da-cab0-40bb-8f86-9d1cabe3268f}">
+      <Get Name="Get" Id="{1dcb63ea-d1de-4c03-80d6-7dfe98c33561}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[hResult := ReadModuleClassId();
@@ -61,27 +61,27 @@ ClassId := moduleClsId;
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Error" Id="{ae944a2a-65d9-44bc-ae46-bc6c17020876}">
+    <Property Name="Error" Id="{7f2ba93a-368a-4bf2-aa0a-e0db2c74b163}">
       <Declaration><![CDATA[PROPERTY Error : BOOL
 ]]></Declaration>
-      <Get Name="Get" Id="{3b948a45-99a8-4322-8b02-a6461295c1f9}">
+      <Get Name="Get" Id="{f96fae2f-3b69-4712-bfb1-76030e1111ca}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[Error := FAILED(hResult);]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="ErrorCode" Id="{3756fb46-9287-4236-8b27-749c659ab75e}">
+    <Property Name="ErrorCode" Id="{85ff5366-0954-49df-a02c-0d6e4190ad9f}">
       <Declaration><![CDATA[PROPERTY ErrorCode : HRESULT
 ]]></Declaration>
-      <Get Name="Get" Id="{610f745a-d70c-4c1c-a76c-ce8cb4736c94}">
+      <Get Name="Get" Id="{f0e09895-2b60-4820-8c17-b47fccfbd065}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[ErrorCode := hResult;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="Execute" Id="{897ccdc9-ae89-4a2e-9393-cc003d074937}">
+    <Method Name="Execute" Id="{35a103d7-ec50-43af-bc94-2b7a2f3e2595}">
       <Declaration><![CDATA[{attribute 'object_name' := 'Execute'}
 METHOD Execute : HRESULT
 VAR
@@ -164,7 +164,7 @@ Execute := hResult;
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_exit" Id="{bda62fa0-b206-42d1-a8a6-0bc99d5ee571}">
+    <Method Name="FB_exit" Id="{37cd098a-9d8d-442d-98dd-58c143c6eaad}">
       <Declaration><![CDATA[{attribute 'object_name' := 'FB_exit'}
 METHOD FB_exit : BOOL
 VAR_INPUT
@@ -185,7 +185,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="FB_init" Id="{239573d1-11e8-4471-a81e-4fd83bf1b22c}">
+    <Method Name="FB_init" Id="{d6f1a6cf-574a-429a-b023-b03683409488}">
       <Declaration><![CDATA[{attribute 'object_name' := 'FB_init'}
 METHOD FB_init : BOOL
 VAR_INPUT
@@ -202,7 +202,7 @@ FB_init := SUCCEEDED(Init(oid));
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GetImagePtrs" Id="{ff908ccf-3565-43bd-8c35-175db7408221}">
+    <Method Name="GetImagePtrs" Id="{7a6d0120-8131-41cb-bbeb-99b398d9b8b5}">
       <Declaration><![CDATA[{attribute 'object_name' := 'GetImagePtrs'}
 METHOD PRIVATE GetImagePtrs
 VAR_INPUT
@@ -245,7 +245,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="GetObjPara" Id="{61205001-6918-4083-92e9-20dac0bc4ef1}">
+    <Method Name="GetObjPara" Id="{9188554c-6b91-48b0-ae25-783fe7ca5a35}">
       <Declaration><![CDATA[{attribute 'object_name' := 'GetObjPara'}
 METHOD GetObjPara : HRESULT
 VAR_INPUT
@@ -266,7 +266,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Init" Id="{29d7bf75-9381-4d84-a860-099f3b936472}">
+    <Method Name="Init" Id="{a458d5a0-de1a-4385-a402-504ea6d24ac5}">
       <Declaration><![CDATA[{attribute 'object_name' := 'Init'}
 METHOD PROTECTED Init : HRESULT
 VAR_INPUT
@@ -305,7 +305,7 @@ Init := hresult;
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="InitObjName" Id="{e57bbda3-9db4-4021-aa3c-80bb9f1ad4be}">
+    <Method Name="InitObjName" Id="{57e361b9-15ab-441e-a552-05c8869fccb5}">
       <Declaration><![CDATA[{attribute 'object_name' := 'InitObjName'}
 METHOD PRIVATE InitObjName
 VAR_INPUT
@@ -330,7 +330,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Internal_SetObjState" Id="{2a284430-023c-42ff-b905-106a19dc7756}">
+    <Method Name="Internal_SetObjState" Id="{48a4cc02-9d20-4d6c-ac03-2c726826d0b9}">
       <Declaration><![CDATA[{attribute 'object_name' := 'Internal_SetObjState'}
 METHOD PROTECTED Internal_SetObjState
 VAR_INPUT
@@ -360,7 +360,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="QueryObjInterface" Id="{963e2511-8d40-4d41-a2af-424870312b01}">
+    <Method Name="QueryObjInterface" Id="{2c9009ea-092d-4907-8576-096fe09f7be5}">
       <Declaration><![CDATA[{attribute 'object_name' := 'QueryObjInterface'}
 METHOD PRIVATE QueryObjInterface
 VAR_INPUT
@@ -384,7 +384,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="QueryObjInterfaces" Id="{0e4c5207-7479-486b-8435-e7143af5d8f3}">
+    <Method Name="QueryObjInterfaces" Id="{306af944-8e22-4cb5-923a-4bab2f50961d}">
       <Declaration><![CDATA[{attribute 'object_name' := 'QueryObjInterfaces'}
 METHOD PRIVATE QueryObjInterfaces
 VAR_INPUT
@@ -406,7 +406,7 @@ QueryObjInterface(hr,IID_ITcADI,ADR(ipTcAdi));
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="QueryTcComInterface" Id="{db5ece08-104a-41b4-854a-121b9be60508}">
+    <Method Name="QueryTcComInterface" Id="{0b5c2446-be24-4f0b-b1a9-12b669ad6d31}">
       <Declaration><![CDATA[{attribute 'object_name' := 'QueryTcComInterface'}
 METHOD PRIVATE QueryTcComInterface
 VAR_INPUT
@@ -461,7 +461,7 @@ IF (memcmp(ADR(moduleClsId),ADR(emptyClsId),SIZEOF(moduleClsId))=0) THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReleaseImagePtrs" Id="{a11c8173-b42c-4002-8dd2-5b54a6df6598}">
+    <Method Name="ReleaseImagePtrs" Id="{90deca67-89f1-4ae1-ba9d-ae760d0afcb4}">
       <Declaration><![CDATA[{attribute 'object_name' := 'ReleaseImagePtrs'}
 METHOD PRIVATE ReleaseImagePtrs : HRESULT
 VAR
@@ -489,7 +489,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReleaseObjInterfaces" Id="{099390ec-6044-4769-bc62-210d36cfde3a}">
+    <Method Name="ReleaseObjInterfaces" Id="{a439ad86-9fa6-4d9c-9a11-56325f54e5e0}">
       <Declaration><![CDATA[{attribute 'object_name' := 'ReleaseObjInterfaces'}
 METHOD PRIVATE ReleaseObjInterfaces : HRESULT
 ]]></Declaration>
@@ -511,7 +511,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReleaseTcComInterface" Id="{0bd0cb80-7c08-4b56-bc2f-c0a84ce845c0}">
+    <Method Name="ReleaseTcComInterface" Id="{81dd91c6-d477-4f7b-a40c-2d10445ed5f7}">
       <Declaration><![CDATA[{attribute 'object_name' := 'ReleaseTcComInterface'}
 METHOD PRIVATE ReleaseTcComInterface : HRESULT
 VAR
@@ -536,7 +536,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ResetHresult" Id="{051d2f38-d781-491e-82e7-88c7a9a3935a}">
+    <Method Name="ResetHresult" Id="{896897a2-ce21-4567-9f1f-4a75dfa07704}">
       <Declaration><![CDATA[{attribute 'object_name' := 'ResetHresult'}
 METHOD ResetHresult
 ]]></Declaration>
@@ -544,7 +544,7 @@ METHOD ResetHresult
         <ST><![CDATA[hResult := S_OK;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SaveOnlineParametersForInit" Id="{a7caf675-3d50-448e-8171-f43e075220f9}">
+    <Method Name="SaveOnlineParametersForInit" Id="{d2f5823b-dec5-4b49-be7e-07a86e32eb4a}">
       <Declaration><![CDATA[{attribute 'object_name' := 'SaveOnlineParametersForInit'}
 METHOD SaveOnlineParametersForInit : HRESULT
 VAR
@@ -601,7 +601,7 @@ END_VAR
         <ST><![CDATA[this^.pInitData := pInitData;]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetObjPara" Id="{8255aae4-4cd2-486f-aa65-ca5adba9f12e}">
+    <Method Name="SetObjPara" Id="{3f2abc33-b310-4e30-a970-72eb214835eb}">
       <Declaration><![CDATA[{attribute 'object_name' := 'SetObjPara'}
 METHOD SetObjPara : HRESULT
 VAR_INPUT
@@ -622,7 +622,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetObjState" Id="{07834245-7dca-4271-83eb-f39f33826d77}">
+    <Method Name="SetObjState" Id="{3543108f-5b8b-4fca-8ffe-e379bbe91dfc}">
       <Declaration><![CDATA[{attribute 'object_name' := 'SetObjState'}
 METHOD SetObjState : HRESULT
 VAR_INPUT
@@ -687,10 +687,10 @@ SetObjState := hResult;
                   ]]></ST>
       </Implementation>
     </Method>
-    <Property Name="State" Id="{77fd2b10-a50d-4a9b-a578-fbc4b1c5ecb4}">
+    <Property Name="State" Id="{7565ad94-7e94-4ffd-99e0-7428d388e0bd}">
       <Declaration><![CDATA[PROPERTY State : TCOM_STATE
 ]]></Declaration>
-      <Get Name="Get" Id="{2600e4c2-e6ef-4162-91d9-45e5dab2a9be}">
+      <Get Name="Get" Id="{020f8201-1c5c-4c91-a9a3-585814ee7cd1}">
         <Declaration><![CDATA[VAR
 	hr: HRESULT := S_OK;
 	eObjState: TCOM_STATE;
@@ -710,7 +710,7 @@ State := eObjState;
                     ]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{4fceb017-e75d-4428-88a4-0e2ee1b68092}">
+      <Set Name="Set" Id="{41e8d62d-6e17-4777-a1ae-b447af39e9f9}">
         <Declaration><![CDATA[]]></Declaration>
         <Implementation>
           <ST><![CDATA[SetObjState(State);]]></ST>

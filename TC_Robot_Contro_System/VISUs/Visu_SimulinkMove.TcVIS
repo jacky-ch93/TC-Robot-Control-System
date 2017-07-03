@@ -1632,7 +1632,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"MAIN.ExSetPoint_Execute"</v>
+                      <v n="Value">"Simulink_Model_Generator.ExSetPoint_Execute"</v>
                     </o>
                   </l>
                 </o>
@@ -1730,7 +1730,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"MAIN.ExSetPoint_Execute"</v>
+                      <v n="Value">"Simulink_Model_Generator.ExSetPoint_Execute"</v>
                     </o>
                   </l>
                 </o>
@@ -3866,7 +3866,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"MAIN.ExtSetPointEnable"</v>
+                      <v n="Value">"Simulink_Model_Generator.ExtSetPointEnable"</v>
                     </o>
                   </l>
                 </o>
@@ -4141,7 +4141,7 @@
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
-                      <v n="Value">"MAIN.T_All"</v>
+                      <v n="Value">"Simulink_Model_Generator.T_All"</v>
                     </o>
                     <o>
                       <v n="Id">823443203L</v>
@@ -4159,7 +4159,7 @@
                   <v>OnMouseClick</v>
                   <a cet="InputBoxInputAction">
                     <o>
-                      <v n="InputBoxVariable">"MAIN.T_All"</v>
+                      <v n="InputBoxVariable">"Simulink_Model_Generator.T_ALL"</v>
                       <v n="InputType">"Default"</v>
                       <v n="InputBoxMin">""</v>
                       <v n="InputBoxMax">""</v>
@@ -4424,7 +4424,7 @@
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
-                      <v n="Value">"MAIN.t"</v>
+                      <v n="Value">"Simulink_Model_Generator.t"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -4576,7 +4576,7 @@
                       <l n="VisualElemMemberList" t="VisualElemMemberCollection" cet="VisualElemMember">
                         <o>
                           <v n="Id">1186196937L</v>
-                          <v n="Value">"MAIN.ExtSetPointEnable"</v>
+                          <v n="Value">"Simulink_Model_Generator.ExtSetPointEnable"</v>
                         </o>
                       </l>
                     </o>
@@ -4815,7 +4815,7 @@
                     </o>
                     <o>
                       <v n="Id">743958181L</v>
-                      <v n="Value">"MAIN.ExtSetPointDisable"</v>
+                      <v n="Value">"Simulink_Model_Generator.ExtSetPointDisable"</v>
                     </o>
                   </l>
                 </o>
@@ -5196,7 +5196,7 @@
                     </o>
                     <o>
                       <v n="Id">2477733581L</v>
-                      <v n="Value">"MAIN.t_Interval"</v>
+                      <v n="Value">"Simulink_Model_Generator.t_Interval"</v>
                     </o>
                     <o>
                       <v n="Id">2597686782L</v>
@@ -5214,18 +5214,18 @@
                 <v n="VisualElementIdentifier">"GenElemInst_305"</v>
                 <n n="VisualElementOfflinePaintCommands" />
                 <n n="VisualElementFrameInformation" />
-                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="IInputAction[]">
+                <d n="VisualElementInputActions" t="Hashtable" ckt="String" cvt="InputBoxInputAction[]">
                   <v>OnMouseClick</v>
                   <a cet="InputBoxInputAction">
                     <o>
-                      <v n="InputBoxVariable">"MAIN.t_Interval"</v>
+                      <v n="InputBoxVariable">"Simulink_Model_Generator.t_Interval"</v>
                       <v n="InputType">"Default"</v>
                       <v n="InputBoxMin">""</v>
                       <v n="InputBoxMax">""</v>
                       <v n="InputBoxDialogTitle">""</v>
                       <v n="Password">false</v>
                       <v n="UseTextOutputVariable">false</v>
-                      <v n="TextOutputVariableInitialized">false</v>
+                      <v n="TextOutputVariableInitialized">true</v>
                       <v n="OtherVarConversion">""</v>
                       <v n="Format">""</v>
                     </o>
@@ -5441,7 +5441,6 @@
         <Type n="Guid">System.Guid</Type>
         <Type n="Hashtable">System.Collections.Hashtable</Type>
         <Type n="HotkeyConfiguration">{6b108d46-58af-4e41-a3f4-174d8f160cc4}</Type>
-        <Type n="IInputAction[]">_3S.CoDeSys.VisualElem.IInputAction[], VisualElem, Version=3.5.8.0, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="InputBoxInputAction">{e8e7e747-f76f-4dee-ab1c-b9637e41ac26}</Type>
         <Type n="InputBoxInputAction[]">_3S.CoDeSys.VisualElem.InputBoxInputAction[], VisualElem.plugin, Version=3.5.8.40, Culture=neutral, PublicKeyToken=null</Type>
         <Type n="Int16">System.Int16</Type>

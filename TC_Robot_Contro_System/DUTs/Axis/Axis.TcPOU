@@ -15,8 +15,8 @@ VAR
 	ResetDone		    : BOOL;					// Status of function block MC_Reset
 	HaltDone		    : BOOL;					// Status of function block MC_Halt
 	HomeDone		    : BOOL;					// Status of function block MC_Home
-  MoveAbsoluteDone : BOOL;        // Status of function block MC_MoveAbsolute
-  ExtSetPiontDone 	: BOOL;         		// Status of function block MC_ExtSetPointGenDisable
+  	MoveAbsoluteDone : BOOL;        // Status of function block MC_MoveAbsolute
+  	ExtSetPiontDone 	: BOOL;         		// Status of function block MC_ExtSetPointGenDisable
 
 	// =============== Control variables ======================
 	//Home_Back_Start	: BOOL;
@@ -47,7 +47,7 @@ VAR
   	Axis_Max_Turque       	: INT;
 
 	// ================= Sensor FeedBack ====================
-  Proximity_Switch      : DINT;
+  	Proximity_Switch      : DINT;
 	
 	// =============== Motion function blocks =================
 	Axis_Power 			: MC_Power;				// FB for enable and override			[上电]
@@ -60,6 +60,7 @@ VAR
 	Axis_MoveAbsolute 	: MC_MoveAbsolute;		// FB to move axis absolutely			[绝对位置运动]
 	Axis_MoveRelative	: MC_MoveRelative;		// FB to move axis relatively			[相对位置运动]
   	Axis_ActPosition  : MC_ReadActualPosition; // FB to read the actual position of axis  [读取电机轴的实际位置]
+	Axis_ActVelocity	: MC_ReadActualVelocity;// FB to read the actual Velocity of axis [读取电机轴的实际速度]
 	Axis_Delay			: Delay;				// FB to operate the delay program		[延迟程序]
 	Axis_ExtSetPiontEnable	: MC_ExtSetPointGenEnable;	// FB to enable extsetpoint		[外部函数发生使能]
 	Axis_ExtSetPiontDisable	: MC_ExtSetPointGenDisable;	// FB to disable extsetpoint	[外部函数结束使能]
@@ -80,6 +81,17 @@ END_VAR
         <Implementation>
           <ST><![CDATA[Axis_ActPosition( Axis:= AxisRef, Enable:= TRUE );
 ActPosition := Axis_ActPosition.Position;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="ActVelocity" Id="{6ba788af-13d6-45aa-88b8-c4b15f3b7302}">
+      <Declaration><![CDATA[PROPERTY ActVelocity : LREAL]]></Declaration>
+      <Get Name="Get" Id="{d9e77e56-00f7-4ebc-9fc8-803356b7adfe}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Axis_ActVelocity( Axis:= AxisRef, Enable:= TRUE,  ActualVelocity=> ActVelocity);]]></ST>
         </Implementation>
       </Get>
     </Property>
@@ -210,14 +222,14 @@ END_VAR
 // 找零程序过程为：先让丝杠回退，到达机械限位后停止,并用程序将该位置置为零位
 
 //======================丝杠回退========================
-Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+Jog_Backward(Drive_Jog_Backward:= (Drive_Home AND (NOT BackDone)));
 Jog_Velocity := Velocity_Home;
-HomeDone := Axis_MoveAbsolute.Done;					// 回到零点的标志为丝杠伸长到制定距离
+HomeDone := Axis_MoveAbsolute.Done;					// 找零结束的标志为丝杠伸长到制定距离
 	
 IF NOT Axis_Home.Error THEN
 	IF ABS(Axis_Current_Turque) > Axis_Max_Turque AND NOT BackDone THEN
-		Drive_Home :=0;
-		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+		//Drive_Home :=0;
+		Jog_Backward(Drive_Jog_Backward:= 0);
 		Delay(IN:= NOT Delay.Q, PT:=T#200MS, Q=> , ET=> );
 		Axis_Home( 	Axis:= AxisRef, 
 					Execute:= Delay.Q, 
@@ -225,10 +237,11 @@ IF NOT Axis_Home.Error THEN
 					HomingMode:= MC_Direct);
 		BackDone := Axis_Home.Done;				
 	END_IF
-	IF BackDone THEN
+	IF BackDone AND Drive_Home THEN
 		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= Home_Position );
 		IF Axis_MoveAbsolute.Done THEN
 			BackDone := FALSE;
+			Drive_Home	:= FALSE;
 		END_IF
 	END_IF
 END_IF
@@ -798,6 +811,9 @@ END_VAR
       <LineId Id="3" Count="0" />
       <LineId Id="2" Count="0" />
     </LineIds>
+    <LineIds Name="Axis.ActVelocity.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
     <LineIds Name="Axis.Current_Turque_Value.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
@@ -819,9 +835,7 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home">
-      <LineId Id="131" Count="4" />
-      <LineId Id="183" Count="0" />
-      <LineId Id="136" Count="34" />
+      <LineId Id="249" Count="41" />
       <LineId Id="2" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Absolute_Position.Get">

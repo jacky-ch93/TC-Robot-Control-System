@@ -537,7 +537,7 @@
 			</SubItem>
 		</DataType>
 		<DataType>
-			<Name GUID="{EACDDCAC-1F72-903E-4E03-CE7B59AEA9AF}">ExtU_hexmove_T</Name>
+			<Name GUID="{C4FB114F-D932-ADF4-CC67-05A115DC90B8}">ExtU_output_WeldingDiameter10_T</Name>
 			<BitSize>64</BitSize>
 			<SubItem>
 				<Name>t</Name>
@@ -545,6 +545,15 @@
 				<BitSize>64</BitSize>
 				<BitOffs>0</BitOffs>
 			</SubItem>
+		</DataType>
+		<DataType>
+			<Name GUID="{6761E8AA-7A72-5550-E6F7-E2105630A466}">matrix_3_real_T</Name>
+			<BitSize>192</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+			<ArrayInfo>
+				<LBound>0</LBound>
+				<Elements>3</Elements>
+			</ArrayInfo>
 		</DataType>
 		<DataType>
 			<Name GUID="{18071995-0000-0000-0000-000000000035}" TcBaseType="true" HideType="true">UINTARR2</Name>
@@ -1944,9 +1953,15 @@ External Setpoint Generation:
 	</ImageDatas>
 	<Project ProjectGUID="{7A1DD643-067E-477F-A245-66F5366C4220}" TargetNetId="5.18.64.212.1.1" ShowHideConfigurations="#x106">
 		<System>
+			<Settings>
+				<IoIdleTask Priority="12"/>
+			</Settings>
 			<Tasks>
-				<Task Id="4" Priority="20" CycleTime="10000" AmsPort="350">
+				<Task Id="4" Priority="8" CycleTime="10000" AmsPort="350">
 					<Name>PlcTask</Name>
+				</Task>
+				<Task Id="6" Priority="10" CycleTime="10000" AmsPort="351">
+					<Name>Simulink_Test</Name>
 				</Task>
 			</Tasks>
 			<Modules>
@@ -1969,9 +1984,9 @@ External Setpoint Generation:
 							<Context>
 								<Id>0</Id>
 								<ManualConfig>
-									<OTCID>#x02010040</OTCID>
+									<OTCID>#x02010060</OTCID>
 								</ManualConfig>
-								<Priority>20</Priority>
+								<Priority>10</Priority>
 								<CycleTime>1000000</CycleTime>
 							</Context>
 						</Contexts>
@@ -3633,11 +3648,11 @@ External Setpoint Generation:
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskOid</Name>
-								<Value>33620032</Value>
+								<Value>33620064</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskPriority</Name>
-								<Value>20</Value>
+								<Value>10</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
@@ -3645,7 +3660,7 @@ External Setpoint Generation:
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskPort</Name>
-								<Value>350</Value>
+								<Value>351</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskSortOrder</Name>
@@ -3655,11 +3670,11 @@ External Setpoint Generation:
 					</TmcDesc>
 				</Module>
 				<Module Id="#x01010020" KeepUnrestoredLinks="2">
-					<Name>Object2 (HexMove)</Name>
+					<Name>Object2 (Welding_Control_Circle_86s)</Name>
 					<ImageId>1000</ImageId>
-					<TmcDesc GUID="{17344CA2-8DEB-423E-86B2-C072D90EC986}">
-						<Name>HexMove</Name>
-						<CLSID ClassFactory="HexMove">{17344CA2-8DEB-423E-86B2-C072D90EC986}</CLSID>
+					<TmcDesc GUID="{4F7C9520-5E7B-4579-BE6E-10C0EB37316D}">
+						<Name>Welding_Control_Circle_86s</Name>
+						<CLSID ClassFactory="Welding_Control_Circle_86s">{4F7C9520-5E7B-4579-BE6E-10C0EB37316D}</CLSID>
 						<Info>
 							<TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}"/>
 						</Info>
@@ -3673,9 +3688,9 @@ External Setpoint Generation:
 							<Context>
 								<Id>0</Id>
 								<ManualConfig>
-									<OTCID>#x02010040</OTCID>
+									<OTCID>#x02010060</OTCID>
 								</ManualConfig>
-								<Priority>20</Priority>
+								<Priority>10</Priority>
 								<CycleTime>1000000</CycleTime>
 							</Context>
 						</Contexts>
@@ -3751,7 +3766,7 @@ External Setpoint Generation:
 							<Parameter>
 								<Name>Input</Name>
 								<BitSize>64</BitSize>
-								<BaseType GUID="{EACDDCAC-1F72-903E-4E03-CE7B59AEA9AF}">ExtU_hexmove_T</BaseType>
+								<BaseType GUID="{C4FB114F-D932-ADF4-CC67-05A115DC90B8}">ExtU_output_WeldingDiameter10_T</BaseType>
 								<PTCID>#x80000000</PTCID>
 							</Parameter>
 							<Parameter CreateSymbol="true">
@@ -3812,6 +3827,19 @@ External Setpoint Generation:
 									<BitOffs>0</BitOffs>
 								</Symbol>
 							</DataArea>
+							<DataArea>
+								<AreaNo AreaType="Internal" CreateSymbols="true">2</AreaNo>
+								<Name>BlockIO</Name>
+								<ContextId>0</ContextId>
+								<ByteSize>24</ByteSize>
+								<Symbol CreateSymbol="true">
+									<Name>position</Name>
+									<BitSize>192</BitSize>
+									<BaseType GUID="{6761E8AA-7A72-5550-E6F7-E2105630A466}">matrix_3_real_T</BaseType>
+									<PTCID>#x82000000</PTCID>
+									<BitOffs>0</BitOffs>
+								</Symbol>
+							</DataArea>
 						</DataAreas>
 						<Deployment>
 							<FileEntry TargetPlatform="TwinCAT RT (x86)">
@@ -3831,14 +3859,14 @@ External Setpoint Generation:
 								<DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
 							</FileEntry>
 							<FileEntry>
-								<ProjectFile>%SOLUTIONMODULEINSTTPATH%HexMove_PlcOpenPOUs.xml</ProjectFile>
+								<ProjectFile>%SOLUTIONMODULEINSTTPATH%Welding_Control_Circle_86s_PlcOpenPOUs.xml</ProjectFile>
 							</FileEntry>
 							<FileEntry>
-								<ProjectFile>%SOLUTIONMODULEINSTTPATH%HexMove_ModuleInfo.xml</ProjectFile>
+								<ProjectFile>%SOLUTIONMODULEINSTTPATH%Welding_Control_Circle_86s_ModuleInfo.xml</ProjectFile>
 							</FileEntry>
 						</Deployment>
 						<Xml>
-							<GeneratedModuleInfoFile>HexMove_ModuleInfo.xml</GeneratedModuleInfoFile>
+							<GeneratedModuleInfoFile>Welding_Control_Circle_86s_ModuleInfo.xml</GeneratedModuleInfoFile>
 						</Xml>
 						<ParameterValues>
 							<Value>
@@ -4003,11 +4031,11 @@ External Setpoint Generation:
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskOid</Name>
-								<Value>33620032</Value>
+								<Value>33620064</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskPriority</Name>
-								<Value>20</Value>
+								<Value>10</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
@@ -4015,7 +4043,7 @@ External Setpoint Generation:
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskPort</Name>
-								<Value>350</Value>
+								<Value>351</Value>
 							</Value>
 							<Value>
 								<Name>ContextInfoArr_0_TaskSortOrder</Name>
@@ -4040,7 +4068,7 @@ External Setpoint Generation:
 						<Name>Image</Name>
 					</Image>
 				</SafTask>
-				<SvbTask Priority="8" CycleTime="10000" AmsPort="511">
+				<SvbTask Priority="6" CycleTime="10000" AmsPort="511">
 					<Name>NC-Task 1 SVB</Name>
 				</SvbTask>
 				<Axis CreateSymbols="true" AxisType="1" Id="1">
@@ -8724,7 +8752,8 @@ External Setpoint Generation:
 						</Var>
 					</Vars>
 					<TaskPouOids>
-						<TaskPouOid Prio="20" OTCID="#x01010011"/>
+						<TaskPouOid Prio="8" OTCID="#x01010011"/>
+						<TaskPouOid Prio="10" OTCID="#x01010012"/>
 					</TaskPouOids>
 				</Instance>
 			</Project>
