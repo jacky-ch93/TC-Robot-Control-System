@@ -45,28 +45,37 @@
     <Compile Include="DUTs\Hexapod_Leg\Hexapod_Leg.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Mapping\Hexapod_Robot_Mapping.TcPOU">
+    <Compile Include="DUTs\Mapping\Leg_Control_Mapping_Model.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Mapping\Leg_Model_Mapping_Control.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Mapping\Variable_Control_Mapping_Model.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Mapping\Variable_Model_Mapping_Control.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Robot_Simulink\E_TcMatSimDataAreaType.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Robot_Simulink\FB_HexMove.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\Robot_Simulink\FB_TcMatSimObject.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Robot_Simulink\ST_HexMove_InitData.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\Robot_Simulink\ST_HexMove_Input.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DUTs\Robot_Simulink\ST_HexMove_Output.TcDUT">
+    <Compile Include="DUTs\Robot_Simulink\FB_Welding_Control_Circle_86s.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Robot_Simulink\ST_TcMatSimObjectDataAreaInfo.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_Welding_Control_Circle_86s_InitData.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_Welding_Control_Circle_86s_Input.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Robot_Simulink\ST_Welding_Control_Circle_86s_Output.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
@@ -78,11 +87,13 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="VISUs\Visu_Home.TcVIS">
+    <Compile Include="POUs\Simulink_Model_Generator.TcPOU">
       <SubType>Code</SubType>
-      <DependentUpon>视图管理器.TcVMO</DependentUpon>
     </Compile>
-    <Compile Include="VISUs\Visu_SimulinkMove.TcVIS">
+    <Compile Include="Simulink_Test.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="VISUs\Visu_Home.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>视图管理器.TcVMO</DependentUpon>
     </Compile>
@@ -91,6 +102,10 @@
       <DependentUpon>视图管理器.TcVMO</DependentUpon>
     </Compile>
     <Compile Include="VISUs\Visu_Reset.TcVIS">
+      <SubType>Code</SubType>
+      <DependentUpon>视图管理器.TcVMO</DependentUpon>
+    </Compile>
+    <Compile Include="VISUs\Visu_SimulinkMove.TcVIS">
       <SubType>Code</SubType>
       <DependentUpon>视图管理器.TcVMO</DependentUpon>
     </Compile>
@@ -270,86 +285,6 @@
     <SubObject Include="FB_Filter_Current_Hexapod_Robot.StepSize_Startup.Get" />
     <SubObject Include="FB_Filter_Current_Hexapod_Robot.StepSize_Startup.Set" />
     <SubObject Include="FB_Filter_Current_Hexapod_Robot.VerifyParameters" />
-    <SubObject Include="FB_HexMove.CallBy_Online" />
-    <SubObject Include="FB_HexMove.CallBy_Online.Get" />
-    <SubObject Include="FB_HexMove.CallBy_Online.Set" />
-    <SubObject Include="FB_HexMove.CallBy_Startup" />
-    <SubObject Include="FB_HexMove.CallBy_Startup.Get" />
-    <SubObject Include="FB_HexMove.CallBy_Startup.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Online" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Online.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Online.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Startup" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Startup.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskCycleTimeNs_Startup.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Online" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Online.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Online.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Startup" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Startup.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskOid_Startup.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Online" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Online.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Online.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Startup" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Startup.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPort_Startup.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Online" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Online.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Online.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Startup" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Startup.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskPriority_Startup.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Online" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Online.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Online.Set" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Startup" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Startup.Get" />
-    <SubObject Include="FB_HexMove.ContextInfoArr_0_TaskSortOrder_Startup.Set" />
-    <SubObject Include="FB_HexMove.CycleUpdateExecuted_Online" />
-    <SubObject Include="FB_HexMove.CycleUpdateExecuted_Online.Get" />
-    <SubObject Include="FB_HexMove.CycleUpdateExecuted_Online.Set" />
-    <SubObject Include="FB_HexMove.Execute" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Online" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Online.Get" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Online.Set" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Startup" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Startup.Get" />
-    <SubObject Include="FB_HexMove.ExecuteModelCode_Startup.Set" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Online" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Online.Get" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Online.Set" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Startup" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Startup.Get" />
-    <SubObject Include="FB_HexMove.ExecutionSequence_Startup.Set" />
-    <SubObject Include="FB_HexMove.FB_init" />
-    <SubObject Include="FB_HexMove.InitData" />
-    <SubObject Include="FB_HexMove.InitData.Get" />
-    <SubObject Include="FB_HexMove.InitData.Set" />
-    <SubObject Include="FB_HexMove.Input_Online" />
-    <SubObject Include="FB_HexMove.Input_Online.Get" />
-    <SubObject Include="FB_HexMove.Input_Online.Set" />
-    <SubObject Include="FB_HexMove.Internal_SetObjState" />
-    <SubObject Include="FB_HexMove.MdlInitialized_Online" />
-    <SubObject Include="FB_HexMove.MdlInitialized_Online.Get" />
-    <SubObject Include="FB_HexMove.MdlInitialized_Online.Set" />
-    <SubObject Include="FB_HexMove.ModuleBuildInfo_Online" />
-    <SubObject Include="FB_HexMove.ModuleBuildInfo_Online.Get" />
-    <SubObject Include="FB_HexMove.ModuleBuildInfo_Online.Set" />
-    <SubObject Include="FB_HexMove.ModuleInfo_Online" />
-    <SubObject Include="FB_HexMove.ModuleInfo_Online.Get" />
-    <SubObject Include="FB_HexMove.ModuleInfo_Online.Set" />
-    <SubObject Include="FB_HexMove.SaveOnlineParametersForInit" />
-    <SubObject Include="FB_HexMove.SimulinkTime_Online" />
-    <SubObject Include="FB_HexMove.SimulinkTime_Online.Get" />
-    <SubObject Include="FB_HexMove.SimulinkTime_Online.Set" />
-    <SubObject Include="FB_HexMove.StepSize_Online" />
-    <SubObject Include="FB_HexMove.StepSize_Online.Get" />
-    <SubObject Include="FB_HexMove.StepSize_Online.Set" />
-    <SubObject Include="FB_HexMove.StepSize_Startup" />
-    <SubObject Include="FB_HexMove.StepSize_Startup.Get" />
-    <SubObject Include="FB_HexMove.StepSize_Startup.Set" />
-    <SubObject Include="FB_HexMove.VerifyParameters" />
     <SubObject Include="FB_TcMatSimObject.AssignClassId" />
     <SubObject Include="FB_TcMatSimObject.ClassId" />
     <SubObject Include="FB_TcMatSimObject.ClassId.Get" />
@@ -414,11 +349,86 @@
     <SubObject Include="FB_TcMatSimObject_1.State.Get" />
     <SubObject Include="FB_TcMatSimObject_1.State.Set" />
     <SubObject Include="FB_TcMatSimObject_1.VerifyClassId" />
-    <SubObject Include="MAIN.Logic_Control" />
-    <SubObject Include="MAIN.Robot_Action" />
-    <SubObject Include="MAIN.SetGenerator" />
-    <SubObject Include="MAIN.Variable_Monitor" />
-    <SubObject Include="MAIN.Variable_Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CallBy_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskCycleTimeNs_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskOid_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPort_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskPriority_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ContextInfoArr_0_TaskSortOrder_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CycleUpdateExecuted_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CycleUpdateExecuted_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.CycleUpdateExecuted_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.Execute" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecuteModelCode_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ExecutionSequence_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.FB_init" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.InitData" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.InitData.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.InitData.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.Input_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.Input_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.Input_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.Internal_SetObjState" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.MdlInitialized_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.MdlInitialized_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.MdlInitialized_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleBuildInfo_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleBuildInfo_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleBuildInfo_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleInfo_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleInfo_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.ModuleInfo_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.SaveOnlineParametersForInit" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.SimulinkTime_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.SimulinkTime_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.SimulinkTime_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Online" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Online.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Online.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Startup" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Startup.Get" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.StepSize_Startup.Set" />
+    <SubObject Include="FB_Welding_Control_Circle_86s.VerifyParameters" />
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

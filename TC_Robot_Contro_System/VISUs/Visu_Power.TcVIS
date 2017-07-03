@@ -8036,10 +8036,10 @@
               <d n="FbMethods" t="CaseInsensitiveHashtable" ckt="String" cvt="Guid">
                 <v>FB_Init</v>
                 <v>3149f22f-e36e-4ac0-8957-37e493001c75</v>
-                <v>FB_Reinit</v>
-                <v>9b992773-389f-4e51-a3c6-758d94b3fa2b</v>
                 <v>FB_Exit</v>
                 <v>5fb04ade-0442-435e-bc48-5b9c5fc2b781</v>
+                <v>FB_Reinit</v>
+                <v>9b992773-389f-4e51-a3c6-758d94b3fa2b</v>
               </d>
               <v n="FbName">"NotImportant"</v>
               <v n="FbGuid">{73095a86-0b5c-426b-9ab1-b7549503e0db}</v>

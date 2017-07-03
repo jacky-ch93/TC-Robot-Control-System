@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Variable_Control_Mapping_Model" Id="{3c610b54-ac68-4218-b10d-10036d9d572f}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Variable_Control_Mapping_Model
+VAR_INPUT
+	Controller_Leg_Variable	: ARRAY[1..18] OF LREAL;		// 控制模型中的驱动器位置
+END_VAR
+VAR_OUTPUT
+	Model_Leg_Variable	: ARRAY[1..18] OF LREAL;		// 六足机构模型中的腿位置
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Model_Leg_Variable[1]		:= Controller_Leg_Variable[2];
+Model_Leg_Variable[2]		:= Controller_Leg_Variable[3];
+Model_Leg_Variable[3]		:= Controller_Leg_Variable[1];
+Model_Leg_Variable[4]		:= Controller_Leg_Variable[17];
+Model_Leg_Variable[5]		:= Controller_Leg_Variable[18];
+Model_Leg_Variable[6]		:= Controller_Leg_Variable[16];
+Model_Leg_Variable[7]		:= Controller_Leg_Variable[14];
+Model_Leg_Variable[8]		:= Controller_Leg_Variable[15];
+Model_Leg_Variable[9]		:= Controller_Leg_Variable[13];
+Model_Leg_Variable[10]		:= Controller_Leg_Variable[11];
+Model_Leg_Variable[11]		:= Controller_Leg_Variable[12];
+Model_Leg_Variable[12]		:= Controller_Leg_Variable[10];
+Model_Leg_Variable[13]		:= Controller_Leg_Variable[8];
+Model_Leg_Variable[14]		:= Controller_Leg_Variable[9];
+Model_Leg_Variable[15]		:= Controller_Leg_Variable[7];
+Model_Leg_Variable[16]		:= Controller_Leg_Variable[5];
+Model_Leg_Variable[17]		:= Controller_Leg_Variable[6];
+Model_Leg_Variable[18]		:= Controller_Leg_Variable[4];]]></ST>
+    </Implementation>
+    <LineIds Name="Variable_Control_Mapping_Model">
+      <LineId Id="31" Count="12" />
+      <LineId Id="45" Count="3" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
