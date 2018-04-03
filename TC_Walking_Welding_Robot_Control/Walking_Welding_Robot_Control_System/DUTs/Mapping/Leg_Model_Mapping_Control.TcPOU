@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Leg_Model_Mapping_Control" Id="{2f403fe3-200c-465c-8480-66271282d461}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Leg_Model_Mapping_Control
+VAR_INPUT
+	Model_Leg		: ARRAY [1..18] OF LREAL;			// 模型中的腿编号
+END_VAR
+VAR_OUTPUT
+	Control_Leg		: ARRAY [1..18] OF LREAL;			// 控制程序中的腿编号
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Control_Leg[1] 		:= Model_Leg[1];
+Control_Leg[2] 		:= Model_Leg[6];
+Control_Leg[3] 		:= Model_Leg[5];
+Control_Leg[4] 		:= Model_Leg[4];
+Control_Leg[5] 		:= Model_Leg[3];
+Control_Leg[6] 		:= Model_Leg[2];]]></ST>
+    </Implementation>
+    <LineIds Name="Leg_Model_Mapping_Control">
+      <LineId Id="12" Count="4" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

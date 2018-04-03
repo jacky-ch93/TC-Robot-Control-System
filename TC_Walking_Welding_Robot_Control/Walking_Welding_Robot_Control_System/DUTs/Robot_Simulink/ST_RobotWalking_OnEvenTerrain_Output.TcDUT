@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_RobotWalking_OnEvenTerrain_Output" Id="{05ff9d10-0a29-491f-a916-3ca1f17b5f9d}">
+    <Declaration><![CDATA[TYPE ST_RobotWalking_OnEvenTerrain_Output :
+STRUCT
+	Disp_P: matrix_18_real_T;
+	realState: LREAL;
+	state: LREAL;
+	Number: LREAL;
+	Act_Lout: matrix_18_real_T;
+	Act_Slice: matrix_8_real_T;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
