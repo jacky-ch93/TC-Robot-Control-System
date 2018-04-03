@@ -1,0 +1,1457 @@
+<?xml version="1.0"?>
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" GeneratedBy="TwinCAT Target For Simulink" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass">
+  <Vendor>
+    <Name>TE1400 Module Vendor</Name>
+  </Vendor>
+  <DataTypes>
+    <DataType>
+      <Name GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>CyclicTask</Text>
+        <Enum>0</Enum>
+        <Comment>Add to the specified cyclic callers.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>Module</Text>
+        <Enum>1</Enum>
+        <Comment>Don't add to cyclic callers. The module can be called from other TwinCAT modules (e. g. a PLC).</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>IoAtTaskBegin</Text>
+        <Enum>0</Enum>
+        <Comment>Input mapping -&gt; Output mapping -&gt; State update -&gt; Output update -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>StateUpdateAfterOutputMapping</Text>
+        <Enum>1</Enum>
+        <Comment>Input mapping -&gt; Output update -&gt; Output mapping -&gt; State update -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>StateUpdateBeforeOutputUpdate</Text>
+        <Enum>2</Enum>
+        <Comment>Input mapping -&gt; State update -&gt; Output update -&gt; Output mapping -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>RequireMatchingTaskCycleTime</Text>
+        <Enum>0</Enum>
+        <Comment>Don't accept task cycle times other than the Simulink step sizes.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>UseTaskCycleTime</Text>
+        <Enum>1</Enum>
+        <Comment>Adapt the Smulink step sizes to the task cycle times.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>UseModelStepSize</Text>
+        <Enum>2</Enum>
+        <Comment>Keep the Smulink step sizes, independent of the callers cycle time.</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{C6D0FB79-6108-4D0E-B97B-193031B12AD6}">TctModelCheckSumType</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</Name>
+      <BitSize>1184</BitSize>
+      <SubItem>
+        <Name>ClassId</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000024}">CLSID</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>BuildTimeStamp</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000004D}">DATE_AND_TIME</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ModelCheckSum</Name>
+        <Type GUID="{C6D0FB79-6108-4D0E-B97B-193031B12AD6}">TctModelCheckSumType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>160</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ModelVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>288</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TwinCatVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>416</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcTargetVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>544</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>MatlabVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>672</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>SimulinkVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>800</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>CoderVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>928</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcTargetLicenseId</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000021}">GUID</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1056</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</Name>
+      <BitSize>8</BitSize>
+      <SubItem>
+        <Name>Debug</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</Name>
+      <BitSize>1152</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>18</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{80745900-e0d7-18a8-00d0-a16c9a688d7e}">ExtU_Touch_Signal_Detection_S_T</Name>
+      <BitSize>1408</BitSize>
+      <SubItem>
+        <Name>Current_Filter</Name>
+        <Type GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</Type>
+        <BitSize>1152</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Delay_Time</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1152</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Minimum_Limit</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>State</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1280</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>Number</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1344</BitOffs>
+      </SubItem>
+      <Hides>
+        <Hide GUID="{064beba8-af48-5c3b-d613-4a73c06339f9}" />
+        <Hide GUID="{d1c74498-8cdf-b5cf-1b1c-336676fe0817}" />
+        <Hide GUID="{83bdf721-f8e8-f88d-7685-dd3295cf7a8d}" />
+        <Hide GUID="{6a738a76-d6e6-7316-e4fd-f7de7b7c7c10}" />
+      </Hides>
+    </DataType>
+    <DataType>
+      <Name GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</Name>
+      <BitSize>48</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>6</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</Name>
+      <BitSize>192</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>3</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{3f4dee3a-5f10-414f-fb2f-1968022ef915}">P_Touch_Signal_Detection_Simp_T</Name>
+      <BitSize>2752</BitSize>
+      <SubItem>
+        <Name>VariableTimeDelay_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>64</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay1_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay1_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>192</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay2_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay2_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>320</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay3_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>384</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay3_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>448</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay4_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>512</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay4_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>576</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay5_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>640</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay5_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>704</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay6_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>768</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay6_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>832</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay7_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>896</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay7_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>960</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay8_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1024</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay8_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1088</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay9_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1152</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay9_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay10_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1280</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay10_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1344</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay11_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1408</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay11_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1472</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay12_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1536</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay12_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1600</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay13_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1664</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay13_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1728</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay14_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1792</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay14_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1856</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay15_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1920</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay15_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1984</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay16_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2048</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay16_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2112</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay17_MaxDelay</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2176</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>VariableTimeDelay17_InitOutput</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2240</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DataStoreMemory5_InitialValue</Name>
+        <Type GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</Type>
+        <BitSize>192</BitSize>
+        <BitOffs>2304</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DataStoreMemory6_InitialValue</Name>
+        <Type GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</Type>
+        <BitSize>192</BitSize>
+        <BitOffs>2496</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DataStoreMemory4_InitialValue</Name>
+        <Type GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</Type>
+        <BitSize>48</BitSize>
+        <BitOffs>2688</BitOffs>
+      </SubItem>
+      <Hides>
+        <Hide GUID="{621a284d-f820-478d-b08a-932ed497d799}" />
+        <Hide GUID="{d41343b7-efc1-8076-0d93-47da23e7621d}" />
+        <Hide GUID="{1baa803f-553b-b83a-393b-182c63ec9c9b}" />
+      </Hides>
+    </DataType>
+    <DataType>
+      <Name GUID="{ca956086-5822-045f-2a8b-434f48bce2df}" HideSubItems="1">matrix_2049_real_T</Name>
+      <BitSize>131136</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>2049</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+    </DataType>
+  </DataTypes>
+  <Groups>
+    <Group SortOrder="101">
+      <Name>Generated_Modules__TE1400_1.2_</Name>
+      <DisplayName>Generated Modules (TE1400 1.2)</DisplayName>
+      <ImageData>424D3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542C32784C31784B3077493076482F75462E74442D72422C71402B703E2A6E3C296C3A286B372769352667331D4A1E337B4F3D94833C93803A917D398F7A378D76358A7233886F31856A2F81662D7E612B7B5D29775827735424704F266733357D5340998A3F98873D97843C95813A927D389079368D75348A7032876C3083672D7F622B7C5D297859277454276935378056439E913C8F712E66232E66232E66232E66232E66232E66232E66232E66232E66232E66233D7C50297759286B3838835946A5982E6623419D8D409B893E98863C96823A927D388F78358C7333876F31836A2E7C622E6623468B6F296C3A3A855B4CAA9E2E66234BA99B397E4F57AD9C42A08D409D883C99833A957D389178368D7333886D2E6623478C702A6E3C4289605EB5AA2E662360B7AC2B6421326A29519D7F43A390409E893D9A833B967E389078358C732E6623488F732B703F4A8F6670BFB52E662373C3B82C65225EA997326C36407E4953A996409E893D99833A947E378F782E66234A91782C724153936B81C9C02E662385CCC42D65237CC8BE70C1B5488A6E31682A539B7C409D893D98833A937D2E66234B947B2D73435B987092D2C92E662397D6CE2E66238CD1C980CBC172C2B659A79A3473453977404FA28E3C96812E66234D967F2E7445629B74A2D9D22E6623A8DED72E65229AD9D18DD1C97EC9BF6DBEB25AB2A43D8D702A612A4D92712E66234E98822F7647699E77B1DFD92E6623BCE6E02D6520ABDFD89BD7D08ACFC67BC5BC68BAAE55AD9F49A2923977532E66234B98833077496EA079BDE4DF87AA942E66232E66232E66232E66232E66232E66232E66232E66232E66232E662332794F3C928031784B6FA07AC2E6E1D3EDEAD2EDE9C2E7E2B1E0D9A0D8D08DCFC77BC5BB69BAB056AFA446A497439F91409A8A3D948332784C6D9F79BDE3DEC9E8E4C8E8E4BDE3DEADDDD79DD5CE8BCDC57AC3BA67B9AE54AEA247A59945A093419B8C3E958633794E3E66416F9F7973A27C73A27C6FA07A689D76609A7258956E4F9169468B633D865D388259378157367E54347B5123542D</ImageData>
+    </Group>
+  </Groups>
+  <Modules>
+    <Module GUID="{edbb4036-240d-4fd3-9b53-34bfff27d6ef}" Select="false" Group="Generated_Modules__TE1400_1.2_">
+      <Name>Tough_Signal_Detection_Simple</Name>
+      <CLSID ClassFactory="Tough_Signal_Detection_Simple" RealTimeInstantiable="true">{edbb4036-240d-4fd3-9b53-34bfff27d6ef}</CLSID>
+      <Info>
+        <ImageData>424D3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542C32784C31784B3077493076482F75462E74442D72422C71402B703E2A6E3C296C3A286B372769352667331D4A1E337B4F3D94833C93803A917D398F7A378D76358A7233886F31856A2F81662D7E612B7B5D29775827735424704F266733357D5340998A3F98873D97843C95813A927D389079368D75348A7032876C3083672D7F622B7C5D297859277454276935378056439E913C8F712E66232E66232E66232E66232E66232E66232E66232E66232E66232E66233D7C50297759286B3838835946A5982E6623419D8D409B893E98863C96823A927D388F78358C7333876F31836A2E7C622E6623468B6F296C3A3A855B4CAA9E2E66234BA99B397E4F57AD9C42A08D409D883C99833A957D389178368D7333886D2E6623478C702A6E3C4289605EB5AA2E662360B7AC2B6421326A29519D7F43A390409E893D9A833B967E389078358C732E6623488F732B703F4A8F6670BFB52E662373C3B82C65225EA997326C36407E4953A996409E893D99833A947E378F782E66234A91782C724153936B81C9C02E662385CCC42D65237CC8BE70C1B5488A6E31682A539B7C409D893D98833A937D2E66234B947B2D73435B987092D2C92E662397D6CE2E66238CD1C980CBC172C2B659A79A3473453977404FA28E3C96812E66234D967F2E7445629B74A2D9D22E6623A8DED72E65229AD9D18DD1C97EC9BF6DBEB25AB2A43D8D702A612A4D92712E66234E98822F7647699E77B1DFD92E6623BCE6E02D6520ABDFD89BD7D08ACFC67BC5BC68BAAE55AD9F49A2923977532E66234B98833077496EA079BDE4DF87AA942E66232E66232E66232E66232E66232E66232E66232E66232E66232E662332794F3C928031784B6FA07AC2E6E1D3EDEAD2EDE9C2E7E2B1E0D9A0D8D08DCFC77BC5BB69BAB056AFA446A497439F91409A8A3D948332784C6D9F79BDE3DEC9E8E4C8E8E4BDE3DEADDDD79DD5CE8BCDC57AC3BA67B9AE54AEA247A59945A093419B8C3E958633794E3E66416F9F7973A27C73A27C6FA07A689D76609A7258956E4F9169468B633D865D388259378157367E54347B5123542D</ImageData>
+        <TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}" />
+      </Info>
+      <Licenses>
+        <License>
+          <LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+        </License>
+      </Licenses>
+      <InitSequence>PSO</InitSequence>
+      <Contexts>
+        <Context>
+          <Id>0</Id>
+          <Priority>5</Priority>
+          <CycleTime>1000000</CycleTime>
+          <DependOn>ManualConfig</DependOn>
+        </Context>
+      </Contexts>
+      <Interfaces>
+        <Interface>
+          <Type GUID="{03000010-0000-0000-e000-000000000064}">ITcCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000025-0000-0000-e000-000000000064}">ITcPostCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000012-0000-0000-e000-000000000064}">ITcADI</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000018-0000-0000-e000-000000000064}">ITcWatchSource</Type>
+        </Interface>
+      </Interfaces>
+      <Parameters>
+        <Parameter CreateSymbol="1">
+          <Name>CallBy</Name>
+          <BaseType GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</BaseType>
+          <Default>
+            <EnumText>Module</EnumText>
+          </Default>
+          <PTCID>#x0</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ExecutionSequence</Name>
+          <BaseType GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</BaseType>
+          <Default>
+            <EnumText>StateUpdateAfterOutputMapping</EnumText>
+          </Default>
+          <PTCID>#x1</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>StepSize</Name>
+          <BaseType GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</BaseType>
+          <Default>
+            <EnumText>UseTaskCycleTime</EnumText>
+          </Default>
+          <PTCID>#x2</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>MdlInitialized</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <PTCID>#x3</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>CycleUpdateExecuted</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <PTCID>#x4</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>SimulinkTime</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+          <PTCID>#x5</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>ModuleInfo</Name>
+          <BaseType GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</BaseType>
+          <PTCID>#x6</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>ModuleBuildInfo</Name>
+          <BaseType GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</BaseType>
+          <PTCID>#x7</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ExecuteModelCode</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <Value>1</Value>
+          </Default>
+          <PTCID>#x8</PTCID>
+        </Parameter>
+        <Parameter>
+          <Name>Input</Name>
+          <BaseType GUID="{80745900-e0d7-18a8-00d0-a16c9a688d7e}">ExtU_Touch_Signal_Detection_S_T</BaseType>
+          <PTCID>#x80000000</PTCID>
+        </Parameter>
+        <Parameter>
+          <Name>ModelParameters</Name>
+          <BaseType GUID="{3f4dee3a-5f10-414f-fb2f-1968022ef915}">P_Touch_Signal_Detection_Simp_T</BaseType>
+          <Default>
+            <SubItem>
+              <Name>.VariableTimeDelay_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay1_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay2_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay3_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay4_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay5_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay6_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay7_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay8_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay9_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay10_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay11_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay12_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay13_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay14_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay15_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay16_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.VariableTimeDelay17_MaxDelay</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory5_InitialValue[0]</Name>
+              <Value>1.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory5_InitialValue[1]</Name>
+              <Value>3.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory5_InitialValue[2]</Name>
+              <Value>5.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory6_InitialValue[0]</Name>
+              <Value>2.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory6_InitialValue[1]</Name>
+              <Value>4.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory6_InitialValue[2]</Name>
+              <Value>6.00000000000000000e+00</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory4_InitialValue[0]</Name>
+              <Value>1</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory4_InitialValue[2]</Name>
+              <Value>1</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DataStoreMemory4_InitialValue[4]</Name>
+              <Value>1</Value>
+            </SubItem>
+          </Default>
+          <PTCID>#x83000000</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskOid</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+          <PTCID>#x3002060</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskPriority</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x3002070</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x3002080</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskPort</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+          <PTCID>#x3002090</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskSortOrder</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x30020b0</PTCID>
+        </Parameter>
+      </Parameters>
+      <DataAreas>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="1">0</AreaNo>
+          <Name>Input</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>Current_Filter</Name>
+            <BitSize>1152</BitSize>
+            <BaseType GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</BaseType>
+            <PTCID>#x80000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Delay_Time</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Minimum_Limit</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x80000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>State</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x800000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Number</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x800000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="OutputSrc" CreateSymbols="1">1</AreaNo>
+          <Name>Output</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>Touch_Signal</Name>
+            <BitSize>48</BitSize>
+            <BaseType GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</BaseType>
+            <PTCID>#x81000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Leg_Touch</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x81000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Leg_Detection</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x81000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Current_Change</Name>
+            <BitSize>1152</BitSize>
+            <BaseType GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</BaseType>
+            <PTCID>#x81000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">2</AreaNo>
+          <Name>BlockIO</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>VectorConcatenate</Name>
+            <BitSize>1152</BitSize>
+            <BaseType GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</BaseType>
+            <PTCID>#x82000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreRead5</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x82000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreRead6</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x820000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VectorConcatenate2</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x820000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Leg_Detection</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x820000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay17</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreRead4</Name>
+            <BitSize>48</BitSize>
+            <BaseType GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</BaseType>
+            <PTCID>#x820000f8</PTCID>
+            <BitOffs>1984</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VectorConcatenate1</Name>
+            <BitSize>48</BitSize>
+            <BaseType GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</BaseType>
+            <PTCID>#x820000fe</PTCID>
+            <BitOffs>2032</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">3</AreaNo>
+          <Name>ModelParameters</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay1_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay1_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay2_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay2_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay3_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay3_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay4_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay4_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay5_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay5_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000058</PTCID>
+            <BitOffs>704</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay6_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay6_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000068</PTCID>
+            <BitOffs>832</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay7_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay7_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay8_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay8_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay9_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay9_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay10_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay10_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay11_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay11_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000b8</PTCID>
+            <BitOffs>1472</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay12_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay12_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000c8</PTCID>
+            <BitOffs>1600</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay13_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000d0</PTCID>
+            <BitOffs>1664</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay13_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay14_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000e0</PTCID>
+            <BitOffs>1792</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay14_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000e8</PTCID>
+            <BitOffs>1856</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay15_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay15_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000f8</PTCID>
+            <BitOffs>1984</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay16_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay16_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000108</PTCID>
+            <BitOffs>2112</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay17_MaxDelay</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000110</PTCID>
+            <BitOffs>2176</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay17_InitOutput</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000118</PTCID>
+            <BitOffs>2240</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreMemory5_InitialValue</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000120</PTCID>
+            <BitOffs>2304</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreMemory6_InitialValue</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x83000138</PTCID>
+            <BitOffs>2496</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DataStoreMemory4_InitialValue</Name>
+            <BitSize>48</BitSize>
+            <BaseType GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</BaseType>
+            <PTCID>#x83000150</PTCID>
+            <BitOffs>2688</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">4</AreaNo>
+          <Name>DWork01</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>Leg_Touch_Old</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x84000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Leg_Detection_Old</Name>
+            <BitSize>192</BitSize>
+            <BaseType GUID="{6761e8aa-7a72-5550-e6f7-e2105630a466}">matrix_3_real_T</BaseType>
+            <PTCID>#x84000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay1_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84004038</PTCID>
+            <BitOffs>131520</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay2_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84008040</PTCID>
+            <BitOffs>262656</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay3_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x8400c048</PTCID>
+            <BitOffs>393792</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay4_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84010050</PTCID>
+            <BitOffs>524928</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay5_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84014058</PTCID>
+            <BitOffs>656064</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay6_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84018060</PTCID>
+            <BitOffs>787200</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay7_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x8401c068</PTCID>
+            <BitOffs>918336</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay8_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84020070</PTCID>
+            <BitOffs>1049472</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay9_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84024078</PTCID>
+            <BitOffs>1180608</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay10_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84028080</PTCID>
+            <BitOffs>1311744</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay11_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x8402c088</PTCID>
+            <BitOffs>1442880</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay12_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84030090</PTCID>
+            <BitOffs>1574016</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay13_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x84034098</PTCID>
+            <BitOffs>1705152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay14_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x840380a0</PTCID>
+            <BitOffs>1836288</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay15_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x8403c0a8</PTCID>
+            <BitOffs>1967424</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay16_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x840400b0</PTCID>
+            <BitOffs>2098560</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay17_RWORK</Name>
+            <BitSize>131136</BitSize>
+            <BaseType GUID="{ca956086-5822-045f-2a8b-434f48bce2df}">matrix_2049_real_T</BaseType>
+            <PTCID>#x840440b8</PTCID>
+            <BitOffs>2229696</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">5</AreaNo>
+          <Name>DWork02</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay1_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay2_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay3_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay4_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay5_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay6_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay7_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay8_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay9_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay10_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay11_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay12_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay13_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000d0</PTCID>
+            <BitOffs>1664</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay14_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000e0</PTCID>
+            <BitOffs>1792</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay15_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x850000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay16_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>VariableTimeDelay17_IWORK</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{507aa7d1-00e3-d407-b0c8-fc42a9fca748}">matrix_4_int_T</BaseType>
+            <PTCID>#x85000110</PTCID>
+            <BitOffs>2176</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>Touch_Signal_Old</Name>
+            <BitSize>48</BitSize>
+            <BaseType GUID="{fb2c1127-9262-0d23-a506-4d48f8b0a43e}">matrix_6_boolean_T</BaseType>
+            <PTCID>#x85000120</PTCID>
+            <BitOffs>2304</BitOffs>
+          </Symbol>
+        </DataArea>
+      </DataAreas>
+      <DataPointers />
+      <Deployment>
+        <FileEntry TargetPlatform="TwinCAT RT (x86)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.sys</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x86)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.pdb</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x64)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.sys</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x64)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.pdb</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+        </FileEntry>
+        <FileEntry>
+          <ProjectFile>%SOLUTIONMODULEINSTTPATH%Tough_Signal_Detection_Simple_PlcOpenPOUs.xml</ProjectFile>
+        </FileEntry>
+        <FileEntry>
+          <ProjectFile>%SOLUTIONMODULEINSTTPATH%Tough_Signal_Detection_Simple_ModuleInfo.xml</ProjectFile>
+        </FileEntry>
+      </Deployment>
+      <Xml>
+        <GeneratedModuleInfoFile>Tough_Signal_Detection_Simple_ModuleInfo.xml</GeneratedModuleInfoFile>
+      </Xml>
+    </Module>
+  </Modules>
+</TcModuleClass>

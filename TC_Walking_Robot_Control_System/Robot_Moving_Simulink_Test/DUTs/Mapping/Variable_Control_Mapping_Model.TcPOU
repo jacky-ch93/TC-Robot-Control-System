@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Variable_Control_Mapping_Model" Id="{3c610b54-ac68-4218-b10d-10036d9d572f}" SpecialFunc="None">
+  <POU Name="Variable_Control_Mapping_Model" Id="{9d48883c-8b80-4f05-b48f-637a56faf3fc}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Variable_Control_Mapping_Model
 VAR_INPUT
 	Controller_Leg_Variable	: ARRAY[1..18] OF LREAL;		// 控制模型中的驱动器位置

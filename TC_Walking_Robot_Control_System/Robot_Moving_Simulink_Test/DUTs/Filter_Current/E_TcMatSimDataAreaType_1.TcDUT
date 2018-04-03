@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <DUT Name="E_TcMatSimDataAreaType_1" Id="{5adc1d66-c048-497c-8757-9c904d8f5dac}">
+  <DUT Name="E_TcMatSimDataAreaType_1" Id="{2a3103c9-54a3-44c0-8cbe-1903edccf039}">
     <Declaration><![CDATA[TYPE E_TcMatSimDataAreaType_1 :
 (
 	NotSpecified := 0,

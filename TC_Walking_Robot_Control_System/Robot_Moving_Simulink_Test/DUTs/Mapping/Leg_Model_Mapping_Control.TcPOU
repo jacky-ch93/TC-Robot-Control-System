@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Leg_Model_Mapping_Control" Id="{2f403fe3-200c-465c-8480-66271282d461}" SpecialFunc="None">
+  <POU Name="Leg_Model_Mapping_Control" Id="{4d805766-6301-4e45-930b-18b1f845242a}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Leg_Model_Mapping_Control
 VAR_INPUT
 	Model_Leg		: ARRAY [1..18] OF LREAL;			// 模型中的腿编号

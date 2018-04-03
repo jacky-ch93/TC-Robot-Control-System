@@ -37,7 +37,7 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Method Name="AssignClassId" Id="{70aee05c-b7c0-4a1a-90db-a70048b378df}">
+    <Method Name="AssignClassId" Id="{a77dd85a-6097-45ab-8007-67916b5b3f30}">
       <Declaration><![CDATA[METHOD PUBLIC AssignClassId
 VAR_INPUT
 	clsId : CLSID;
@@ -440,7 +440,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="ReadModuleClassId" Id="{4430359c-9c39-4c2f-b0ca-4e5015b398ea}">
+    <Method Name="ReadModuleClassId" Id="{453dcbee-583d-4acb-904e-d2e95a6a535a}">
       <Declaration><![CDATA[{attribute 'object_name' := 'ReadModuleClassId'}
 METHOD PRIVATE ReadModuleClassId : HRESULT
 VAR
@@ -575,7 +575,7 @@ END_IF
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetDataAreaInfo" Id="{11a4ecef-f4b8-4ea3-b32a-f5c95d2a16a3}">
+    <Method Name="SetDataAreaInfo" Id="{238cddc0-9065-4299-bddc-7019d7b30ea7}">
       <Declaration><![CDATA[
 METHOD PUBLIC SetDataAreaInfo
 VAR_INPUT
@@ -590,7 +590,7 @@ THIS^.pDataAreas := pDataAreas;
                   ]]></ST>
       </Implementation>
     </Method>
-    <Method Name="SetInitDataInfo" Id="{a4b3eb8c-b58b-4cd6-a9be-95800eb47e3c}">
+    <Method Name="SetInitDataInfo" Id="{ae92a9f1-827e-4816-b599-28add2972c5b}">
       <Declaration><![CDATA[
 METHOD PUBLIC SetInitDataInfo
 VAR_INPUT
@@ -717,7 +717,7 @@ State := eObjState;
         </Implementation>
       </Set>
     </Property>
-    <Method Name="VerifyClassId" Id="{239bccd7-2f3a-47e3-959e-96b59c3eff01}">
+    <Method Name="VerifyClassId" Id="{f1598fa1-ee4c-4b67-ac04-3a626bab0cef}">
       <Declaration><![CDATA[{attribute 'object_name' := 'VerifyClassId'}
 METHOD PRIVATE VerifyClassId : HRESULT
 VAR

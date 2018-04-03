@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Hexapod_Leg" Id="{49eba7d8-d2c8-4ac9-8090-16d605a814cb}" SpecialFunc="None">
+  <POU Name="Hexapod_Leg" Id="{914f4208-f619-4b5d-a17f-3e0ef39ade98}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Hexapod_Leg
 VAR_INPUT
 	Axis1, Axis2, Axis3	: Axis;
@@ -19,7 +19,7 @@ END_VAR
 Axis_Leg[2] := Axis2;
 Axis_Leg[3] := Axis3;]]></ST>
     </Implementation>
-    <Method Name="Home" Id="{f793b9f5-69c0-4aee-af04-1fe207aaecb6}">
+    <Method Name="Home" Id="{959bb286-169d-4f39-a185-0b167baf5e13}">
       <Declaration><![CDATA[METHOD Home
 VAR_INPUT
 	Axis1_HomeSet	: BOOL;
@@ -41,9 +41,9 @@ Axis_HomeDone[2] := Axis2.State_HomeDone;
 Axis_HomeDone[3] := Axis3.State_HomeDone;]]></ST>
       </Implementation>
     </Method>
-    <Property Name="State_HomeDone" Id="{8ca86c01-ddc8-4dc1-9d24-6379a91e4e8a}">
+    <Property Name="State_HomeDone" Id="{7ea31a18-09aa-43dc-a272-2cac98bc6ca4}">
       <Declaration><![CDATA[PROPERTY State_HomeDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{9a83aeec-779d-4e61-86ae-2b2c09c8cf87}">
+      <Get Name="Get" Id="{d0d12854-8f04-4eb3-8619-591b17832620}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>

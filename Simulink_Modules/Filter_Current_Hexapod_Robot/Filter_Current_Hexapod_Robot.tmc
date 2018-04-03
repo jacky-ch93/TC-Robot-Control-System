@@ -1,0 +1,1891 @@
+<?xml version="1.0"?>
+<TcModuleClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" GeneratedBy="TwinCAT Target For Simulink" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2009/05/TcModuleClass">
+  <Vendor>
+    <Name>TE1400 Module Vendor</Name>
+  </Vendor>
+  <DataTypes>
+    <DataType>
+      <Name GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>CyclicTask</Text>
+        <Enum>0</Enum>
+        <Comment>Add to the specified cyclic callers.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>Module</Text>
+        <Enum>1</Enum>
+        <Comment>Don't add to cyclic callers. The module can be called from other TwinCAT modules (e. g. a PLC).</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>IoAtTaskBegin</Text>
+        <Enum>0</Enum>
+        <Comment>Input mapping -&gt; Output mapping -&gt; State update -&gt; Output update -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>StateUpdateAfterOutputMapping</Text>
+        <Enum>1</Enum>
+        <Comment>Input mapping -&gt; Output update -&gt; Output mapping -&gt; State update -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>StateUpdateBeforeOutputUpdate</Text>
+        <Enum>2</Enum>
+        <Comment>Input mapping -&gt; State update -&gt; Output update -&gt; Output mapping -&gt; External mode processing -&gt; ADS access</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</Name>
+      <BitSize>32</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000009}">DINT</BaseType>
+      <EnumInfo>
+        <Text>RequireMatchingTaskCycleTime</Text>
+        <Enum>0</Enum>
+        <Comment>Don't accept task cycle times other than the Simulink step sizes.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>UseTaskCycleTime</Text>
+        <Enum>1</Enum>
+        <Comment>Adapt the Smulink step sizes to the task cycle times.</Comment>
+      </EnumInfo>
+      <EnumInfo>
+        <Text>UseModelStepSize</Text>
+        <Enum>2</Enum>
+        <Comment>Keep the Smulink step sizes, independent of the callers cycle time.</Comment>
+      </EnumInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{C6D0FB79-6108-4D0E-B97B-193031B12AD6}">TctModelCheckSumType</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>4</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</Name>
+      <BitSize>1184</BitSize>
+      <SubItem>
+        <Name>ClassId</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000024}">CLSID</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>BuildTimeStamp</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000004D}">DATE_AND_TIME</Type>
+        <BitSize>32</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ModelCheckSum</Name>
+        <Type GUID="{C6D0FB79-6108-4D0E-B97B-193031B12AD6}">TctModelCheckSumType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>160</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>ModelVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>288</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TwinCatVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>416</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcTargetVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>544</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>MatlabVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>672</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>SimulinkVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>800</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>CoderVersion</Name>
+        <Type GUID="{AE62C532-7D57-4C8A-B241-8440614F0C4E}">TctVersionArrayType</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>928</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>TcTargetLicenseId</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000021}">GUID</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1056</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</Name>
+      <BitSize>8</BitSize>
+      <SubItem>
+        <Name>Debug</Name>
+        <Type GUID="{18071995-0000-0000-0000-000000000030}">BOOL</Type>
+        <BitSize>8</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</Name>
+      <BitSize>1152</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>18</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{234fa6c9-2134-ea10-2c34-1376d1099e0d}">ExtU_Filter_Current_Hexapod_R_T</Name>
+      <BitSize>1152</BitSize>
+      <SubItem>
+        <Name>Current_Motor</Name>
+        <Type GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</Type>
+        <BitSize>1152</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+    </DataType>
+    <DataType>
+      <Name GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Name>
+      <BitSize>128</BitSize>
+      <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+      <ArrayInfo>
+        <LBound>0</LBound>
+        <Elements>2</Elements>
+      </ArrayInfo>
+    </DataType>
+    <DataType>
+      <Name GUID="{1351a517-ae24-1daa-7843-4689de3a5913}">P_Filter_Current_Hexapod_Robo_T</Name>
+      <BitSize>5760</BitSize>
+      <SubItem>
+        <Name>DiscreteFilter_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>0</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>128</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>256</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter1_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>320</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter1_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>448</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter1_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>576</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter2_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>640</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter2_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>768</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter2_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>896</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter3_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>960</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter3_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1088</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter3_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1216</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter4_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1280</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter4_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1408</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter4_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1536</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter5_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1600</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter5_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1728</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter5_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>1856</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter6_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>1920</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter6_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2048</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter6_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2176</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter7_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2240</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter7_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2368</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter7_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2496</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter8_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2560</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter8_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2688</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter8_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>2816</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter9_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>2880</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter9_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3008</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter9_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>3136</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter10_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3200</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter10_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3328</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter10_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>3456</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter11_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3520</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter11_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3648</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter11_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>3776</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter12_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3840</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter12_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>3968</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter12_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>4096</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter13_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4160</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter13_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4288</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter13_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>4416</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter14_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4480</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter14_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4608</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter14_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>4736</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter15_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4800</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter15_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>4928</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter15_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>5056</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter16_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>5120</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter16_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>5248</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter16_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>5376</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter17_NumCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>5440</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter17_DenCoef</Name>
+        <Type GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</Type>
+        <BitSize>128</BitSize>
+        <BitOffs>5568</BitOffs>
+      </SubItem>
+      <SubItem>
+        <Name>DiscreteFilter17_InitialStates</Name>
+        <Type GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</Type>
+        <BitSize>64</BitSize>
+        <BitOffs>5696</BitOffs>
+      </SubItem>
+    </DataType>
+  </DataTypes>
+  <Groups>
+    <Group SortOrder="101">
+      <Name>Generated_Modules__TE1400_1.2_</Name>
+      <DisplayName>Generated Modules (TE1400 1.2)</DisplayName>
+      <ImageData>424D3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542C32784C31784B3077493076482F75462E74442D72422C71402B703E2A6E3C296C3A286B372769352667331D4A1E337B4F3D94833C93803A917D398F7A378D76358A7233886F31856A2F81662D7E612B7B5D29775827735424704F266733357D5340998A3F98873D97843C95813A927D389079368D75348A7032876C3083672D7F622B7C5D297859277454276935378056439E913C8F712E66232E66232E66232E66232E66232E66232E66232E66232E66232E66233D7C50297759286B3838835946A5982E6623419D8D409B893E98863C96823A927D388F78358C7333876F31836A2E7C622E6623468B6F296C3A3A855B4CAA9E2E66234BA99B397E4F57AD9C42A08D409D883C99833A957D389178368D7333886D2E6623478C702A6E3C4289605EB5AA2E662360B7AC2B6421326A29519D7F43A390409E893D9A833B967E389078358C732E6623488F732B703F4A8F6670BFB52E662373C3B82C65225EA997326C36407E4953A996409E893D99833A947E378F782E66234A91782C724153936B81C9C02E662385CCC42D65237CC8BE70C1B5488A6E31682A539B7C409D893D98833A937D2E66234B947B2D73435B987092D2C92E662397D6CE2E66238CD1C980CBC172C2B659A79A3473453977404FA28E3C96812E66234D967F2E7445629B74A2D9D22E6623A8DED72E65229AD9D18DD1C97EC9BF6DBEB25AB2A43D8D702A612A4D92712E66234E98822F7647699E77B1DFD92E6623BCE6E02D6520ABDFD89BD7D08ACFC67BC5BC68BAAE55AD9F49A2923977532E66234B98833077496EA079BDE4DF87AA942E66232E66232E66232E66232E66232E66232E66232E66232E66232E662332794F3C928031784B6FA07AC2E6E1D3EDEAD2EDE9C2E7E2B1E0D9A0D8D08DCFC77BC5BB69BAB056AFA446A497439F91409A8A3D948332784C6D9F79BDE3DEC9E8E4C8E8E4BDE3DEADDDD79DD5CE8BCDC57AC3BA67B9AE54AEA247A59945A093419B8C3E958633794E3E66416F9F7973A27C73A27C6FA07A689D76609A7258956E4F9169468B633D865D388259378157367E54347B5123542D</ImageData>
+    </Group>
+  </Groups>
+  <Modules>
+    <Module GUID="{4ef20903-d648-49c7-a906-8cfc20507fb3}" Select="false" Group="Generated_Modules__TE1400_1.2_">
+      <Name>Filter_Current_Hexapod_Robot</Name>
+      <CLSID ClassFactory="Filter_Current_Hexapod_Robot" RealTimeInstantiable="true">{4ef20903-d648-49c7-a906-8cfc20507fb3}</CLSID>
+      <Info>
+        <ImageData>424D3603000000000000360000002800000010000000100000000100180000000000000300000000000000000000000000000000000023542C32784C31784B3077493076482F75462E74442D72422C71402B703E2A6E3C296C3A286B372769352667331D4A1E337B4F3D94833C93803A917D398F7A378D76358A7233886F31856A2F81662D7E612B7B5D29775827735424704F266733357D5340998A3F98873D97843C95813A927D389079368D75348A7032876C3083672D7F622B7C5D297859277454276935378056439E913C8F712E66232E66232E66232E66232E66232E66232E66232E66232E66232E66233D7C50297759286B3838835946A5982E6623419D8D409B893E98863C96823A927D388F78358C7333876F31836A2E7C622E6623468B6F296C3A3A855B4CAA9E2E66234BA99B397E4F57AD9C42A08D409D883C99833A957D389178368D7333886D2E6623478C702A6E3C4289605EB5AA2E662360B7AC2B6421326A29519D7F43A390409E893D9A833B967E389078358C732E6623488F732B703F4A8F6670BFB52E662373C3B82C65225EA997326C36407E4953A996409E893D99833A947E378F782E66234A91782C724153936B81C9C02E662385CCC42D65237CC8BE70C1B5488A6E31682A539B7C409D893D98833A937D2E66234B947B2D73435B987092D2C92E662397D6CE2E66238CD1C980CBC172C2B659A79A3473453977404FA28E3C96812E66234D967F2E7445629B74A2D9D22E6623A8DED72E65229AD9D18DD1C97EC9BF6DBEB25AB2A43D8D702A612A4D92712E66234E98822F7647699E77B1DFD92E6623BCE6E02D6520ABDFD89BD7D08ACFC67BC5BC68BAAE55AD9F49A2923977532E66234B98833077496EA079BDE4DF87AA942E66232E66232E66232E66232E66232E66232E66232E66232E66232E662332794F3C928031784B6FA07AC2E6E1D3EDEAD2EDE9C2E7E2B1E0D9A0D8D08DCFC77BC5BB69BAB056AFA446A497439F91409A8A3D948332784C6D9F79BDE3DEC9E8E4C8E8E4BDE3DEADDDD79DD5CE8BCDC57AC3BA67B9AE54AEA247A59945A093419B8C3E958633794E3E66416F9F7973A27C73A27C6FA07A689D76609A7258956E4F9169468B633D865D388259378157367E54347B5123542D</ImageData>
+        <TabExtension GUID="{BB6DDFDC-900F-473F-83FC-D83513217B55}" />
+      </Info>
+      <Licenses>
+        <License>
+          <LicenseId>{AD7F40C3-F160-4413-83E3-6B7656A795A2}</LicenseId>
+        </License>
+      </Licenses>
+      <InitSequence>PSO</InitSequence>
+      <Contexts>
+        <Context>
+          <Id>0</Id>
+          <Priority>5</Priority>
+          <CycleTime>1000000000</CycleTime>
+          <DependOn>ManualConfig</DependOn>
+        </Context>
+      </Contexts>
+      <Interfaces>
+        <Interface>
+          <Type GUID="{03000010-0000-0000-e000-000000000064}">ITcCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000025-0000-0000-e000-000000000064}">ITcPostCyclic</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000012-0000-0000-e000-000000000064}">ITcADI</Type>
+        </Interface>
+        <Interface>
+          <Type GUID="{03000018-0000-0000-e000-000000000064}">ITcWatchSource</Type>
+        </Interface>
+      </Interfaces>
+      <Parameters>
+        <Parameter CreateSymbol="1">
+          <Name>CallBy</Name>
+          <BaseType GUID="{119729AD-8099-482A-9FEE-7DE2E19D43CE}">TctModuleCallByType</BaseType>
+          <Default>
+            <EnumText>Module</EnumText>
+          </Default>
+          <PTCID>#x0</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ExecutionSequence</Name>
+          <BaseType GUID="{F283B6A3-FCB4-4228-84CD-F59E0DCC841F}">TctModuleExecutionSequenceType</BaseType>
+          <Default>
+            <EnumText>StateUpdateAfterOutputMapping</EnumText>
+          </Default>
+          <PTCID>#x1</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>StepSize</Name>
+          <BaseType GUID="{E04CF4BC-B951-4433-A72E-9E3429B8BAA2}">TctStepSizeType</BaseType>
+          <Default>
+            <EnumText>UseTaskCycleTime</EnumText>
+          </Default>
+          <PTCID>#x2</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>MdlInitialized</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <PTCID>#x3</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>CycleUpdateExecuted</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <PTCID>#x4</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>SimulinkTime</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+          <PTCID>#x5</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>ModuleInfo</Name>
+          <BaseType GUID="{A16CA67D-37F1-48E5-B5E7-DA121A1461E4}">TctModuleInfoType</BaseType>
+          <PTCID>#x6</PTCID>
+        </Parameter>
+        <Parameter OnlineParameter="1" CreateSymbol="1" ReadOnly="1">
+          <Name>ModuleBuildInfo</Name>
+          <BaseType GUID="{6719AAA2-5EAE-471D-ADEF-B0F177D15642}">TctModuleBuildInfoType</BaseType>
+          <PTCID>#x7</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ExecuteModelCode</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000030}">BOOL</BaseType>
+          <Default>
+            <Value>1</Value>
+          </Default>
+          <PTCID>#x8</PTCID>
+        </Parameter>
+        <Parameter>
+          <Name>Input</Name>
+          <BaseType GUID="{234fa6c9-2134-ea10-2c34-1376d1099e0d}">ExtU_Filter_Current_Hexapod_R_T</BaseType>
+          <PTCID>#x80000000</PTCID>
+        </Parameter>
+        <Parameter>
+          <Name>ModelParameters</Name>
+          <BaseType GUID="{1351a517-ae24-1daa-7843-4689de3a5913}">P_Filter_Current_Hexapod_Robo_T</BaseType>
+          <Default>
+            <SubItem>
+              <Name>.DiscreteFilter_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter1_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter1_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter1_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter1_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter2_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter2_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter2_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter2_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter3_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter3_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter3_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter3_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter4_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter4_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter4_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter4_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter5_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter5_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter5_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter5_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter6_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter6_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter6_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter6_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter7_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter7_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter7_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter7_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter8_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter8_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter8_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter8_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter9_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter9_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter9_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter9_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter10_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter10_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter10_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter10_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter11_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter11_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter11_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter11_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter12_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter12_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter12_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter12_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter13_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter13_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter13_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter13_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter14_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter14_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter14_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter14_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter15_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter15_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter15_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter15_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter16_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter16_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter16_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter16_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter17_NumCoef[0]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter17_NumCoef[1]</Name>
+              <Value>1.25663706143591720e+01</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter17_DenCoef[0]</Name>
+              <Value>2.01256637061435910e+03</Value>
+            </SubItem>
+            <SubItem>
+              <Name>.DiscreteFilter17_DenCoef[1]</Name>
+              <Value>-1.98743362938564090e+03</Value>
+            </SubItem>
+          </Default>
+          <PTCID>#x83000000</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskOid</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-00000000000F}">OTCID</BaseType>
+          <PTCID>#x3002060</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskPriority</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x3002070</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskCycleTimeNs</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x3002080</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskPort</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000005}">UINT</BaseType>
+          <PTCID>#x3002090</PTCID>
+        </Parameter>
+        <Parameter CreateSymbol="1">
+          <Name>ContextInfoArr_0_TaskSortOrder</Name>
+          <BaseType GUID="{18071995-0000-0000-0000-000000000008}">UDINT</BaseType>
+          <PTCID>#x30020b0</PTCID>
+        </Parameter>
+      </Parameters>
+      <DataAreas>
+        <DataArea>
+          <AreaNo AreaType="InputDst" CreateSymbols="1">0</AreaNo>
+          <Name>Input</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>Current_Motor</Name>
+            <BitSize>1152</BitSize>
+            <BaseType GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</BaseType>
+            <PTCID>#x80000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="OutputSrc" CreateSymbols="1">1</AreaNo>
+          <Name>Output</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>Current_Monitor</Name>
+            <BitSize>1152</BitSize>
+            <BaseType GUID="{017a51f0-74ac-1814-a21e-237b868b9bc2}">matrix_18_real_T</BaseType>
+            <PTCID>#x81000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">2</AreaNo>
+          <Name>BlockIO</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000058</PTCID>
+            <BitOffs>704</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000068</PTCID>
+            <BitOffs>832</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_1</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_2</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_3</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_4</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_5</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_6</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000b8</PTCID>
+            <BitOffs>1472</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_7</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_8</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000c8</PTCID>
+            <BitOffs>1600</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_9</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000d0</PTCID>
+            <BitOffs>1664</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_10</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_11</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000e0</PTCID>
+            <BitOffs>1792</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_12</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000e8</PTCID>
+            <BitOffs>1856</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_13</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_14</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x820000f8</PTCID>
+            <BitOffs>1984</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_15</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_16</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000108</PTCID>
+            <BitOffs>2112</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_17</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000110</PTCID>
+            <BitOffs>2176</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>current_filter_In_18</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x82000118</PTCID>
+            <BitOffs>2240</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">3</AreaNo>
+          <Name>ModelParameters</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830000c8</PTCID>
+            <BitOffs>1600</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830000e8</PTCID>
+            <BitOffs>1856</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000110</PTCID>
+            <BitOffs>2176</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000118</PTCID>
+            <BitOffs>2240</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000128</PTCID>
+            <BitOffs>2368</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000138</PTCID>
+            <BitOffs>2496</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000140</PTCID>
+            <BitOffs>2560</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000150</PTCID>
+            <BitOffs>2688</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000160</PTCID>
+            <BitOffs>2816</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000168</PTCID>
+            <BitOffs>2880</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000178</PTCID>
+            <BitOffs>3008</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000188</PTCID>
+            <BitOffs>3136</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000190</PTCID>
+            <BitOffs>3200</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830001a0</PTCID>
+            <BitOffs>3328</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830001b0</PTCID>
+            <BitOffs>3456</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830001b8</PTCID>
+            <BitOffs>3520</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830001c8</PTCID>
+            <BitOffs>3648</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830001d8</PTCID>
+            <BitOffs>3776</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830001e0</PTCID>
+            <BitOffs>3840</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830001f0</PTCID>
+            <BitOffs>3968</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000200</PTCID>
+            <BitOffs>4096</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000208</PTCID>
+            <BitOffs>4160</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000218</PTCID>
+            <BitOffs>4288</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000228</PTCID>
+            <BitOffs>4416</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000230</PTCID>
+            <BitOffs>4480</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000240</PTCID>
+            <BitOffs>4608</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000250</PTCID>
+            <BitOffs>4736</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000258</PTCID>
+            <BitOffs>4800</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000268</PTCID>
+            <BitOffs>4928</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x83000278</PTCID>
+            <BitOffs>5056</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000280</PTCID>
+            <BitOffs>5120</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x83000290</PTCID>
+            <BitOffs>5248</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830002a0</PTCID>
+            <BitOffs>5376</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17_NumCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830002a8</PTCID>
+            <BitOffs>5440</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17_DenCoef</Name>
+            <BitSize>128</BitSize>
+            <BaseType GUID="{bb70daad-4e7a-b6f5-9e66-27230d456ec9}">matrix_2_real_T</BaseType>
+            <PTCID>#x830002b8</PTCID>
+            <BitOffs>5568</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17_InitialStates</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x830002c8</PTCID>
+            <BitOffs>5696</BitOffs>
+          </Symbol>
+        </DataArea>
+        <DataArea>
+          <AreaNo AreaType="Internal" CreateSymbols="1">4</AreaNo>
+          <Name>DWork</Name>
+          <ContextId>0</ContextId>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000000</PTCID>
+            <BitOffs>0</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000008</PTCID>
+            <BitOffs>64</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000010</PTCID>
+            <BitOffs>128</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000018</PTCID>
+            <BitOffs>192</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000020</PTCID>
+            <BitOffs>256</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000028</PTCID>
+            <BitOffs>320</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000030</PTCID>
+            <BitOffs>384</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000038</PTCID>
+            <BitOffs>448</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000040</PTCID>
+            <BitOffs>512</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000048</PTCID>
+            <BitOffs>576</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000050</PTCID>
+            <BitOffs>640</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000058</PTCID>
+            <BitOffs>704</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000060</PTCID>
+            <BitOffs>768</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000068</PTCID>
+            <BitOffs>832</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000070</PTCID>
+            <BitOffs>896</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000078</PTCID>
+            <BitOffs>960</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000080</PTCID>
+            <BitOffs>1024</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17_states</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000088</PTCID>
+            <BitOffs>1088</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000090</PTCID>
+            <BitOffs>1152</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter1_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000098</PTCID>
+            <BitOffs>1216</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter2_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000a0</PTCID>
+            <BitOffs>1280</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter3_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000a8</PTCID>
+            <BitOffs>1344</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter4_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000b0</PTCID>
+            <BitOffs>1408</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter5_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000b8</PTCID>
+            <BitOffs>1472</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter6_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000c0</PTCID>
+            <BitOffs>1536</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter7_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000c8</PTCID>
+            <BitOffs>1600</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter8_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000d0</PTCID>
+            <BitOffs>1664</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter9_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000d8</PTCID>
+            <BitOffs>1728</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter10_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000e0</PTCID>
+            <BitOffs>1792</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter11_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000e8</PTCID>
+            <BitOffs>1856</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter12_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000f0</PTCID>
+            <BitOffs>1920</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter13_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x840000f8</PTCID>
+            <BitOffs>1984</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter14_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000100</PTCID>
+            <BitOffs>2048</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter15_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000108</PTCID>
+            <BitOffs>2112</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter16_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000110</PTCID>
+            <BitOffs>2176</BitOffs>
+          </Symbol>
+          <Symbol CreateSymbol="1">
+            <Name>DiscreteFilter17_tmp</Name>
+            <BitSize>64</BitSize>
+            <BaseType GUID="{18071995-0000-0000-0000-00000000000E}">LREAL</BaseType>
+            <PTCID>#x84000118</PTCID>
+            <BitOffs>2240</BitOffs>
+          </Symbol>
+        </DataArea>
+      </DataAreas>
+      <DataPointers />
+      <Deployment>
+        <FileEntry TargetPlatform="TwinCAT RT (x86)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.sys</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x86)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x86)\%CLASSFACTORYNAME%.pdb</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x64)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.sys</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.sys</DestinationFile>
+        </FileEntry>
+        <FileEntry TargetPlatform="TwinCAT RT (x64)">
+          <SourceFile>%SOLUTIONMODULEINSTTPATH%TwinCAT RT (x64)\%CLASSFACTORYNAME%.pdb</SourceFile>
+          <DestinationFile>%TC_DRIVERAUTOINSTALLPATH%%CLASSFACTORYNAME%.pdb</DestinationFile>
+        </FileEntry>
+        <FileEntry>
+          <ProjectFile>%SOLUTIONMODULEINSTTPATH%Filter_Current_Hexapod_Robot_PlcOpenPOUs.xml</ProjectFile>
+        </FileEntry>
+        <FileEntry>
+          <ProjectFile>%SOLUTIONMODULEINSTTPATH%Filter_Current_Hexapod_Robot_ModuleInfo.xml</ProjectFile>
+        </FileEntry>
+      </Deployment>
+      <Xml>
+        <GeneratedModuleInfoFile>Filter_Current_Hexapod_Robot_ModuleInfo.xml</GeneratedModuleInfoFile>
+      </Xml>
+    </Module>
+  </Modules>
+</TcModuleClass>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Variable_Model_Mapping_Control" Id="{8bfbae00-9283-4db4-a499-7fa23242537f}" SpecialFunc="None">
+  <POU Name="Variable_Model_Mapping_Control" Id="{45c50944-f17d-4b01-ae18-5c2bf39ac4b0}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Variable_Model_Mapping_Control
 VAR_INPUT
 	Model_Leg_Variable	: ARRAY[1..18] OF LREAL;		// 六足机构模型中的腿位置

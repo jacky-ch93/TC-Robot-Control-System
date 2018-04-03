@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Axis" Id="{875f83f1-eb97-483f-b7d6-014637e061f1}" SpecialFunc="None">
+  <POU Name="Axis" Id="{0297b320-2572-4a6c-bc14-a7635e231c4f}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK Axis
 //VAR_INPUT	
 //END_VAR
@@ -71,9 +71,9 @@ END_VAR
     <Implementation>
       <ST><![CDATA[]]></ST>
     </Implementation>
-    <Property Name="ActPosition" Id="{3015e613-88a6-44b7-bfd3-2c06df6f075d}">
+    <Property Name="ActPosition" Id="{0d8ebaa4-7aa1-4383-80ec-d1bd4628f665}">
       <Declaration><![CDATA[PROPERTY ActPosition : LREAL]]></Declaration>
-      <Get Name="Get" Id="{49f49f46-670a-4f33-894d-6ca9ed093408}">
+      <Get Name="Get" Id="{e48baacc-021b-4023-a440-2ca5f997647d}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -83,9 +83,9 @@ ActPosition := Axis_ActPosition.Position;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Property Name="ActVelocity" Id="{6ba788af-13d6-45aa-88b8-c4b15f3b7302}">
+    <Property Name="ActVelocity" Id="{9b54bb16-bef1-4737-93a0-d686d6881565}">
       <Declaration><![CDATA[PROPERTY ActVelocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{d9e77e56-00f7-4ebc-9fc8-803356b7adfe}">
+      <Get Name="Get" Id="{620d56ba-2ff0-4a80-aa97-3ed6a45a0fa2}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -94,9 +94,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="Current_Turque_Value" Id="{3a2f771d-3376-4640-bd97-650af6e34455}">
+    <Property Name="Current_Turque_Value" Id="{7b4cbfca-b1a0-4ffe-a8fa-26e268dc2f54}">
       <Declaration><![CDATA[PROPERTY Current_Turque_Value : INT]]></Declaration>
-      <Get Name="Get" Id="{c1b780dc-fdc4-4a6a-9032-d0ef9263bab2}">
+      <Get Name="Get" Id="{4f6055aa-a8ec-4d0e-add1-153698558955}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -104,7 +104,7 @@ END_VAR
           <ST><![CDATA[Current_Turque_Value := Axis_Current_Turque;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{51333a67-cd8e-4eac-b9a4-9ecae4706b9e}">
+      <Set Name="Set" Id="{71549ae3-a22a-408d-856c-aa31b83fdcc1}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -113,7 +113,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="ExtSetPoint" Id="{e3dd3d6b-d150-49a2-a8d7-a7990a606e4c}">
+    <Method Name="ExtSetPoint" Id="{b01fe496-a51a-486b-8285-43d5d90a9fa4}">
       <Declaration><![CDATA[METHOD ExtSetPoint
 VAR_INPUT
 	Drive_ExtSetPointEnable 	: BOOL;		// 使能外部信号开始信号
@@ -158,7 +158,7 @@ IF Axis_ExtSetPiontEnable.Error OR Axis_ExtSetPiontDisable.Error OR ABS(Axis_Cur
 END_IF]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Halt" Id="{d7ff254f-2dd7-462f-bdbd-9197c2ffdaa3}">
+    <Method Name="Halt" Id="{9bde2e9b-f9ec-4d6a-b4c6-7b681ff2824e}">
       <Declaration><![CDATA[METHOD Halt : BOOL
 VAR_INPUT
 	DriveHalt		: BOOL;					// Request stop
@@ -202,7 +202,7 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Home" Id="{313e1eef-e597-492a-a006-a8453e584cfd}">
+    <Method Name="Home" Id="{d86168e1-e554-4d6f-9617-4430fef5cab7}">
       <Declaration><![CDATA[METHOD Home
 VAR_INPUT
 	//Back_Start 				: BOOL;
@@ -262,9 +262,9 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Home_Absolute_Position" Id="{4b2bc104-de65-4853-bc96-2381d638aa2c}">
+    <Property Name="Home_Absolute_Position" Id="{3378bb70-de70-49cb-860f-38d4b4ff35f9}">
       <Declaration><![CDATA[PROPERTY Home_Absolute_Position : LREAL]]></Declaration>
-      <Get Name="Get" Id="{b2452760-cdc1-4500-a807-21088ae1fa11}">
+      <Get Name="Get" Id="{484802f3-f31e-42d9-b119-359ed2271159}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -272,7 +272,7 @@ END_VAR
           <ST><![CDATA[Home_Absolute_Position := Home_Position;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{13130e40-cbc6-42ec-8c48-c9869e4c03d4}">
+      <Set Name="Set" Id="{ccd846cd-1d85-412c-9446-94c278ec93d5}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -281,7 +281,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Home_Sensor" Id="{a22704a8-b010-4cc1-be73-1967f40884b9}">
+    <Method Name="Home_Sensor" Id="{1c17b649-efcc-45bb-ae5e-9cf30a2d631f}">
       <Declaration><![CDATA[METHOD Home_Sensor
 VAR_INPUT
 	Drive_Home				: BOOL;			// 调零使能信号
@@ -338,9 +338,9 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Home_Velocity" Id="{075d0823-6614-4698-9d00-5a9266b58e8c}">
+    <Property Name="Home_Velocity" Id="{96940263-d7e2-4e23-8857-5d761e72d358}">
       <Declaration><![CDATA[PROPERTY Home_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{41764938-04f0-496d-b0d3-2075d0bf01de}">
+      <Get Name="Get" Id="{6657ae91-c5f5-4c30-92cc-4a0003b2769b}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -348,7 +348,7 @@ END_VAR
           <ST><![CDATA[Home_Velocity := Velocity_Home;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{81d43709-9b51-4423-8fa5-968a12b8eb76}">
+      <Set Name="Set" Id="{425a57d7-0c4e-4b3b-a589-0846a7d787f3}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -357,7 +357,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Jog_Backward" Id="{99d13956-4937-48a4-92d1-297e5120f462}">
+    <Method Name="Jog_Backward" Id="{a4c6da57-bf65-48fb-a6d6-b884dd02fec5}">
       <Declaration><![CDATA[METHOD Jog_Backward
 VAR_INPUT
 	Drive_Jog_Backward	: BOOL;				//点动后退使能信号
@@ -398,7 +398,7 @@ END_IF*)
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Jog_Forward" Id="{9deceb4f-22e3-43d3-abba-cc65da0a988f}">
+    <Method Name="Jog_Forward" Id="{4779dde2-f67f-4662-af9a-451a772d25d8}">
       <Declaration><![CDATA[METHOD Jog_Forward : BOOL
 VAR_INPUT
 	Drive_Jog_Forward	: BOOL;				//点动前进使能信号
@@ -439,11 +439,11 @@ END_IF*)
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Jog_Velocity" Id="{fbf70f23-ccbc-42f7-9290-364343308531}">
+    <Property Name="Jog_Velocity" Id="{cb8b277a-51dd-4d89-91eb-c44bae373e36}">
       <Declaration><![CDATA[// =======================读写点动程序中的速度值==========================
 
 PROPERTY Jog_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{43fe7bb4-cb6d-421c-bc16-b82658b77bde}">
+      <Get Name="Get" Id="{41f1c919-9e35-4fb0-9d96-aacea9d69404}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -451,7 +451,7 @@ END_VAR
           <ST><![CDATA[Jog_Velocity := Velocity_Jog;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{5232cb37-92d1-44d0-9e06-54bf215c7cbc}">
+      <Set Name="Set" Id="{57b804e1-59a5-4f7d-8e37-a2cef611381d}">
         <Declaration><![CDATA[
 VAR
 END_VAR
@@ -461,9 +461,9 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Property Name="Max_Turque_Value" Id="{c8624b49-e9f6-4c92-b644-367354523826}">
+    <Property Name="Max_Turque_Value" Id="{a1715295-6901-4254-8242-95c2727a170a}">
       <Declaration><![CDATA[PROPERTY Max_Turque_Value : INT]]></Declaration>
-      <Set Name="Set" Id="{61f18c04-0a46-4043-b21d-3c09633e0ec4}">
+      <Set Name="Set" Id="{236201a5-52e3-49c6-9e09-32af45edae8a}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -472,7 +472,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Move_Absolute" Id="{90058d1c-d052-4ccf-9289-5faf8ddb84ca}">
+    <Method Name="Move_Absolute" Id="{12e32043-d091-4a80-be02-6ea3fbf6df52}">
       <Declaration><![CDATA[METHOD Move_Absolute
 VAR_INPUT
 	Drive_Move_Absolute : BOOL;				// 运动使能信号
@@ -507,11 +507,11 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Move_Absolute_Velocity" Id="{7cb9ac45-b7a3-4012-b6de-6d6ce49b5a54}">
+    <Property Name="Move_Absolute_Velocity" Id="{49809bc4-abcc-4ce8-89db-0034251fcee4}">
       <Declaration><![CDATA[// =======================读写绝对运动程序中的速度值==========================
 
 PROPERTY Move_Absolute_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{72f69858-955f-443c-af51-259e8e609d4c}">
+      <Get Name="Get" Id="{7369021a-0285-46f5-905e-1b1f49285dce}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -519,7 +519,7 @@ END_VAR
           <ST><![CDATA[Move_Absolute_Velocity := Velocity_Absolute;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{c5a5a778-30ed-4aa2-a2ed-0d898d7d6498}">
+      <Set Name="Set" Id="{f46af1a8-28ac-42f9-8dde-58159eb2bb7e}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -528,7 +528,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Move_Backward" Id="{d07db03f-d706-432b-92a0-251009b4d606}">
+    <Method Name="Move_Backward" Id="{337e5803-e92f-4860-b95e-50cbd2141b68}">
       <Declaration><![CDATA[METHOD Move_Backward
 VAR_INPUT
 	Move_Backward_Start : BOOL;					//匀速后退使能信号
@@ -560,7 +560,7 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Move_Fordward" Id="{30d70636-f830-44c4-adf2-54f90ee067a6}">
+    <Method Name="Move_Fordward" Id="{056a50de-c086-4e3d-b569-34915d9bf6e9}">
       <Declaration><![CDATA[METHOD Move_Fordward
 VAR_INPUT
 	Move_Forward_Start : BOOL;					//匀速前进使能信号
@@ -592,7 +592,7 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Move_Relative" Id="{7b541efd-c3a2-463f-9025-d3f3cd116050}">
+    <Method Name="Move_Relative" Id="{7ef2e85a-fdb5-4050-b553-b09b1344ef61}">
       <Declaration><![CDATA[METHOD Move_Relative
 VAR_INPUT
 	Drive_Move_Relative		: BOOL;				// 运动使能信号
@@ -625,11 +625,11 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="Move_Relative_Velocity" Id="{10d568b7-1224-4f3c-82dc-f2b473343afd}">
+    <Property Name="Move_Relative_Velocity" Id="{a2007fa8-9136-4470-8a7c-08b36a802e9d}">
       <Declaration><![CDATA[// =======================读写相对运动程序中的速度值==========================
 
 PROPERTY Move_Relative_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{2ef19610-9237-4e3e-8453-be0ff288ee9e}">
+      <Get Name="Get" Id="{c4832642-7098-4da2-8e93-c55fc0de36db}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -637,7 +637,7 @@ END_VAR
           <ST><![CDATA[Move_Relative_Velocity := Velocity_Relative;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{333783a0-b8e9-41f4-b7a2-5d9a70341bc4}">
+      <Set Name="Set" Id="{6116d05f-7371-48c0-8b14-c261b37e515d}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -646,9 +646,9 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Property Name="Move_Velocity" Id="{21dc1ad2-a805-4cc5-ba52-5eb4a3378ad2}">
+    <Property Name="Move_Velocity" Id="{baafb3de-c630-4f04-95b4-f2aab1391740}">
       <Declaration><![CDATA[PROPERTY Move_Velocity : LREAL]]></Declaration>
-      <Get Name="Get" Id="{febdf6e5-1449-4037-ae17-7b2213508e1c}">
+      <Get Name="Get" Id="{4796ecb7-0a7f-429e-8fac-0beaa3808b94}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -656,7 +656,7 @@ END_VAR
           <ST><![CDATA[Move_Velocity := Velocity_Move;]]></ST>
         </Implementation>
       </Get>
-      <Set Name="Set" Id="{44a4395c-73de-4ae0-b7b0-c7902df3efbf}">
+      <Set Name="Set" Id="{1a0bef2c-0a8e-4858-bcc9-d098a83b6365}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -665,7 +665,7 @@ END_VAR
         </Implementation>
       </Set>
     </Property>
-    <Method Name="Power" Id="{cc0985ad-b04b-4e99-b924-c7a9a3e5739c}">
+    <Method Name="Power" Id="{8e0af2d2-d23d-480b-b659-64465503fb47}">
       <Declaration><![CDATA[METHOD Power
 VAR_INPUT
 	Axis_Enable : BOOL;
@@ -693,7 +693,7 @@ Axis_Moves := AxisRef.Status.Moving;
 // ==========================================================]]></ST>
       </Implementation>
     </Method>
-    <Method Name="Reset" Id="{dedc8057-c4ab-4248-b14b-274fa3c9288f}">
+    <Method Name="Reset" Id="{233649a1-433c-4eab-be04-eab312f72a15}">
       <Declaration><![CDATA[METHOD Reset
 VAR_INPUT
 	Drive_Reset		: BOOL;					// Request reset
@@ -729,9 +729,9 @@ END_IF
 // =========================================================]]></ST>
       </Implementation>
     </Method>
-    <Property Name="State_ExtSetPiontDone" Id="{6243132d-fdac-4a44-aabc-1626db2c504e}">
+    <Property Name="State_ExtSetPiontDone" Id="{ca58efa5-bb89-4dcd-bf5d-a603ca9d5da9}">
       <Declaration><![CDATA[PROPERTY State_ExtSetPiontDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{c75a34d6-3b40-4dd5-b205-992b19da25da}">
+      <Get Name="Get" Id="{b0107657-7a2a-47aa-a781-d15fcff43910}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -740,11 +740,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="State_HomeDone" Id="{b05cc381-4a45-4536-92f9-829385d416fe}">
+    <Property Name="State_HomeDone" Id="{ce1f8c3e-68ec-4615-817a-025c75cd229d}">
       <Declaration><![CDATA[// =======================回零结束信号==========================
 
 PROPERTY State_HomeDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{61dc4a9a-ce60-4f15-af37-592d6a63af40}">
+      <Get Name="Get" Id="{a3510f33-91cc-4bac-96b3-9bbfa1b167ab}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -753,11 +753,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="State_JogDone" Id="{3c0f115e-f80a-44b9-a70e-39bb83e64c81}">
+    <Property Name="State_JogDone" Id="{27688534-4098-40fc-954b-fa45a6971fca}">
       <Declaration><![CDATA[// =======================点动结束信号==========================
 
 PROPERTY State_JogDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{19bafe7b-2de8-400b-a26d-d4ad9918869f}">
+      <Get Name="Get" Id="{51e746fe-f184-40ff-a6be-96a339aff0cb}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -766,9 +766,9 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="State_MoveAbsoluteDone" Id="{7b7a8b76-a437-47fb-99a9-6a9d632d1395}">
+    <Property Name="State_MoveAbsoluteDone" Id="{47f80986-d4c0-4164-a12a-52b14313e1fb}">
       <Declaration><![CDATA[PROPERTY State_MoveAbsoluteDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{15c8003a-8e08-4231-b9e8-509a81a20964}">
+      <Get Name="Get" Id="{323a086a-6a9f-4141-99e5-bda994083ecf}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -777,11 +777,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="State_PowerStatus" Id="{26f2d544-ee3f-4b26-afb9-71118906e7d1}">
+    <Property Name="State_PowerStatus" Id="{7d361c2d-372b-4089-b726-a08b81aa23c4}">
       <Declaration><![CDATA[// =======================上电状态信号==========================
 
 PROPERTY State_PowerStatus : BOOL]]></Declaration>
-      <Get Name="Get" Id="{d3af8348-880a-4df8-b9de-20b9d23a495b}">
+      <Get Name="Get" Id="{de26ef6b-bed6-4c4e-aa47-ff43dbb3f9bf}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -790,11 +790,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="State_ResetDone" Id="{e8bc9f4f-5bd7-4f76-a8c5-8b726ec5b1c8}">
+    <Property Name="State_ResetDone" Id="{34f4e1b9-637c-4552-9456-8ec89e2b13d7}">
       <Declaration><![CDATA[// =======================复位结束信号==========================
 
 PROPERTY State_ResetDone : BOOL]]></Declaration>
-      <Get Name="Get" Id="{6d6b999c-0bec-46b0-8fb1-c5d8586fb5ed}">
+      <Get Name="Get" Id="{fc972bcb-4a51-4a36-abba-59b2c1d449e3}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
-  <POU Name="Robot_Movement" Id="{6eff56ac-a0cd-4732-8b85-b7ebda69435f}" SpecialFunc="None">
+  <POU Name="Robot_Movement" Id="{3ee795f3-e122-4679-95e7-ab3c58d16ee2}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM Robot_Movement
 VAR_INPUT
 	
@@ -136,7 +136,7 @@ END_IF]]></ST>
 //END_IF]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Logic_Control" Id="{6ff3755a-9121-416a-ae3e-6ea6ca2447d3}">
+    <Action Name="Logic_Control" Id="{a7311406-1166-42b9-9353-497a6a597d4b}">
       <Implementation>
         <ST><![CDATA[// =====================外部信号发生逻辑========================
 IF ExSetPoint_Execute THEN
@@ -188,7 +188,7 @@ END_IF
 ]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Monitor" Id="{02473303-261c-445b-9136-403286493e0a}">
+    <Action Name="Variable_Monitor" Id="{36050174-2830-4dd7-b5c1-fd14c314dd64}">
       <Implementation>
         <ST><![CDATA[// ==============实际运动位移和输入位移差值检测区==============
 FOR Axis_Number := 1 TO 18 {BY 1} DO
@@ -204,7 +204,7 @@ Current_Turque_Filter := Filter_Current_Simulink.stOutput.Current_Monitor;
 Mapping_Current_Filter(Controller_Leg_Variable:= Current_Turque_Filter, Model_Leg_Variable=> Current_Turque_Leg);]]></ST>
       </Implementation>
     </Action>
-    <Action Name="Variable_Set" Id="{dd62ebc4-64fe-46c6-9ee6-b54b3152150e}">
+    <Action Name="Variable_Set" Id="{abfa5d23-22a6-48fb-847b-8585733494bf}">
       <Implementation>
         <ST><![CDATA[// ===================外部信号发生电机位置输入值================
 FOR Axis_Number := 1 TO 18 {BY 1} DO
