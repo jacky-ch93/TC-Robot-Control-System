@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <Task Name="Sensor_Test" Id="{9b437a7c-87c5-4b52-b7a9-4a8a1faa516a}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>4000</CycleTime>
+    <Priority>12</Priority>
+    <PouCall>
+      <Name>SignalData_Interface</Name>
+    </PouCall>
+    <TaskFBGuid>{19a17a63-8a87-4ba3-956b-aa2de7977b85}</TaskFBGuid>
+    <Fb_init>{8ebfa720-681e-4348-b17d-9b9b92b958cc}</Fb_init>
+    <Fb_exit>{c7b13ab8-02e2-49fc-85c2-4e390720ba78}</Fb_exit>
+    <CycleUpdate>{a6785bae-4704-4185-b2a9-8931d3059aca}</CycleUpdate>
+    <PostCycleUpdate>{9fa48f8d-412b-4848-b024-249d9b36c65e}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>

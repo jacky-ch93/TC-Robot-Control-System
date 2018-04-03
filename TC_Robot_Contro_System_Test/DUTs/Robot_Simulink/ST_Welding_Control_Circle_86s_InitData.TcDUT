@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_Welding_Control_Circle_86s_InitData" Id="{aa8a0217-ac20-433b-bbc7-8495edb42fe6}">
+    <Declaration><![CDATA[{attribute 'pack_mode' := '4'}
+TYPE ST_Welding_Control_Circle_86s_InitData :
+STRUCT
+	Header: TComInitDataHdr;
+	CallByHdr: TComInitDataElmHdr;
+	CallBy: TctModuleCallByType;
+	ExecutionSequenceHdr: TComInitDataElmHdr;
+	ExecutionSequence: TctModuleExecutionSequenceType;
+	StepSizeHdr: TComInitDataElmHdr;
+	StepSize: TctStepSizeType;
+	ExecuteModelCodeHdr: TComInitDataElmHdr;
+	ExecuteModelCode: BOOL;
+	ContextInfoArr_0_TaskOidHdr: TComInitDataElmHdr;
+	ContextInfoArr_0_TaskOid: OTCID;
+	ContextInfoArr_0_TaskPriorityHdr: TComInitDataElmHdr;
+	ContextInfoArr_0_TaskPriority: UDINT;
+	ContextInfoArr_0_TaskCycleTimeNsHdr: TComInitDataElmHdr;
+	ContextInfoArr_0_TaskCycleTimeNs: UDINT;
+	ContextInfoArr_0_TaskPortHdr: TComInitDataElmHdr;
+	ContextInfoArr_0_TaskPort: UINT;
+	ContextInfoArr_0_TaskSortOrderHdr: TComInitDataElmHdr;
+	ContextInfoArr_0_TaskSortOrder: UDINT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

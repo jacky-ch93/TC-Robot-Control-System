@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Simulink_Model_Generator" Id="{6eff56ac-a0cd-4732-8b85-b7ebda69435f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Simulink_Model_Generator
+VAR_INPUT
+	
+	Axis_Number 		: INT;							// 定义轴数目
+	
+	ExSetPoint_Execute	: BOOL;							// 机器人外部信号发生使能
+	ExtSetPointEnable	: BOOL;							// 外部信号发生信号
+	ExtSetPointDisable	: BOOL;							// 外部信号结束信号
+	
+	T_ALL				: LREAL:=100;						// Simulink模型运动总时长
+	t_Interval			: LREAL:=0.001;						// 取样时间间隔，默认为1ms
+	t					: LREAL:=0;							// 取样当前时间变量，以0为起点
+	
+	// ====================Simulink模块相关=====================
+	Robot_Simulink		: FB_Welding_Control_Circle_86s(oid:=16#01010020);	// Simulink模型定义
+	Mapping_Position	: Variable_Model_Mapping_Control;	// 变量映射			
+	
+	Filter_Current  	: FB_Filter_Current_Hexapod_Robot(oid:=16#01010030);
+	Mapping_Current_Filter	: Variable_Control_Mapping_Model;		// 变量映射	
+
+	
+END_VAR
+VAR
+	Leg_Number			: INT;							// 定义机器人腿数
+END_VAR
+VAR_OUTPUT
+	Model_Position		: ARRAY[1..18] OF LREAL;			// Simulink中各个腿的位置
+	ExSetPoint_Position	: ARRAY[1..18] OF LREAL;			// 外部信号位置
+	
+	Current_Turque_Filter  	: ARRAY[1..18] OF LREAL;		// 滤波后电流
+	Current_Turque_Leg		: ARRAY[1..18] OF LREAL;		// Mapping后的电流
+	Difference_Position	: ARRAY[1..18] OF LREAL;			// 实际位置与输入位置差值
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =======================子程序使能(永久运行)===================
+Variable_Monitor();			// 变量监测子程序使能
+Logic_Control();			// 逻辑控制子程序使能
+Variable_Set();				// 各动作速度子程序使能
+
+// =======================模型使能=======================
+IF ExSetPoint_Execute OR MAIN.Home_Execute THEN
+	Robot_Simulink.Execute();	// Simulink模型使能
+END_IF
+
+IF MAIN.Power_Execute THEN
+	Filter_Current.Execute();
+END_IF
+
+// =======================外部信号运动程序=======================
+IF ExSetPoint_Execute THEN
+	//SetGenerator();			// 使能外部信号发生子程序
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		MAIN.Axis_Robot[Axis_Number].ExtSetPoint(	Drive_ExtSetPointEnable:= ExtSetPointEnable, 
+													Drive_ExtSetPointDisable:= ExtSetPointDisable, 
+													ExSetPosition:= ExSetPoint_Position[Axis_Number]);
+	END_FOR
+END_IF
+
+
+// ======================外部信号发生=========================
+IF ExtSetPointEnable THEN	
+	t := t + t_Interval;
+	ExtSetPointDisable := FALSE;
+END_IF
+
+IF t>=T_ALL THEN
+	ExtSetPointEnable := FALSE;
+	t:=0;
+	ExtSetPointDisable := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <Action Name="Leg_Action" Id="{e2341ef6-f295-424a-a9bd-2f39ef2bb4fe}">
+      <Implementation>
+        <ST><![CDATA[// ===================机器人触地信号转换====================
+//IF ExtSetPointEnable THEN
+//	FOR Leg_Number := 1 TO 6 {BY 1} DO
+//		IF Leg_Home_Set[Leg_Number] THEN		// 在可视化中，Leg_Home_Set为点动
+//			Axis_Home_Set[1+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//			Axis_Home_Set[2+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//			Axis_Home_Set[3+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//		ELSIF Home_Done[1+(Leg_Number-1)*3] AND Home_Done[2+(Leg_Number-1)*3] AND Home_Done[3+(Leg_Number-1)*3] THEN
+//			Leg_Home_Set[Leg_Number] := FALSE; 
+//		END_IF
+//	END_FOR
+//END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Logic_Control" Id="{6ff3755a-9121-416a-ae3e-6ea6ca2447d3}">
+      <Implementation>
+        <ST><![CDATA[// =====================外部信号发生逻辑========================
+IF ExSetPoint_Execute THEN
+	MAIN.Home_Execute := FALSE;						// 外部信号发生使能时，机器人调零必须结束
+	MAIN.Move_Execute :=0;							// 外部信号发生时，不能进行其他运动
+ELSIF NOT ExSetPoint_Execute THEN
+	ExtSetPointEnable := 0;						// 外部信号发生不使能时，外部信号不能进入程序
+	ExtSetPointDisable :=0;
+ELSIF ExtSetPointDisable THEN
+	ExtSetPointEnable :=0;						// 外部信号发生停止与外部信号发生开始不能同时进行
+END_IF
+
+IF MAIN.Home_Execute OR MAIN.Move_Execute THEN
+	ExSetPoint_Execute := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Variable_Monitor" Id="{02473303-261c-445b-9136-403286493e0a}">
+      <Implementation>
+        <ST><![CDATA[// ==============实际运动位移和输入位移差值检测区==============
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Difference_Position[Axis_Number] := MAIN.Axis_ActPostion[Axis_Number]- Mapping_Position.Controller_Leg_Variable[Axis_Number]; 
+END_FOR
+
+// ===================电流滤波环节===================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Filter_Current.stInput.Current_Motor[Axis_Number-1] := MAIN.Current_Turque_Value[Axis_Number];
+END_FOR	
+
+Current_Turque_Filter := Filter_Current.stOutput.Current_Monitor;
+Mapping_Current_Filter(Controller_Leg_Variable:= Current_Turque_Filter, Model_Leg_Variable=> Current_Turque_Leg);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Variable_Set" Id="{dd62ebc4-64fe-46c6-9ee6-b54b3152150e}">
+      <Implementation>
+        <ST><![CDATA[// ===================外部信号发生电机位置输入值================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	ExSetPoint_Position[Axis_Number]:= Mapping_Position.Controller_Leg_Variable[Axis_Number];
+END_FOR
+
+// ===================程序与模型的变量链接===================
+Mapping_Position(Model_Leg_Variable:= Model_Position);		// 映射运动学模型中腿编号和控制模型中的电机编号
+Robot_Simulink.stInput.t := t;								// 采样时间t与Simulink模型中的采样时间链接
+Model_Position := Robot_Simulink.stOutput.Disp_P;			// Simulink中的电机输出位移输入到控制模型]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="Simulink_Model_Generator">
+      <LineId Id="85" Count="2" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="132" Count="3" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="51" Count="6" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="30" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Simulink_Model_Generator.Leg_Action">
+      <LineId Id="2" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="5" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Simulink_Model_Generator.Logic_Control">
+      <LineId Id="2" Count="12" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Simulink_Model_Generator.Variable_Monitor">
+      <LineId Id="18" Count="7" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Simulink_Model_Generator.Variable_Set">
+      <LineId Id="2" Count="3" />
+      <LineId Id="16" Count="3" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

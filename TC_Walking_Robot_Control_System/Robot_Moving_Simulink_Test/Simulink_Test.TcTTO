@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <Task Name="Simulink_Test" Id="{2283ee5c-22d1-4f1f-b1a0-bd0ce8cad3a9}">
+    <!--CycleTime in micro seconds.-->
+    <CycleTime>4000</CycleTime>
+    <Priority>6</Priority>
+    <PouCall>
+      <Name>Robot_Movement</Name>
+    </PouCall>
+    <TaskFBGuid>{845291b5-e1bb-48d1-a214-bf6c027e16dd}</TaskFBGuid>
+    <Fb_init>{3f26b9dd-8c82-4800-bf60-d4f987ef55b1}</Fb_init>
+    <Fb_exit>{69f99f0c-f978-4786-a88b-08d50c407362}</Fb_exit>
+    <CycleUpdate>{ae45e0c4-ad4e-4753-be7b-aa65ba8c1627}</CycleUpdate>
+    <PostCycleUpdate>{3b166933-9f7a-4e17-9371-7d3d534227aa}</PostCycleUpdate>
+  </Task>
+</TcPlcObject>
