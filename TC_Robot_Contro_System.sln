@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "TC_Robot_Contro_System", "TC_Robot_Contro_System.tsproj", "{7A1DD643-067E-477F-A245-66F5366C4220}"
+Project("{B1E792BE-AA5F-4E3C-8C82-674BF9C0715B}") = "TC_Robot_Contro_System_Test", "TC_Robot_Contro_System_Test.tsproj", "{7A1DD643-067E-477F-A245-66F5366C4220}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

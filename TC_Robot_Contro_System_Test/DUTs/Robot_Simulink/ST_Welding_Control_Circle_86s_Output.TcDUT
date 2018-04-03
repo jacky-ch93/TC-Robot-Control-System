@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_Welding_Control_Circle_86s_Output" Id="{ca7942df-00b6-4982-953d-244c83f8fb3e}">
+    <Declaration><![CDATA[TYPE ST_Welding_Control_Circle_86s_Output :
+STRUCT
+	Disp_P: matrix_18_real_T;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

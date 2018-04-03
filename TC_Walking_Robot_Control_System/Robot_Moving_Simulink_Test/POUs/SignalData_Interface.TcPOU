@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="SignalData_Interface" Id="{937fbb6d-5f89-4032-b9b8-596abb29953d}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM SignalData_Interface
+VAR_INPUT
+	// ===================触地信号区==========
+	// ===================触地信号区==========
+END_VAR
+VAR
+	// ===================陀螺仪信号区==========
+	open_windows 	AT 	%MD7 : BOOL;			// 控制传感器窗口的开关信号
+	
+	// ===================触地信号区==========
+END_VAR
+VAR_OUTPUT
+	// ===================陀螺仪信号区==========
+	W  		AT  %MD0 : REAL;
+	X		AT 	%MD1 : REAL;
+	Y		AT 	%MD2 : REAL;
+	Z		AT 	%MD3 : REAL;
+	ROLL 	AT 	%MD4 : REAL;
+	PITCH	AT 	%MD5 : REAL;
+	YAW		AT 	%MD6 : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[;]]></ST>
+    </Implementation>
+    <Action Name="Signal_Monitor" Id="{b6d8f2b9-a4ef-4181-8eb2-a1c39e2ea77e}">
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="SignalData_Interface">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="SignalData_Interface.Signal_Monitor">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
