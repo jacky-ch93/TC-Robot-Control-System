@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Hexapod_Leg" Id="{49eba7d8-d2c8-4ac9-8090-16d605a814cb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Hexapod_Leg
+VAR_INPUT
+	Axis1, Axis2, Axis3	: Axis;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Axis_Leg		: ARRAY [1..3] OF Axis;
+	Axis_Number		: INT;
+	Axis_HomeDone	: ARRAY [1..3] OF BOOL;
+	HomeDone		: BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Axis_Leg[1] := Axis1;
+Axis_Leg[2] := Axis2;
+Axis_Leg[3] := Axis3;]]></ST>
+    </Implementation>
+    <Method Name="Home" Id="{f793b9f5-69c0-4aee-af04-1fe207aaecb6}">
+      <Declaration><![CDATA[METHOD Home
+VAR_INPUT
+	Axis1_HomeSet	: BOOL;
+	Axis2_HomeSet	: BOOL;
+	Axis3_HomeSet	: BOOL;
+END_VAR
+VAR_OUTPUT	
+END_VAR
+VAR
+	Axis_HomeSet	: BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Axis_HomeDone[1] AND Axis_HomeDone[2] AND Axis_HomeDone[2] THEN
+	HomeDone := TRUE;
+END_IF
+
+Axis_HomeDone[1] := Axis1.State_HomeDone;
+Axis_HomeDone[2] := Axis2.State_HomeDone;
+Axis_HomeDone[3] := Axis3.State_HomeDone;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="State_HomeDone" Id="{8ca86c01-ddc8-4dc1-9d24-6379a91e4e8a}">
+      <Declaration><![CDATA[PROPERTY State_HomeDone : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9a83aeec-779d-4e61-86ae-2b2c09c8cf87}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[State_HomeDone := HomeDone;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <LineIds Name="Hexapod_Leg">
+      <LineId Id="40" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Hexapod_Leg.Home">
+      <LineId Id="11" Count="1" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Hexapod_Leg.State_HomeDone.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

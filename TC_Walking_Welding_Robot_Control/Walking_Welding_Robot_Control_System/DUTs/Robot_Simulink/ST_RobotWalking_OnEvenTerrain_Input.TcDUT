@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_RobotWalking_OnEvenTerrain_Input" Id="{12bfe1aa-c9dc-4d1a-9d15-4c763653fefe}">
+    <Declaration><![CDATA[TYPE ST_RobotWalking_OnEvenTerrain_Input :
+STRUCT
+	t: LREAL;
+	Touch_Signal: matrix_6_real_T;
+	Step_Test: BOOL;
+	params_x: matrix_5_real_T;
+	params_y: matrix_5_real_T;
+	params_z: matrix_5_real_T;
+	params_alpha: matrix_5_real_T;
+	params_beta: matrix_5_real_T;
+	params_gama: matrix_5_real_T;
+	Mode_Move: LREAL;
+	t_Trajectory: LREAL;
+	R_Circle: LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

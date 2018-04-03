@@ -3,7 +3,7 @@
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{d770d283-c30a-4d26-a5c4-c8f5f5da174c}</ProjectGuid>
+    <ProjectGuid>{41df21bc-5dad-41c5-b304-5bca5d02c90e}</ProjectGuid>
     <SubObjectsSortedByName>True</SubObjectsSortedByName>
     <Name>Robot_Moving_Simulink_Test</Name>
     <ProgramVersion>3.1.4020.4</ProgramVersion>

@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <POU Name="Robot_Movement" Id="{6eff56ac-a0cd-4732-8b85-b7ebda69435f}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Robot_Movement
+VAR_INPUT
+	
+	Axis_Number 		: INT;							// 定义轴数目
+	
+	ExSetPoint_Execute	: BOOL;							// 机器人外部信号发生使能
+	ExtSetPointEnable	: BOOL;							// 外部信号发生信号
+	ExtSetPointDisable	: BOOL;							// 外部信号结束信号
+	
+	T_ALL				: LREAL:=40000;					// Simulink模型运动总时长
+	t_Interval			: LREAL:=0.001;					// 取样时间间隔，默认为1ms
+	t					: LREAL:=0;						// 取样当前时间变量，以0为起点
+	
+		
+	// ====================Simulink模块相关=====================
+	Robot_Simulink		: FB_RobotWalking_OnEvenTerrain(oid:=16#01010020);	// Simulink模型定义
+	Model_Position		: ARRAY[1..18] OF LREAL;			// Simulink中各个腿的位置
+	ExSetPoint_Position	: ARRAY[1..18] OF LREAL;			// 外部信号位置
+	Mapping_Position	: Variable_Model_Mapping_Control;	// 变量映射
+	Mapping_Position1	: Variable_Control_Mapping_Model;	// 将检测到的腿位置反馈到机器人控制模型		
+	Home_Position 		: ARRAY[1..18] OF LREAL;			// Home结束后的位移值
+	
+	// ====================Simulink模块相关=====================
+	Filter_Current_Simulink  : FB_Filter_Current_Hexapod_Robot(oid:=16#01010030);
+	Current_Turque_Filter  	: ARRAY[1..18] OF LREAL;		// 滤波后电流
+	Mapping_Current_Filter	: Variable_Control_Mapping_Model;		// 变量映射,结果按模型中腿分布
+	
+	Current_Delay_Simulink	: FB_Tough_Signal_Detection_Simple(oid:=16#01010040);		// 输出延迟的电流
+	Delay_Time_1			: LREAL:=0.6;						// 延迟的时间，默认150毫秒
+	Current_Fiter_Delay		: ARRAY[1..18] OF LREAL;			// 延迟后的电流输出
+	MINIMUM_Current_Change	: LREAL	:=150;						// 最小电流的变化值
+	Difference_Current		: ARRAY[1..18] OF LREAL;			// 电流变化差值
+	Mapping_Leg				: Leg_Control_Mapping_Model;		// 输出为模型中的腿标号
+
+	Current_Change			: ARRAY[1..18] OF LREAL;			// 电流变化
+	
+	Current_Turque_Leg		: ARRAY[1..18] OF LREAL;			// Mapping后的电流
+	
+	Touch_Signal	: ARRAY [1..6] OF BOOL := [0,0,0,0,0,0];
+	Touch_Signal_1	: ARRAY [1..6] OF BOOL;
+	Leg_Lengths		: ARRAY [1..18] OF LREAL;
+	Leg_Touch		: ARRAY [1..3] OF LREAL;
+	Leg_Detection	: ARRAY [1..3] OF LREAL;
+	
+		// 模型输入
+	Step_Test		: BOOL :=0;
+	params_x		: ARRAY [1..5] OF LREAL:=[0,0,0,0,0];
+	params_y		: ARRAY [1..5] OF LREAL:=[0,0,0,0,0];
+	params_z		: ARRAY [1..5] OF LREAL:=[0,0,0,0,0];
+	
+	params_alpha	: ARRAY [1..5] OF LREAL:=[0,0,0,0,0]; 	// 绕Y轴
+	params_beta		: ARRAY [1..5] OF LREAL:=[0,0,0,0,0];		// 绕Z轴
+	params_gama		: ARRAY [1..5] OF LREAL:=[0,0,0,0,0];		// 绕X轴
+	
+	Mode_Move		: INT := 1;
+	t_traj			: LREAL := 480;
+	R_circle		: LREAL := 2;
+	
+		// 模型输出
+	//Disp_P		: ARRAY [1..18] OF LREAL;
+	realState		: LREAL;
+	state			: LREAL;
+	Number			: LREAL;
+	//Act_COM		: ARRAY [1..3] OF LREAL;
+	Act_Lout		: ARRAY [1..18] OF LREAL;
+	Act_Slice		: ARRAY [1..8] OF LREAL;
+	
+	//Current_Turque_Leg		: ARRAY[1..18] OF LREAL;		// Mapping后的电流
+	
+	Difference_Position	: ARRAY[1..18] OF LREAL;			// 实际位置与输入位置差值
+END_VAR
+
+VAR
+	Leg_Number			: INT;							// 定义机器人腿数
+	Init_Execute		: BOOL;							// 机器人运动Simulink模型初始化使能
+	Model_state: TCOM_STATE :=TCOM_STATE.TCOM_STATE_OP;
+	Model_save_par		: BOOL;
+END_VAR
+
+VAR_OUTPUT
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// =======================子程序使能(永久运行)===================
+Variable_Monitor();			// 变量监测子程序使能
+Logic_Control();			// 逻辑控制子程序使能
+Variable_Set();				// 各动作速度子程序使能
+Touch_Signal_Detection();	// 触地信号检测
+
+// =======================模型使能=======================
+IF ExSetPoint_Execute OR MAIN.Home_Execute THEN
+	Robot_Simulink.Execute();	// Simulink模型使能
+END_IF
+
+IF MAIN.Power_Execute THEN
+	Filter_Current_Simulink.Execute();
+END_IF
+
+// =======================模型初始化=======================
+IF Init_Execute THEN
+	Model_state	:=TCOM_STATE.TCOM_STATE_INIT;
+	t	:=0;
+ELSE
+	Model_state	:=TCOM_STATE.TCOM_STATE_OP;
+END_IF
+
+IF Robot_Simulink.State<>Model_state THEN
+	Robot_Simulink.State	:= Model_state;
+END_IF
+
+IF NOT Model_save_par THEN
+	Model_save_par:=tc3_module.SUCCEEDED(Robot_Simulink.SaveOnlineParametersForInit());
+END_IF
+
+// =======================外部信号运动程序=======================
+
+IF ExSetPoint_Execute THEN
+	//SetGenerator();			// 使能外部信号发生子程序
+	FOR Axis_Number := 1 TO 18 {BY 1} DO
+		MAIN.Axis_Robot[Axis_Number].ExtSetPoint(	Drive_ExtSetPointEnable:= ExtSetPointEnable, 
+													Drive_ExtSetPointDisable:= ExtSetPointDisable, 
+													ExSetPosition:= ExSetPoint_Position[Axis_Number]);
+	END_FOR
+END_IF
+
+// ======================外部信号发生=========================
+IF ExtSetPointEnable THEN	
+	t := t + t_Interval;
+	ExtSetPointDisable := FALSE;
+END_IF
+
+IF t>=T_ALL OR MAIN.Reset_Execute THEN
+	ExtSetPointEnable := FALSE;
+	t:=0;
+	ExtSetPointDisable := TRUE;
+END_IF]]></ST>
+    </Implementation>
+    <Action Name="Leg_Action" Id="{e0af93bf-3391-42b3-9f2c-aebf833b409a}">
+      <Implementation>
+        <ST><![CDATA[// ===================机器人触地信号转换====================
+//IF ExtSetPointEnable THEN
+	//FOR Leg_Number := 1 TO 6 {BY 1} DO
+		//IF 
+	//END_FOR
+//		IF Leg_Home_Set[Leg_Number] THEN		// 在可视化中，Leg_Home_Set为点动
+//			Axis_Home_Set[1+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//			Axis_Home_Set[2+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//			Axis_Home_Set[3+(Leg_Number-1)*3] := Leg_Home_Set[Leg_Number];
+//		ELSIF Home_Done[1+(Leg_Number-1)*3] AND Home_Done[2+(Leg_Number-1)*3] AND Home_Done[3+(Leg_Number-1)*3] THEN
+//			Leg_Home_Set[Leg_Number] := FALSE; 
+//		END_IF
+//END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Logic_Control" Id="{6ff3755a-9121-416a-ae3e-6ea6ca2447d3}">
+      <Implementation>
+        <ST><![CDATA[// =====================外部信号发生逻辑========================
+IF ExSetPoint_Execute THEN
+	MAIN.Home_Execute := FALSE;						// 外部信号发生使能时，机器人调零必须结束
+	MAIN.Move_Execute :=0;							// 外部信号发生时，不能进行其他运动
+	Init_Execute	  := FALSE;						// 外部信号发生时，模型不能使能
+ELSIF NOT ExSetPoint_Execute THEN
+	ExtSetPointEnable := 0;							// 外部信号发生不使能时，外部信号不能进入程序
+	ExtSetPointDisable :=0;
+ELSIF ExtSetPointDisable THEN
+	ExtSetPointEnable :=0;							// 外部信号发生停止与外部信号发生开始不能同时进行
+END_IF
+
+IF 	Robot_Simulink.State = TCOM_STATE.TCOM_STATE_INIT THEN
+	ExSetPoint_Execute 	:= FALSE;					// 模型初始化时不能使能
+END_IF
+
+
+IF MAIN.Home_Execute OR MAIN.Move_Execute THEN
+	ExSetPoint_Execute := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Safety" Id="{668d4c2a-c9ff-45e4-b690-5df9d258aa35}">
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Touch_Signal_Detection" Id="{a7b09809-24f5-4205-965d-6459f7d21bee}">
+      <Implementation>
+        <ST><![CDATA[// =======================用来进行触地信号的处理===================
+// 此处已经将电流的编号由控制中的编号转换成模型中的编号
+
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	current_Delay_Simulink.stInput.Current_Filter[Axis_Number-1]		:= Current_Turque_Leg[Axis_Number];
+	//Current_Fiter_Delay[Axis_Number] := Current_Delay_Simulink.stOutput.Variable_Delay[Axis_Number-1];
+	Current_Delay_Simulink.stInput.Delay_Time	:= Delay_Time_1;
+END_FOR
+
+current_Delay_Simulink.stInput.Number := Number;
+
+current_Delay_Simulink.stInput.Minimum_Limit 	:= MINIMUM_Current_Change;
+current_Delay_Simulink.stInput.State 			:= LREAL_TO_INT(Robot_Movement.state);
+Touch_Signal_1 									:= current_Delay_Simulink.stOutput.Touch_Signal;
+Robot_Movement.Leg_Touch 						:= current_Delay_Simulink.stOutput.Leg_Touch;
+Robot_Movement.Leg_Detection					:= current_Delay_Simulink.stOutput.Leg_Detection;
+Current_Change									:= current_Delay_Simulink.stOutput.Current_Change;
+
+IF ExSetPoint_Execute THEN
+	Current_Delay_Simulink.Execute();
+END_IF
+]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Variable_Monitor" Id="{02473303-261c-445b-9136-403286493e0a}">
+      <Implementation>
+        <ST><![CDATA[// ==============实际运动位移和输入位移差值检测区==============
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Difference_Position[Axis_Number] := MAIN.Axis_ActPostion[Axis_Number]- Mapping_Position.Controller_Leg_Variable[Axis_Number]; 
+END_FOR
+
+// ===================电流滤波环节===================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	Filter_Current_Simulink.stInput.Current_Motor[Axis_Number-1] := MAIN.Current_Turque_Value[Axis_Number];
+END_FOR	
+
+Current_Turque_Filter := Filter_Current_Simulink.stOutput.Current_Monitor;
+Mapping_Current_Filter(Controller_Leg_Variable:= Current_Turque_Filter, Model_Leg_Variable=> Current_Turque_Leg);]]></ST>
+      </Implementation>
+    </Action>
+    <Action Name="Variable_Set" Id="{dd62ebc4-64fe-46c6-9ee6-b54b3152150e}">
+      <Implementation>
+        <ST><![CDATA[// ===================外部信号发生电机位置输入值================
+FOR Axis_Number := 1 TO 18 {BY 1} DO
+	ExSetPoint_Position[Axis_Number]:= Mapping_Position.Controller_Leg_Variable[Axis_Number];
+END_FOR
+
+// ===================程序与模型的变量链接===================
+Mapping_Position(Model_Leg_Variable:= Model_Position);		// 映射运动学模型中腿编号和控制模型中的电机编号
+
+Mapping_Position1(Controller_Leg_Variable:= MAIN.Axis_ActPostion, Model_Leg_Variable=> Leg_Lengths);
+
+Touch_Signal			:= Touch_Signal_1;
+FOR Leg_Number := 1 TO 6 {BY 1} DO
+	Robot_Simulink.stInput.Touch_Signal[Leg_Number-1]	:= BOOL_TO_LREAL(Touch_Signal[Leg_Number]);		// 传感器采集到的触地信号
+END_FOR
+
+	// 模型输入链接
+Robot_Simulink.stInput.t := t;								// 采样时间t与Simulink模型中的采样时间链接								
+Robot_Simulink.stInput.Step_Test		:= Step_Test;		// 测试模式
+Robot_simulink.stInput.params_x := params_x;
+Robot_simulink.stInput.params_y := params_y;
+Robot_simulink.stInput.params_z := params_z;
+Robot_simulink.stInput.params_alpha := params_alpha;
+Robot_simulink.stInput.params_beta := params_beta;
+Robot_simulink.stInput.params_gama := params_gama;
+Robot_simulink.stInput.Mode_Move := Mode_Move;
+Robot_simulink.stInput.t_Trajectory := t_traj;
+Robot_simulink.stInput.R_Circle := R_circle;
+
+	// 模型输出
+Model_Position := Robot_Simulink.stOutput.Disp_P;			// Simulink中的电机输出位移输入到控制模型
+realState		:= Robot_Simulink.stOutput.realState;		// 模型监测状态量
+state			:= Robot_Simulink.stOutput.state;			// 模型监测状态量
+Number			:= Robot_Simulink.stOutput.Number;
+Act_Slice := Robot_simulink.stOutput.Act_Slice;
+Act_Lout := Robot_simulink.stOutput.Act_Lout;
+
+	// 模型输入定义
+params_x[1] := 0;params_x[2] := 0.01;params_x[3] := 0;params_x[4] := 0;params_x[5] := 0;
+params_y[1] := 0;params_y[2] := 0.548901719911339;params_y[3] := 0;params_y[4] := 0;params_y[5] := 0;
+params_z[1] := 0;params_z[2] := 0.03;params_z[3] := 0;params_z[4] := 0;params_z[5] := 0;
+
+params_alpha[1] := 0;params_alpha[2] := pi/600;params_alpha[3] := 0;params_alpha[4] := 0;params_alpha[5] := 0;
+params_beta[1] := 0;params_beta[2] := 0;params_beta[3] := 0;params_beta[4] := 0;params_beta[5] := 0;
+params_gama[1] := 0;params_gama[2] := 0;params_gama[3] := 0;params_gama[4] := 0;params_gama[5] := 0;]]></ST>
+      </Implementation>
+    </Action>
+    <LineIds Name="Robot_Movement">
+      <LineId Id="85" Count="2" />
+      <LineId Id="202" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="131" Count="0" />
+      <LineId Id="128" Count="0" />
+      <LineId Id="127" Count="0" />
+      <LineId Id="129" Count="0" />
+      <LineId Id="132" Count="3" />
+      <LineId Id="281" Count="3" />
+      <LineId Id="392" Count="0" />
+      <LineId Id="291" Count="1" />
+      <LineId Id="296" Count="0" />
+      <LineId Id="298" Count="7" />
+      <LineId Id="130" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="297" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="51" Count="5" />
+      <LineId Id="307" Count="0" />
+      <LineId Id="47" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="1" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="32" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Leg_Action">
+      <LineId Id="2" Count="1" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="4" Count="6" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Logic_Control">
+      <LineId Id="2" Count="2" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="5" Count="5" />
+      <LineId Id="30" Count="4" />
+      <LineId Id="11" Count="3" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Safety">
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Touch_Signal_Detection">
+      <LineId Id="25" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="31" Count="1" />
+      <LineId Id="35" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="3" Count="0" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="40" Count="3" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Variable_Monitor">
+      <LineId Id="31" Count="10" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+    <LineIds Name="Robot_Movement.Variable_Set">
+      <LineId Id="2" Count="3" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="44" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="46" Count="8" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="56" Count="1" />
+      <LineId Id="41" Count="1" />
+      <LineId Id="59" Count="6" />
+      <LineId Id="1" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

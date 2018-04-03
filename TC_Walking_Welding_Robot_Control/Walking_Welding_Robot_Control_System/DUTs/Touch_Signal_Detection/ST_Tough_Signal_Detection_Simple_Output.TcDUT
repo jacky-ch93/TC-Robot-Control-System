@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.12">
+  <DUT Name="ST_Tough_Signal_Detection_Simple_Output" Id="{93dde4f6-1753-47b2-a1b7-89279cc5454c}">
+    <Declaration><![CDATA[TYPE ST_Tough_Signal_Detection_Simple_Output :
+STRUCT
+	Touch_Signal: matrix_6_boolean_T;
+	Leg_Touch: matrix_3_real_T;
+	Leg_Detection: matrix_3_real_T;
+	Current_Change: matrix_18_real_T;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
