@@ -356,30 +356,35 @@ END_VAR]]></Declaration>
 // 找零程序过程为：先让丝杠回退，当传感器检测到金属表面并反馈信号后, 程序将该位置置为零位
 
 //======================丝杠回退========================
-Jog_Backward(Drive_Jog_Backward:= Drive_Home);
-Jog_Velocity := Velocity_Home;
-HomeDone := Axis_MoveAbsolute.Done;					// 回到零点的标志为丝杠伸长到制定距离
+	Jog_Backward(Drive_Jog_Backward:= Drive_Home);
+	Jog_Velocity := Velocity_Home;
+	HomeDone := Axis_MoveAbsolute.Done;					// 回到零点的标志为丝杠伸长到制定距离
 	
-IF NOT Axis_Home.Error THEN
-	IF Home_Switch THEN
-		Drive_Home :=0;
-		Jog_Backward(Drive_Jog_Backward:= Drive_Home);
-	END_IF
-	
-	Delay(IN:= Home_Switch, PT:=T#10MS, Q=> , ET=> );
-	Axis_Home( 	Axis:= AxisRef, 
-				Execute:= Delay.Q,
-				Position:= 0, 
-				HomingMode:= MC_Direct);
-	BackDone := Axis_Home.Done;
-
-	IF BackDone THEN
-		Move_Absolute(Drive_Move_Absolute:= TRUE, Absolute_Position:= Home_Position);
+	IF NOT Axis_Home.Error THEN
+		IF Home_Switch THEN
+			//Drive_Home :=0;
+			Jog_Backward(Drive_Jog_Backward:= FALSE);
+		END_IF
+//		IF Drive_Home THEN	
+			Delay(IN:= Home_Switch AND Drive_Home, PT:=T#10MS, Q=> , ET=> );
+			Axis_Home( 	Axis:= AxisRef, 
+						Execute:= Delay.Q,
+						Position:= 0, 
+						HomingMode:= MC_Direct);
+			BackDone := Axis_Home.Done;
+		
+			IF BackDone THEN
+				Move_Absolute(Drive_Move_Absolute:= Drive_Home, Absolute_Position:= Home_Position);
+			END_IF
+//		END_IF		
+		
 		IF Axis_MoveAbsolute.Done THEN
 			BackDone := FALSE;
-		END_IF
-	END_IF
-END_IF
+		END_IF	
+
+	END_IF	
+//END_IF
+
 
 (*IF HomeSet THEN
 	Jog_Backward(Drive_Jog_Backward:= 0,  Axis_Current_Turque:= Axis_Current_Turque);
@@ -921,12 +926,19 @@ END_VAR
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Sensor_Backward">
-      <LineId Id="83" Count="9" />
-      <LineId Id="134" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="137" Count="0" />
-      <LineId Id="95" Count="28" />
+      <LineId Id="83" Count="2" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="153" Count="0" />
+      <LineId Id="192" Count="0" />
+      <LineId Id="184" Count="0" />
+      <LineId Id="155" Count="14" />
+      <LineId Id="173" Count="0" />
+      <LineId Id="177" Count="0" />
+      <LineId Id="188" Count="3" />
+      <LineId Id="175" Count="1" />
+      <LineId Id="152" Count="0" />
+      <LineId Id="86" Count="0" />
+      <LineId Id="108" Count="15" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="Axis.Home_Velocity.Get">
